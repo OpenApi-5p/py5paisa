@@ -1,6 +1,7 @@
 import requests
 import os
-
+from .conf import user_key, app_name, user_id, password
+from .const import GENERIC_PAYLOAD,HEADERS
 
 class UserDataType:
 
@@ -25,42 +26,13 @@ class UserInfo:
     HOLDINGS_REQUEST_CODE = "5PHoldingV2"
     POSITIONS_REQUEST_CODE = "5PNPNWV1"
 
-    def __init__(self, app_name=None, userid=None, passwd=None, client_code=None, data_type=None):
-        self.app_name = app_name
-        self.userid = userid
-        self.passwd = passwd
+    def __init__(self, client_code=None, data_type=None):
         self.client_code = client_code
         self.data_type = data_type
-        self.user_key = None
-
-    def get_key(self):
-        user_key = os.getenv("USER_KEY")
-        if not user_key:
-            raise Exception("USER_KEY environment variable not set")
-        return user_key
 
     def _request(self):
-        headers = {'content-type': 'application/json'}
-        payload = {
-            "head": {
-                "appName": "",
-                "appVer": "1.0",
-                "key": "",
-                "osName": "WEB",
-                "requestCode": "",
-                "userId": "",
-                "password": ""
-            },
-            "body": {
-                "ClientCode": ""
-            }
-        }
-        self.user_key = self.get_key()
-        payload["head"]["appName"] = self.app_name
-        payload["head"]["key"] = self.user_key
+        payload = GENERIC_PAYLOAD
         payload["body"]["ClientCode"] = self.client_code
-        payload["head"]["userId"] = self.userid
-        payload["head"]["password"] = self.passwd
         if self.data_type == "MARGIN":
             request_code = self.MARGIN_REQUEST_CODE
             url = self.MARGIN_ROUTE
@@ -78,7 +50,7 @@ class UserInfo:
 
         payload["head"]["requestCode"] = request_code
         response = requests.request(
-            "POST", url, json=payload, headers=headers)
+            "POST", url, json=payload, headers=HEADERS)
         print(response.text)
         return response.text
 

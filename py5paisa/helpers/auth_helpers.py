@@ -4,11 +4,12 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 
 from Crypto.Cipher import AES
-from .padding import pad
+from padding import pad
 import os
 
 import base64
 
+from ..conf import encryption_key
 
 class EncryptionClient:
 
@@ -25,7 +26,7 @@ class EncryptionClient:
         return padded
 
     def _get_enc_key(self):
-        enc_key = os.getenv("ENCRYPTION_KEY")
+        enc_key = encryption_key
         if not enc_key:
             raise Exception("ENCRYPTION_KEY not set in environment variables")
         self.enc_key = base64.b64encode(
@@ -40,7 +41,7 @@ class EncryptionClient:
             backend=self.backend).derive(self.enc_key)
 
     def get_cipher(self):
-        self.cipher = AES.new(self.derived_key, AES.MODE_ECB, self.iv)
+        self.cipher = AES.new(self.derived_key, AES.MODE_CBC, self.iv)
 
     def encrypt(self, text):
         self._get_enc_key()
