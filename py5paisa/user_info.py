@@ -1,7 +1,9 @@
 import requests
 import os
-from .conf import user_key, app_name, user_id, password
-from .const import GENERIC_PAYLOAD,HEADERS
+from conf import user_key, app_name, user_id, password
+from const import GENERIC_PAYLOAD, HEADERS
+from helpers.auth_helpers import get_cookie, get_client_code
+
 
 class UserDataType:
 
@@ -26,8 +28,8 @@ class UserInfo:
     HOLDINGS_REQUEST_CODE = "5PHoldingV2"
     POSITIONS_REQUEST_CODE = "5PNPNWV1"
 
-    def __init__(self, client_code=None, data_type=None):
-        self.client_code = client_code
+    def __init__(self, data_type):
+        self.client_code = get_client_code()
         self.data_type = data_type
 
     def _request(self):
@@ -49,10 +51,17 @@ class UserInfo:
             raise Exception("Invalid data type requested")
 
         payload["head"]["requestCode"] = request_code
+        cookie = get_cookie()
         response = requests.request(
-            "POST", url, json=payload, headers=HEADERS)
-        print(response.text)
-        return response.text
+            "POST", url, json=payload, headers=HEADERS, cookies=cookie)
+        return response.json()
 
     def get_data(self):
-        self._request()
+        return self._request()
+
+# Usage
+
+
+if __name__ == "__main__":
+    user_holdings = UserInfo(data_type=UserDataType.HOLDINGS)
+    print(user_holdings.get_data())

@@ -1,5 +1,8 @@
 from const import GENERIC_PAYLOAD, HEADERS
 import requests
+from helpers.auth_helpers import get_cookie, get_client_code
+import time
+from conf import app_source
 
 
 class RequestType:
@@ -23,24 +26,51 @@ class ExchangeType:
     CURRENCY = "U"
 
 
-class OrderFor:
+class OrderType:
 
     PLACE = "P"
     MODIFY = "M"
     CANCEL = "C"
 
 
-# class FullOrder:
-
-#     def __init__(self, order_for=OrderFor.PLACE, exchange=Exchange.NSE, exchange_type=ExchangeType.CASH, price=0.0,
-#                  order_id: int, order_type: str, quantity: int, timestamp: str,
-#                  scrip_code: int, atmarket=True, remote_order_id: int, exch_order_id: int, disqty: int,
-#                  stoploss_price: float, is_stoploss_order=False, ioc_order=False, is_intraday=False, vtd: str,
-#                  ahplaced: str, public_ip="", order_validity: int, traded_qty=0, requester_code: int, app_source: int):
-#         pass
-
-
 class Order:
+
+    def __init__(self, order_for: str, exchange: str, exchange_type: str, price: float,
+                 order_id: int, order_type: str, quantity: int,
+                 scrip_code: int, atmarket: bool, remote_order_id: int, exch_order_id: int, disqty: int,
+                 stoploss_price: float, is_stoploss_order: bool, ioc_order: bool, is_intraday: bool, is_vtd: bool, vtd: str,
+                 ahplaced: str, public_ip: str, order_validity: int, traded_qty: int):
+
+        self.order_for = order_for
+        self.exchange = exchange
+        self.exchange_type = exchange_type
+        self.price = price
+        self.order_id = order_id
+        self.order_type = order_type
+        self.quantity = quantity
+        self.scrip_code = scrip_code
+        self.atmarket = atmarket
+        self.remote_order_id = remote_order_id
+        self.exch_order_id = exch_order_id
+        self.disqty = disqty
+        self.stoploss_price = stoploss_price
+        self.is_stoploss_order = is_stoploss_order
+        self.ioc_order = ioc_order
+        self.is_intraday = is_intraday
+        self.is_vtd = is_vtd
+        self.vtd = vtd
+        self.ahplaced = ahplaced
+        self.public_ip = public_ip
+        self.order_validity = order_validity
+        self.traded_qty = traded_qty
+        self.requester_code = get_client_code()
+        self.app_source = int(app_source)
+
+
+class OrderForStatus:
+    """
+    Order class for representing an order for only Status and trade information request.
+    """
 
     def __init__(self, exchange: str, exchange_type: str, scrip_code: int, order_id: str) -> None:
         self.exchange = exchange
@@ -68,7 +98,7 @@ class RequestList:
     def __init__(self):
         self.orders = []
 
-    def add_order(self, order: Order) -> None:
+    def add_order(self, order: OrderForStatus) -> None:
         """
         Adds order to the RequestList object required in the request payload.
         """
@@ -81,13 +111,14 @@ class OrderClient(RequestList):
     ORDER_STATUS_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/OrderStatus"
     TRADE_INFO_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/TradeInformation"
 
-    def __init__(self, client_code: str, req_type: str) -> None:
+    def __init__(self, req_type: str) -> None:
 
-        self.client_code = client_code
+        self.client_code = get_client_code()
+        print(self.client_code)
         self.req_type = req_type
         self.payload = GENERIC_PAYLOAD
 
-    def _request(self):
+    def _request(self) -> dict:
 
         self.payload["body"]["ClientCode"] = self.client_code
 
@@ -102,32 +133,68 @@ class OrderClient(RequestList):
             self.payload["head"]["requestCode"] = "5PTrdInfo"
         else:
             raise Exception("Invalid request type!")
-        print(self.payload)
-        res = requests.post(url, json=self.payload, headers=HEADERS)
-        print(res.content)
+        cookie = get_cookie()
+        res = requests.post(url, json=self.payload,
+                            headers=HEADERS, cookies=cookie)
+        return res.content
 
-    def fetch_order_status(self, req_list: RequestList) -> None:
-        self.payload["OrdStatusReqList"] = req_list.orders
-        self._request()
+    def fetch_order_status(self, req_list: RequestList) -> dict:
+        self.payload["body"]["OrdStatusReqList"] = req_list.orders
+        return self._request()
 
-    def fetch_trade_info(self, req_list: RequestList) -> None:
-        self.payload["TradeDetailList"] = req_list.orders
-        self._request()
+    def fetch_trade_info(self, req_list: RequestList) -> dict:
+        self.payload["body"]["TradeDetailList"] = req_list.orders
+        return self._request()
+
+    def place_order(self, order: Order) -> dict:
+
+        self.payload["body"]["OrderFor"] = order.order_for
+        self.payload["body"]["Exchange"] = order.exchange
+        self.payload["body"]["ExchangeType"] = order.exchange_type
+        self.payload["body"]["Price"] = order.price
+        self.payload["body"]["OrderID"] = order.order_id
+        self.payload["body"]["OrderType"] = order.order_type
+        self.payload["body"]["Qty"] = order.quantity
+        # Probably UNIX timestamp
+        self.payload["body"]["OrderDateTime"] = f"/Date({int(time.time())})/"
+        self.payload["body"]["ScripCode"] = order.scrip_code
+        self.payload["body"]["AtMarket"] = str(order.atmarket).lower()
+        self.payload["body"]["RemoteOrderID"] = order.remote_order_id
+        self.payload["body"]["ExchOrderID"] = order.exch_order_id
+        self.payload["body"]["DisQty"] = order.disqty
+        self.payload["body"]["IsStopLossOrder"] = str(
+            order.is_stoploss_order).lower()
+        self.payload["body"]["StopLossPrice"] = order.stoploss_price
+        self.payload["body"]["IsVTD"] = str(order.is_vtd).lower()
+        self.payload["body"]["IOCOrder"] = str(order.ioc_order).lower()
+        self.payload["body"]["IsIntraday"] = str(order.is_intraday).lower()
+        self.payload["body"]["PublicIP"] = order.public_ip
+        self.payload["body"]["AHPlaced"] = order.ahplaced
+        # Hardcoded for now
+        self.payload["body"]["ValidTillDate"] = f"/Date({int(time.time())})/"
+        self.payload["body"]["TradedQty"] = order.traded_qty
+        self.payload["body"]["OrderRequesterCode"] = order.requester_code
+        self.payload["body"]["AppSource"] = app_source
+        self.payload["body"]["iOrderValidity"] = order.order_validity
+        return self._request()
 
 
-"""
-Order Status Usage:
+# Usage
+if __name__ == "__main__":
 
-order_client = OrderClient(client_code="54059978",
-                           req_type=RequestType.ORDER_STATUS)
+    order_client = OrderClient(req_type=RequestType.ORDER_STATUS)
 
-ITC_order = Order(exchange=Exchange.BSE, exchange_type=ExchangeType.CASH,
-                  scrip_code=500875, order_id="90980441")
+    ITC_order_status = OrderForStatus(exchange=Exchange.BSE, exchange_type=ExchangeType.CASH,
+                                      scrip_code=500875, order_id=0)
 
-req_list = RequestList()
+    req_list = RequestList()
 
-req_list.add_order(ITC_order)
+    req_list.add_order(ITC_order_status)
 
-order_client.fetch_order_status(req_list)
+    print(order_client.fetch_trade_info(req_list))
 
-"""
+    order_client = OrderClient(req_type=RequestType.ORDER_PLACEMENT)
+    ITC_order = Order(order_for=OrderType.PLACE, exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, price=0, order_id=0, order_type="BUY", quantity=10, scrip_code=500875, atmarket=True, remote_order_id="23324", exch_order_id="0",
+                      disqty=10, stoploss_price=0, is_stoploss_order=False, ioc_order=False, is_intraday=False, is_vtd=False, vtd="", ahplaced="Y", public_ip="45.112.149.104", order_validity=0, traded_qty=0)
+
+    print(order_client.place_order(ITC_order))

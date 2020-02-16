@@ -106,3 +106,4 @@ ENV/
 .editorconfig
 .env
 .github/
+env.txt

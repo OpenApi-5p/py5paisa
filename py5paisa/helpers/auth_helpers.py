@@ -4,18 +4,20 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.backends import default_backend
 
 from Crypto.Cipher import AES
-from padding import pad
+from .padding import pad
 import os
 
 import base64
 
-from ..conf import encryption_key
+from conf import encryption_key
+
 
 class EncryptionClient:
 
     def __init__(self):
         self.enc_key = None
-        self.iv = os.urandom(16)
+        self.iv = bytes([83, 71, 26, 58, 54, 35, 22, 11,
+                         83, 71, 26, 58, 54, 35, 22, 11])
         self.derived_key = None
         self.cipher = None
         self.backend = default_backend()
@@ -49,3 +51,17 @@ class EncryptionClient:
         self.get_cipher()
         padded_text = self._pad_and_convert_to_bytes(text)
         return base64.b64encode(self.cipher.encrypt(padded_text))
+
+
+def get_cookie():
+    cookie = {'5paisacookie': os.getenv("COOKIE")}
+    if not cookie:
+        raise Exception("Invalid Session or session expired!")
+    return cookie
+
+
+def get_client_code():
+    client_code = os.getenv("CLIENT_CODE")
+    if not client_code:
+        raise Exception("Not logged in!")
+    return client_code
