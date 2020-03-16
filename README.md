@@ -70,7 +70,6 @@ print(order_client.fetch_trade_info(req_list))
 
 
 #### TODO
- - Authentication does not work.
  - Handle responses more gracefully.
  - Write tests.
  - Set cookie and clientCode as environment variables post auth/login.
