@@ -4,7 +4,7 @@
 
 from setuptools import setup, find_packages
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
 with open('HISTORY.rst') as history_file:
@@ -28,7 +28,8 @@ setup(
     ],
     description=" Python SDK for 5paisa APIs natively written in VB.NET",
     install_requires=requirements,
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
+    long_description_content_type="text/markdown",
     include_package_data=True,
     keywords='py5paisa',
     name='py5paisa',
