@@ -9,7 +9,7 @@ install: pip install -U tox-travis
 install: pip install -r requirements_dev.txt
 
 # Command to run tests, e.g. python setup.py test
-script: tox
+# script: tox
 
 # Assuming you have installed the travis-ci CLI tool, after you
 # create the Github repo and add it to Travis, run the
@@ -18,7 +18,7 @@ script: tox
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
-  user: invinciblycool
+  user: __token__
   password:
     secure: PLEASE_REPLACE_ME
   on:
