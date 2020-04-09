@@ -1,30 +1,25 @@
+from Crypto.Cipher import AES
 import base64
-import os
-from .helpers.auth_helpers import EncryptionClient
+from pbkdf2 import PBKDF2
+from conf import encryption_key
 
 
-class LoginClient:
+class EncryptionClient:
 
-    def __init__(self, email=None, passwd=None, dob=None):
-        """
-        Constructor for the login client.
-        Expects user's email, password and date of birth in YYYYMMDD format.
-        """
-        self.email = None
-        self.passwd = None
-        self.dob = None
+    def __init__(self):
+        self.iv = bytes([83, 71, 26, 58, 54, 35, 22, 11,
+                         83, 71, 26, 58, 54, 35, 22, 11])
+        self.enc_key = encryption_key
 
-    def login(self):
-        encryption_client = EncryptionClient()
-        secret_email = encryption_client.encrypt(self.email)
-        secret_passwd = encryption_client.encrypt(self.passwd)
-        secret_dob = encryption_client.encrypt(self.dob)
+    def _pad_and_convert_to_bytes(self, text):
+        return bytes(text+chr(16-len(text) % 16)*(16-len(text) % 16), encoding="utf-8")
 
-        print(secret_email)
-        print(secret_passwd)
-        print(secret_dob)
+    def encrypt(self, text):
+        padded_text = self._pad_and_convert_to_bytes(text)
+        key_gen = PBKDF2(self.enc_key, self.iv)
 
+        aesiv = key_gen.read(16)
+        aeskey = key_gen.read(32)
+        cipher = AES.new(aeskey, AES.MODE_CBC, aesiv)
 
-login = LoginClient(email="manikyasaiteja.g@gmail.com",
-                    passwd="saiteja@1996", dob="19961209")
-login.login()
+        return str(base64.b64encode(cipher.encrypt(padded_text)), encoding="utf-8")
