@@ -18,12 +18,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
     - name: Build
+      env:
+        TWINE_USERNAME: ${{ secrets.twine_username }}
+        TWINE_PASSWORD: ${{ secrets.twine_password }}
       run: |
         python setup.py sdist bdist_wheel
         twine upload dist/*
-        
-    - name: Publish to Test PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        password: ${{ secrets.test_pypi_password }}
-        repository_url: https://test.pypi.org/legacy/
