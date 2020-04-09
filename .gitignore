@@ -105,5 +105,4 @@ ENV/
 .vscode/
 .editorconfig
 .env
-.github/
 env.txt
