@@ -13,6 +13,26 @@
 
 ### Usage
 
+#### Installing requirements
+
+```sh
+# Since the package is on test PyPI, manual installation of the requirements is needed
+
+pip install certifi==2020.4.5.1 chardet==3.0.4 idna==2.9 pbkdf2==1.3 pycrypto==2.6.1 requests==2.23.0 urllib3==1.25.8
+
+```
+
+#### Setting environment variables
+
+```sh
+export APP_NAME="<your_app_name>"
+export APP_SOURCE="<your_app_source>"
+export USER_ID="<your_userid>"
+export PASSWORD="<your_password>"
+export USER_KEY="<your_user_key>"
+export ENCRYPTION_KEY="<your_enc_key>"
+```
+
 #### Authentication
 
 ```py

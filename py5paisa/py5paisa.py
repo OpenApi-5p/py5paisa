@@ -1,6 +1,7 @@
 import requests
 from .auth import EncryptionClient
 from .const import GENERIC_PAYLOAD, HEADERS
+from .conf import app_source
 from .order import *
 import time
 
@@ -148,23 +149,3 @@ class FivePaisaClient:
         self.payload["body"]["AppSource"] = app_source
         self.payload["body"]["iOrderValidity"] = order.order_validity
         return self.order_request("OP")
-
-
-if __name__ == "__main__":
-
-    client = FivePaisaClient(email="xyz@gmail.com",
-                             passwd="password", dob="yyyymmdd")
-    client.login()
-
-    ITC_order_status = OrderForStatus(
-        exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, scrip_code=500875, order_id=0)
-    req_list = RequestList()
-
-    req_list.add_order(ITC_order_status)
-
-    print(client.fetch_order_status(req_list))
-
-    ITC_order = Order(order_for=OrderType.PLACE, exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, price=0, order_id=0, order_type="BUY", quantity=10, scrip_code=500875, atmarket=True, remote_order_id="23324", exch_order_id="0",
-                      disqty=10, stoploss_price=0, is_stoploss_order=False, ioc_order=False, is_intraday=False, is_vtd=False, vtd="", ahplaced="Y", public_ip="45.112.149.104", order_validity=0, traded_qty=0)
-
-    print(client.place_order(ITC_order))
