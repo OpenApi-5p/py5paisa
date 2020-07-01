@@ -10,7 +10,15 @@ with open('README.md') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [ ]
+requirements = [
+    "requests",
+    "pycrypto==2.6.1",
+    "certifi==2020.4.5.1",
+    "chardet==3.0.4",
+    "pbkdf2==1.3",
+    "urllib3==1.25.8",
+    "idna==2.9",
+]
 
 setup_requirements = [ ]
 

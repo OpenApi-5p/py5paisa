@@ -1,6 +1,6 @@
-from const import GENERIC_PAYLOAD, HEADERS
+from .const import GENERIC_PAYLOAD, HEADERS
 import requests
-from conf import app_source
+from .conf import app_source
 
 class Exchange:
 

@@ -1,4 +1,4 @@
-from conf import app_name, user_id, password, user_key
+from .conf import app_name, user_id, password, user_key
 
 HEADERS = {'content-type': 'application/json'}
 

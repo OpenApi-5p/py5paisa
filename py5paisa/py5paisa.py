@@ -1,7 +1,7 @@
 import requests
-from auth import EncryptionClient
-from const import GENERIC_PAYLOAD, HEADERS
-from order import *
+from .auth import EncryptionClient
+from .const import GENERIC_PAYLOAD, HEADERS
+from .order import *
 import time
 
 

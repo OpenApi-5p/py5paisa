@@ -1,7 +1,7 @@
 from Crypto.Cipher import AES
 import base64
 from pbkdf2 import PBKDF2
-from conf import encryption_key
+from .conf import encryption_key
 
 
 class EncryptionClient:
