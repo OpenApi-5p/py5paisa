@@ -1,19 +1,6 @@
-### Usage
+### Information
 
-
-#### Authentication
-
-```py
-from py5paisa import FivePaisaClient
-
-client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="YYYYMMDD")
-client.login()
-```
-
-After successful authentication, the cookie is persisted for subsequent requests.
-
-
-#### Fetching user info
+#### User information
 
 ```py
 # Fetches holdings
@@ -31,7 +18,7 @@ client.order_book()
 ```
 
 
-#### Fetching Order Status and Trade Information
+#### Order Status and Trade Information
 
 ```py
 from py5paisa.order import OrderForStatus, Exchange, ExchangeType, RequestList

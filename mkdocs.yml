@@ -5,6 +5,7 @@ nav:
     - 'Usage':
         - 'Authentication': 'usage/auth.md'
         - 'Placing an order': 'usage/place.md'
+        - 'Fetching information': 'usage/info.md'
 theme: 
     name: material
     features:

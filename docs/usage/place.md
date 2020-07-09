@@ -1,4 +1,4 @@
-#### Placing an order
+### Placing an order
 
 ```py
 # This is an indicative order.
