@@ -13,15 +13,6 @@
 
 ### Usage
 
-#### Installing requirements
-
-```sh
-# Since the package is on test PyPI, manual installation of the requirements is needed
-
-pip install certifi==2020.4.5.1 chardet==3.0.4 idna==2.9 pbkdf2==1.3 pycrypto==2.6.1 requests==2.23.0 urllib3==1.25.8
-
-```
-
 #### Configuring API keys
 
 Get your API keys from https://www.5paisa.com/developerapi/apikeys
