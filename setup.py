@@ -25,8 +25,8 @@ setup_requirements = []
 test_requirements = []
 
 setup(
-    author="Rahul Tiwari",
-    author_email='jprrahultiwari@gmail.com',
+    author="5paisa",
+    author_email='coreteam@5paisa.com',
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -45,7 +45,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/invinciblycool/py5paisa',
-    version='0.1.5',
+    url='https://github.com/5paisa/py5paisa',
+    version='0.1.0',
     zip_safe=False,
 )
