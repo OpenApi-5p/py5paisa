@@ -1,7 +1,7 @@
 import requests
 from .auth import EncryptionClient
 from .const import GENERIC_PAYLOAD, HEADERS
-from .conf import app_source
+from .conf import APP_SOURCE
 from .order import *
 import time
 
@@ -146,6 +146,6 @@ class FivePaisaClient:
         self.payload["body"]["ValidTillDate"] = f"/Date({int(time.time())})/"
         self.payload["body"]["TradedQty"] = order.traded_qty
         self.payload["body"]["OrderRequesterCode"] = self.client_code
-        self.payload["body"]["AppSource"] = app_source
+        self.payload["body"]["AppSource"] = APP_SOURCE
         self.payload["body"]["iOrderValidity"] = order.order_validity
         return self.order_request("OP")

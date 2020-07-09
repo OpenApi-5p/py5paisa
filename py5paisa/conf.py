@@ -1,8 +1,18 @@
-import os
+"""
+Get your API keys from https://www.5paisa.com/developerapi/apikeys
+"""
+import configparser
 
-app_name = os.getenv("APP_NAME")
-app_source = os.getenv("APP_SOURCE")
-user_id = os.getenv("USER_ID")
-password = os.getenv("PASSWORD")
-user_key = os.getenv("USER_KEY")
-encryption_key = os.getenv("ENCRYPTION_KEY")
+config = configparser.ConfigParser()
+config.read("keys.conf")
+try:
+    section = config["KEYS"]
+except KeyError:
+    raise Exception("Please configure your keys in keys.conf")
+
+APP_SOURCE = config["KEYS"]["APP_SOURCE"]
+APP_NAME = config["KEYS"]["APP_NAME"]
+USER_ID = config["KEYS"]["USER_ID"]
+PASSWORD = config["KEYS"]["PASSWORD"]
+USER_KEY = config["KEYS"]["USER_KEY"]
+ENCRYPTION_KEY = config["KEYS"]["ENCRYPTION_KEY"]

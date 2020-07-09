@@ -1,6 +1,10 @@
+"""
+Contains base classes for Orders etc.
+"""
 from .const import GENERIC_PAYLOAD, HEADERS
 import requests
-from .conf import app_source
+from .conf import APP_SOURCE
+
 
 class Exchange:
 
@@ -53,7 +57,7 @@ class Order:
         self.public_ip = public_ip
         self.order_validity = order_validity
         self.traded_qty = traded_qty
-        self.app_source = int(app_source)
+        self.app_source = int(APP_SOURCE)
 
 
 class OrderForStatus:

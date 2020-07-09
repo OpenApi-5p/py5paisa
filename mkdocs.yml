@@ -1,0 +1,14 @@
+site_name: py5paisa
+nav:
+    - Home: 'index.md'
+    - Installation: 'installation.md'
+    - 'Usage':
+        - 'Authentication': 'usage/auth.md'
+        - 'Placing an order': 'usage/place.md'
+theme: 
+    name: material
+    features:
+        - instant
+markdown_extensions:
+    - codehilite:
+        guess_lang: true

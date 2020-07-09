@@ -12,17 +12,17 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     "requests",
-    "pycrypto==2.6.1",
-    "certifi==2020.4.5.1",
-    "chardet==3.0.4",
-    "pbkdf2==1.3",
-    "urllib3==1.25.8",
-    "idna==2.9",
+    "pycrypto>=2.6.1",
+    "certifi>=2020.4.5.1",
+    "chardet>=3.0.4",
+    "pbkdf2>=1.3",
+    "urllib3>=1.25.8",
+    "idna>=2.9",
 ]
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="Rahul Tiwari",
@@ -46,6 +46,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/invinciblycool/py5paisa',
-    version='0.1.4',
+    version='0.1.5',
     zip_safe=False,
 )

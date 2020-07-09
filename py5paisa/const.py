@@ -1,44 +1,46 @@
-from .conf import app_name, user_id, password, user_key
+"""
+Contains reusable payloads across requests
+"""
+from .conf import APP_NAME, USER_ID, PASSWORD, USER_KEY
 
-HEADERS = {'content-type': 'application/json'}
+HEADERS = {'Content-Type': 'application/json'}
 
 GENERIC_PAYLOAD = {
     "head": {
-        "appName": app_name,
+        "appName": APP_NAME,
         "appVer": "1.0",
-        "key": user_key,
+        "key": USER_KEY,
         "osName": "WEB",
         "requestCode": "",
-        "userId": user_id,
-        "password": password
+        "userId": USER_ID,
+        "password": PASSWORD
     },
     "body": {
         "ClientCode": ""
     }
 }
 
-LOGIN_PAYLOAD = {"head":{
-"appName":app_name,
-        "appVer": "1.0",
-        "key": user_key,
-        "osName": "WEB",
-        "requestCode": "5PLoginV2",
-        "userId": user_id,
-        "password": password
+LOGIN_PAYLOAD = {"head": {
+    "appName": APP_NAME,
+    "appVer": "1.0",
+    "key": USER_KEY,
+    "osName": "WEB",
+    "requestCode": "5PLoginV2",
+    "userId": USER_ID,
+    "password": PASSWORD
 },
-"body":
-{
-"Email_id":"",
-"Password": "",
-"LocalIP": "",
-"PublicIP": "",
-"HDSerailNumber": "",
-"MACAddress": "",
-"MachineID": "039377",
-"VersionNo": "1.7",
-"RequestNo": "1",
-"My2PIN": "",
-"ConnectionType": "1"
+    "body":
+    {
+    "Email_id": "",
+    "Password": "",
+    "LocalIP": "",
+    "PublicIP": "",
+    "HDSerailNumber": "",
+    "MACAddress": "",
+    "MachineID": "039377",
+    "VersionNo": "1.7",
+    "RequestNo": "1",
+    "My2PIN": "",
+    "ConnectionType": "1"
 }
 }
-

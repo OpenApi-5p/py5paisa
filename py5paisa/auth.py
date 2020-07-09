@@ -1,7 +1,11 @@
+"""
+Contains the core encryption logic
+"""
+
 from Crypto.Cipher import AES
 import base64
 from pbkdf2 import PBKDF2
-from .conf import encryption_key
+from .conf import ENCRYPTION_KEY
 
 
 class EncryptionClient:
@@ -9,7 +13,7 @@ class EncryptionClient:
     def __init__(self):
         self.iv = bytes([83, 71, 26, 58, 54, 35, 22, 11,
                          83, 71, 26, 58, 54, 35, 22, 11])
-        self.enc_key = encryption_key
+        self.enc_key = ENCRYPTION_KEY
 
     def _pad_and_convert_to_bytes(self, text):
         return bytes(text+chr(16-len(text) % 16)*(16-len(text) % 16), encoding="utf-8")

@@ -22,16 +22,24 @@ pip install certifi==2020.4.5.1 chardet==3.0.4 idna==2.9 pbkdf2==1.3 pycrypto==2
 
 ```
 
-#### Setting environment variables
+#### Configuring API keys
 
-```sh
-export APP_NAME="<your_app_name>"
-export APP_SOURCE="<your_app_source>"
-export USER_ID="<your_userid>"
-export PASSWORD="<your_password>"
-export USER_KEY="<your_user_key>"
-export ENCRYPTION_KEY="<your_enc_key>"
+Get your API keys from https://www.5paisa.com/developerapi/apikeys
+
+Configure these keys in a file named `keys.conf` in the same directory as your python script exists
+
+A sample `keys.conf` is given below:
+
+```conf
+[KEYS]
+APP_NAME=YOUR_APP_NAME_HERE
+APP_SOURCE=YOUR_APP_SOURCE_HERE
+USER_ID=YOUR_USER_ID_HERE
+PASSWORD=YOUR_PASSWORD_HERE
+USER_KEY=YOUR_USER_KEY_HERE
+ENCRYPTION_KEY=YOUR_ENCRYPTION_KEY_HERE
 ```
+
 
 #### Authentication
 
@@ -69,10 +77,10 @@ client.order_book()
 
 from py5paisa.order import Order, OrderType, Exchange, ExchangeType
 
-ITC_order = Order(order_for=OrderType.PLACE, exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, price=0,
+test_order = Order(order_for=OrderType.PLACE, exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, price=0,
             order_id=0, order_type="BUY", quantity=10, scrip_code=500875, atmarket=True, remote_order_id="23324", exch_order_id="0", disqty=10, stoploss_price=0, is_stoploss_order=False, ioc_order=False, is_intraday=False, is_vtd=False, vtd="", ahplaced="Y", public_ip="45.112.149.104", order_validity=0, traded_qty=0)
 
-print(client.place_order(ITC_order))
+print(client.place_order(test_order))
 
 ```
 
@@ -81,11 +89,11 @@ print(client.place_order(ITC_order))
 ```py
 from py5paisa.order import OrderForStatus, Exchange, ExchangeType, RequestList
 
-order = OrderForStatus(exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, scrip_code=500875, order_id=0)
+test_order_status = OrderForStatus(exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, scrip_code=500875, order_id=0)
 
 req_list = RequestList()
 # Add multiple orders to the RequestList to know status of multiple orders at once.
-req_list.add_order(ITC_order_status)
+req_list.add_order(test_order_status)
 
 # Fetches the trade details
 print(client.fetch_trade_info(req_list))

@@ -106,3 +106,4 @@ ENV/
 .editorconfig
 .env
 env.txt
+site/
