@@ -1,9 +1,8 @@
 # 5paisa Python SDK
 
+Python SDK for 5paisa APIs natively written in VB .NET
 
-> Python SDK for 5paisa APIs natively written in VB .NET
-
-![5paisa logo](../py5paisa/docs/images/5-paisa-img.jpg)
+![5paisa logo](./docs/images/5-paisa-img.jpg)
 
 #### Features
 
