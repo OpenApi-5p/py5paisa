@@ -30,9 +30,9 @@ req_list = RequestList()
 req_list.add_order(test_order_status)
 
 # Fetches the trade details
-print(client.fetch_trade_info(req_list))
+client.fetch_trade_info(req_list)
 
 # Fetches the order status
-print(client.fetch_order_status(req_list))
+client.fetch_order_status(req_list)
 
 ```

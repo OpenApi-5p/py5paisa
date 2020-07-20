@@ -5,6 +5,8 @@ nav:
     - 'Usage':
         - 'Authentication': 'usage/auth.md'
         - 'Placing an order': 'usage/place.md'
+        - 'Modiying an order': 'usage/modify.md'
+        - 'Canceling an order': 'usage/cancel.md'
         - 'Fetching information': 'usage/info.md'
 theme: 
     name: material

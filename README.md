@@ -70,7 +70,7 @@ client.order_book()
 
 from py5paisa.order import Order, OrderType, Exchange, ExchangeType
 
-test_order = Order(order_type: OrderType.BUY, scrip_code: 11111, quantity: 10)
+test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10)
 
 client.place_order(test_order)
 
@@ -100,10 +100,10 @@ req_list = RequestList()
 req_list.add_order(test_order_status)
 
 # Fetches the trade details
-print(client.fetch_trade_info(req_list))
+client.fetch_trade_info(req_list)
 
 # Fetches the order status
-print(client.fetch_order_status(req_list))
+client.fetch_order_status(req_list)
 
 ```
 
