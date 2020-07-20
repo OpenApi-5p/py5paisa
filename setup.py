@@ -18,6 +18,7 @@ requirements = [
     "pbkdf2>=1.3",
     "urllib3>=1.25.8",
     "idna>=2.9",
+    "loguru>=0.5.1",
 ]
 
 setup_requirements = []

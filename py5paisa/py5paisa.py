@@ -3,6 +3,7 @@ from .auth import EncryptionClient
 from .const import GENERIC_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
 from .conf import APP_SOURCE
 from .order import Order, RequestList, OrderType, OrderFor
+from .logging import format_response
 import datetime
 from typing import Union
 
@@ -91,7 +92,7 @@ class FivePaisaClient:
         response = self.session.post(url, json=payload, headers=HEADERS)
         return response.json()
 
-    def order_request(self, req_type) -> dict:
+    def order_request(self, req_type) -> None:
 
         self.payload["body"]["ClientCode"] = self.client_code
 
@@ -109,7 +110,7 @@ class FivePaisaClient:
 
         res = self.session.post(url, json=self.payload,
                                 headers=HEADERS)
-        return res.json()
+        format_response(res.json())
 
     def fetch_order_status(self, req_list: RequestList) -> dict:
         self.payload["body"]["OrdStatusReqList"] = req_list.orders
