@@ -3,7 +3,7 @@ from .auth import EncryptionClient
 from .const import GENERIC_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
 from .conf import APP_SOURCE
 from .order import Order, RequestList, OrderType, OrderFor
-from .logging import format_response
+from .logging import log_response
 import datetime
 from typing import Union
 
@@ -48,8 +48,12 @@ class FivePaisaClient:
         self.payload["body"]["My2PIN"] = secret_dob
         self.payload["head"]["requestCode"] = "5PLoginV2"
         res = self._login_request(self.LOGIN_ROUTE)
+        message = res["body"]["Message"]
+        if message == "":
+            log_response("Logged in!!")
+        else:
+            log_response(message)
         self._set_client_code(res["body"]["ClientCode"])
-        return self.client_code
 
     def holdings(self):
         return self._user_info_request("HOLDINGS")
@@ -89,8 +93,14 @@ class FivePaisaClient:
             raise Exception("Invalid data type requested")
 
         payload["head"]["requestCode"] = request_code
-        response = self.session.post(url, json=payload, headers=HEADERS)
-        return response.json()
+        response = self.session.post(url, json=payload, headers=HEADERS).json()
+        message = response["body"]["Message"]
+        if message != "Success":
+            log_response(message)
+            return None
+        holdings = response["body"]["Data"]
+        log_response(holdings)
+        return holdings
 
     def order_request(self, req_type) -> None:
 
@@ -110,7 +120,7 @@ class FivePaisaClient:
 
         res = self.session.post(url, json=self.payload,
                                 headers=HEADERS)
-        format_response(res.json())
+        log_response(res["body"]["Message"])
 
     def fetch_order_status(self, req_list: RequestList) -> dict:
         self.payload["body"]["OrdStatusReqList"] = req_list.orders

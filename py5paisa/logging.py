@@ -12,6 +12,5 @@ logger.add(sys.stdout, level="INFO",
            format="<green>{time: HH:mm:ss}</green> | <bold>{message}</bold>")
 
 
-def format_response(res: dict) -> None:
-    message = res["body"]["Message"]
+def log_response(message: str) -> None:
     logger.info(message)
