@@ -6,7 +6,7 @@ Python SDK for 5paisa APIs natively written in VB .NET
 
 #### Documentation
 
-Read the docs [here](https://5paisa.github.io/)
+Read the docs hosted [here](https://5paisa.github.io/)
 
 #### Features
 
