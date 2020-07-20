@@ -1,9 +1,11 @@
 import requests
 from .auth import EncryptionClient
-from .const import GENERIC_PAYLOAD, HEADERS
+from .const import GENERIC_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
 from .conf import APP_SOURCE
-from .order import *
-import time
+from .order import Order, RequestList, OrderType, OrderFor
+from .logging import log_response
+import datetime
+from typing import Union
 
 
 class FivePaisaClient:
@@ -46,8 +48,12 @@ class FivePaisaClient:
         self.payload["body"]["My2PIN"] = secret_dob
         self.payload["head"]["requestCode"] = "5PLoginV2"
         res = self._login_request(self.LOGIN_ROUTE)
+        message = res["body"]["Message"]
+        if message == "":
+            log_response("Logged in!!")
+        else:
+            log_response(message)
         self._set_client_code(res["body"]["ClientCode"])
-        return self.client_code
 
     def holdings(self):
         return self._user_info_request("HOLDINGS")
@@ -87,10 +93,16 @@ class FivePaisaClient:
             raise Exception("Invalid data type requested")
 
         payload["head"]["requestCode"] = request_code
-        response = self.session.post(url, json=payload, headers=HEADERS)
-        return response.json()
+        response = self.session.post(url, json=payload, headers=HEADERS).json()
+        message = response["body"]["Message"]
+        if message != "Success":
+            log_response(message)
+            return None
+        holdings = response["body"]["Data"]
+        log_response(holdings)
+        return holdings
 
-    def order_request(self, req_type) -> dict:
+    def order_request(self, req_type) -> None:
 
         self.payload["body"]["ClientCode"] = self.client_code
 
@@ -108,7 +120,7 @@ class FivePaisaClient:
 
         res = self.session.post(url, json=self.payload,
                                 headers=HEADERS)
-        return res.json()
+        log_response(res["body"]["Message"])
 
     def fetch_order_status(self, req_list: RequestList) -> dict:
         self.payload["body"]["OrdStatusReqList"] = req_list.orders
@@ -118,17 +130,16 @@ class FivePaisaClient:
         self.payload["body"]["TradeDetailList"] = req_list.orders
         return self.order_request("TI")
 
-    def place_order(self, order: Order) -> dict:
-
+    def set_payload(self, order: Order) -> None:
         self.payload["body"]["OrderFor"] = order.order_for
         self.payload["body"]["Exchange"] = order.exchange
-        self.payload["body"]["ExchangeType"] = order.exchange_type
+        self.payload["body"]["ExchangeType"] = order.exchange_segment
         self.payload["body"]["Price"] = order.price
         self.payload["body"]["OrderID"] = order.order_id
         self.payload["body"]["OrderType"] = order.order_type
         self.payload["body"]["Qty"] = order.quantity
-        # Probably UNIX timestamp
-        self.payload["body"]["OrderDateTime"] = f"/Date({int(time.time())})/"
+        # Passing today's unix timestamp
+        self.payload["body"]["OrderDateTime"] = f"/Date({TODAY_TIMESTAMP})/"
         self.payload["body"]["ScripCode"] = order.scrip_code
         self.payload["body"]["AtMarket"] = str(order.atmarket).lower()
         self.payload["body"]["RemoteOrderID"] = order.remote_order_id
@@ -142,10 +153,36 @@ class FivePaisaClient:
         self.payload["body"]["IsIntraday"] = str(order.is_intraday).lower()
         self.payload["body"]["PublicIP"] = order.public_ip
         self.payload["body"]["AHPlaced"] = order.ahplaced
-        # Hardcoded for now
-        self.payload["body"]["ValidTillDate"] = f"/Date({int(time.time())})/"
+        # Passing the next day's UNIX timestamp
+        self.payload["body"]["ValidTillDate"] = f"/Date({NEXT_DAY_TIMESTAMP})/"
         self.payload["body"]["TradedQty"] = order.traded_qty
         self.payload["body"]["OrderRequesterCode"] = self.client_code
         self.payload["body"]["AppSource"] = APP_SOURCE
         self.payload["body"]["iOrderValidity"] = order.order_validity
+        # self.order_request()
+
+    def place_order(self, order: Order):
+        """
+        Places a fresh order
+        """
+        self.set_payload(order)
+        return self.order_request("OP")
+
+    def modify_order(self, exch_order_id: str, traded_qty: int, scrip_code: int):
+        """
+        Modifies an existing order
+        Only exch_order_id and traded_qty makes sense here.
+        """
+        order = Order(order_type=OrderType.BUY, scrip_code=scrip_code,
+                      quantity=0, order_for=OrderFor.MODIFY, exch_order_id=exch_order_id, traded_qty=traded_qty)
+        self.set_payload(order)
+        return self.order_request("OP")
+
+    def cancel_order(self, exch_order_id: str, traded_qty: int, scrip_code: int):
+        """
+        Cancels an existing order
+        """
+        order = Order(order_type=OrderType.BUY, scrip_code=scrip_code,
+                      quantity=0, order_for=OrderFor.CANCEL, exch_order_id=exch_order_id, traded_qty=traded_qty)
+        self.set_payload(order)
         return self.order_request("OP")

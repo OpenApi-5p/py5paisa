@@ -2,6 +2,7 @@
 Contains reusable payloads across requests
 """
 from .conf import APP_NAME, USER_ID, PASSWORD, USER_KEY
+import datetime
 
 HEADERS = {'Content-Type': 'application/json'}
 
@@ -44,3 +45,7 @@ LOGIN_PAYLOAD = {"head": {
     "ConnectionType": "1"
 }
 }
+
+TODAY_TIMESTAMP = int(datetime.datetime.today().timestamp())
+NEXT_DAY_TIMESTAMP = int(
+    (datetime.datetime.today()+datetime.timedelta(days=1)).timestamp())
