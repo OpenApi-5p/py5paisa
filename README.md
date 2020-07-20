@@ -4,6 +4,10 @@ Python SDK for 5paisa APIs natively written in VB .NET
 
 ![5paisa logo](./docs/images/5-paisa-img.jpg)
 
+#### Documentation
+
+Read the docs [here](https://5paisa.github.io/)
+
 #### Features
 
 -   Order placement, modification and cancellation
@@ -40,8 +44,7 @@ client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="Y
 client.login()
 ```
 
-After successful authentication, the cookie is persisted for subsequent requests.
-
+After successful authentication, you should get a `Logged in!!` message
 
 #### Fetching user info
 
@@ -63,15 +66,26 @@ client.order_book()
 #### Placing an order
 
 ```py
-# This is an indicative order.
+# Note: This is an indicative order.
 
 from py5paisa.order import Order, OrderType, Exchange, ExchangeType
 
-test_order = Order(order_for=OrderType.PLACE, exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, price=0,
-            order_id=0, order_type="BUY", quantity=10, scrip_code=500875, atmarket=True, remote_order_id="23324", exch_order_id="0", disqty=10, stoploss_price=0, is_stoploss_order=False, ioc_order=False, is_intraday=False, is_vtd=False, vtd="", ahplaced="Y", public_ip="45.112.149.104", order_validity=0, traded_qty=0)
+test_order = Order(order_type: OrderType.BUY, scrip_code: 11111, quantity: 10)
 
-print(client.place_order(test_order))
+client.place_order(test_order)
 
+```
+
+#### Modifying an order
+
+```py
+client.modify_order(exch_order_id="12345678", traded_qty=10, scrip_code=11111)
+```
+
+#### Canceling an order
+
+```py
+client.cancel_order(exch_order_id="12345678", traded_qty=10, scrip_code=11111)
 ```
 
 #### Fetching Order Status and Trade Information
@@ -94,9 +108,7 @@ print(client.fetch_order_status(req_list))
 ```
 
 #### TODO
- - Handle responses more gracefully.
  - Write tests.
- - Add logging
 
 
 #### Credits

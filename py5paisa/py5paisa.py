@@ -171,7 +171,7 @@ class FivePaisaClient:
     def modify_order(self, exch_order_id: str, traded_qty: int, scrip_code: int):
         """
         Modifies an existing order
-        Only exch_order_id and traded_qty makes sense here.
+        Only exch_order_id, traded_qty and scrip_code makes sense here.
         """
         order = Order(order_type=OrderType.BUY, scrip_code=scrip_code,
                       quantity=0, order_for=OrderFor.MODIFY, exch_order_id=exch_order_id, traded_qty=traded_qty)
