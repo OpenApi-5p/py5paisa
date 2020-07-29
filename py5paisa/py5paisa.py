@@ -119,7 +119,7 @@ class FivePaisaClient:
             raise Exception("Invalid request type!")
 
         res = self.session.post(url, json=self.payload,
-                                headers=HEADERS)
+                                headers=HEADERS).json()
         log_response(res["body"]["Message"])
 
     def fetch_order_status(self, req_list: RequestList) -> dict:
@@ -159,7 +159,6 @@ class FivePaisaClient:
         self.payload["body"]["OrderRequesterCode"] = self.client_code
         self.payload["body"]["AppSource"] = APP_SOURCE
         self.payload["body"]["iOrderValidity"] = order.order_validity
-        # self.order_request()
 
     def place_order(self, order: Order):
         """
