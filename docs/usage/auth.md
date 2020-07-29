@@ -2,7 +2,7 @@
 
 #### Configuring API keys
 
-Get your API keys from [https://www.5paisa.com/developerapi/apikeys]()
+Get your API keys from <a href="https://www.5paisa.com/developerapi/apikeys" target="_blank">here</a>
 
 Configure these keys in a file named `keys.conf` in the same directory as your python script exists
 
@@ -27,4 +27,4 @@ client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="Y
 client.login()
 ```
 
-After successful authentication, the cookie is persisted for subsequent requests.
+After successful authentication, you should get a `Logged in!!` message.
