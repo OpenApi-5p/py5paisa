@@ -63,6 +63,11 @@ client.order_book()
 
 ```
 
+Scrip codes reference:
+
+BSE: https://www.bseindia.com/
+NSE: https://nse-scrips.herokuapp.com/
+
 #### Placing an order
 
 ```py
