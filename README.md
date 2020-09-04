@@ -14,6 +14,10 @@ Read the docs hosted [here](https://5paisa.github.io/)
 -   Fetching user info including holdings, positions, margin and order book.
 -   Fetching order status and trade information.
 
+#### Installation
+
+`pip install pyp5aisa`
+
 ### Usage
 
 #### Configuring API keys
