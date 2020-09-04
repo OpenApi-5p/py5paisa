@@ -77,30 +77,31 @@ class FivePaisaClient:
     def _user_info_request(self, data_type):
         payload = GENERIC_PAYLOAD
         payload["body"]["ClientCode"] = self.client_code
+        return_type = ""
         if data_type == "MARGIN":
             request_code = self.MARGIN_REQUEST_CODE
             url = self.MARGIN_ROUTE
+            return_type = "EquityMargin"
         elif data_type == "ORDER_BOOK":
             request_code = self.ORDER_BOOK_REQUEST_CODE
             url = self.ORDER_BOOK_ROUTE
+            return_type = "OrderBookDetail"
         elif data_type == "HOLDINGS":
             request_code = self.HOLDINGS_REQUEST_CODE
             url = self.HOLDINGS_ROUTE
+            return_type = "Data"
         elif data_type == "POSITIONS":
             request_code = self.POSITIONS_REQUEST_CODE
             url = self.POSITIONS_ROUTE
+            return_type = "NetPositionDetail"
         else:
             raise Exception("Invalid data type requested")
 
         payload["head"]["requestCode"] = request_code
         response = self.session.post(url, json=payload, headers=HEADERS).json()
         message = response["body"]["Message"]
-        if message != "Success":
-            log_response(message)
-            return None
-        holdings = response["body"]["Data"]
-        log_response(holdings)
-        return holdings
+        data = response["body"][return_type]
+        return data
 
     def order_request(self, req_type) -> None:
 
