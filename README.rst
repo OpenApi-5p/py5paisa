@@ -15,7 +15,7 @@ Features
 -  Supports order placement, modification and cancellation
 -  Supports fetching order status and trade information.
 
-Usage
+Application 
 ~~~~~
 
 Authentication
