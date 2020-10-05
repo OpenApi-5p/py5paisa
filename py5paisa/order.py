@@ -104,8 +104,8 @@ class OrderForStatus:
         Overriding repr to return dict which can be directly appended to the orders list.
         """
         return {
-            "Exch": self.exchange,
-            "ExchSegment": self.exchange_segment,
+            "Exch": self.exchange.value,
+            "ExchSegment": self.exchange_segment.value,
             "ScripCode": self.scrip_code,
             "RemoteOrderID": self.order_id
         }
