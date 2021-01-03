@@ -5,7 +5,7 @@
 
 from py5paisa.order import Order, OrderType
 
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10)
+test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, price=123.0)
 
 client.place_order(test_order)
 
@@ -20,13 +20,13 @@ By default orders are delivery, to place an intraday order, pass `is_intraday=Tr
 ```py
 from py5paisa.order import Order, OrderType
 
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, is_intraday=True)
+test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, is_intraday=True, price=123.0)
 client.place_order(test_order)
 ```
 
 #### Placing a stoploss order
 
-By default orders are regular, to place a stoploss order, pass `is_stoploss_order=True` and `stoploss_price`
+By default orders are regular, to place a stoploss order, pass `is_stoploss_order=True` and `stoploss_price` which is the trigger price for your order.
 
 `stoploss_price` is a float and for Buy Stop loss, Trigger price should not be greater than Limit Price. And for Sell Stop Loss Order Trigger Price should not be less than Limit Price.
 
