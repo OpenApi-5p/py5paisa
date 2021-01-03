@@ -122,6 +122,7 @@ class FivePaisaClient:
         res = self.session.post(url, json=self.payload,
                                 headers=HEADERS).json()
         log_response(res["body"]["Message"])
+        return res["body"]
 
     def fetch_order_status(self, req_list: RequestList) -> dict:
         self.payload["body"]["OrdStatusReqList"] = req_list.orders
