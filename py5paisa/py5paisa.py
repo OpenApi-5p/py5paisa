@@ -10,7 +10,7 @@ from typing import Union
 
 class FivePaisaClient:
 
-    LOGIN_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/V2/LoginRequestMobileNewbyEmail"
+    LOGIN_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/V3/LoginRequestMobileNewbyEmail"
 
     MARGIN_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/V3/Margin"
     ORDER_BOOK_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/V2/OrderBook"
@@ -46,7 +46,7 @@ class FivePaisaClient:
         self.payload["body"]["Email_id"] = secret_email
         self.payload["body"]["Password"] = secret_passwd
         self.payload["body"]["My2PIN"] = secret_dob
-        self.payload["head"]["requestCode"] = "5PLoginV2"
+        self.payload["head"]["requestCode"] = "5PLoginV3"
         res = self._login_request(self.LOGIN_ROUTE)
         message = res["body"]["Message"]
         if message == "":
