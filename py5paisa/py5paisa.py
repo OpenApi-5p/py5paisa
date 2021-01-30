@@ -54,7 +54,7 @@ class FivePaisaClient:
         else:
             log_response(message)
         self._set_client_code(res["body"]["ClientCode"])
-        return message
+        return resp
 
     def holdings(self):
         return self._user_info_request("HOLDINGS")
