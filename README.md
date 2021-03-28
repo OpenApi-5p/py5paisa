@@ -2,6 +2,9 @@
 
 Python SDK for 5paisa APIs natively written in VB .NET
 
+![PyPI](https://img.shields.io/pypi/v/py5paisa)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/5paisa/py5paisa/Publish%20package/master)
+
 ![5paisa logo](./docs/images/5-paisa-img.jpg)
 
 #### Documentation
