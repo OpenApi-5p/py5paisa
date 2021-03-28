@@ -34,8 +34,8 @@ LOGIN_PAYLOAD = {"head": {
     {
     "Email_id": "",
     "Password": "",
-    "LocalIP": "",
-    "PublicIP": "",
+    "LocalIP": "192.168.10.10",
+    "PublicIP": "192.168.10.10",
     "HDSerailNumber": "",
     "MACAddress": "",
     "MachineID": "039377",

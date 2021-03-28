@@ -1,6 +1,6 @@
 import requests
 from .auth import EncryptionClient
-from .const import GENERIC_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
+from .const import GENERIC_PAYLOAD, LOGIN_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
 from .conf import APP_SOURCE
 from .order import Order, RequestList, OrderType, OrderFor
 from .logging import log_response
@@ -35,6 +35,7 @@ class FivePaisaClient:
         self.passwd = passwd
         self.dob = dob
         self.payload = GENERIC_PAYLOAD
+        self.login_payload = LOGIN_PAYLOAD
         self.client_code = None
         self.session = requests.Session()
 
@@ -43,10 +44,10 @@ class FivePaisaClient:
         secret_email = encryption_client.encrypt(self.email)
         secret_passwd = encryption_client.encrypt(self.passwd)
         secret_dob = encryption_client.encrypt(self.dob)
-        self.payload["body"]["Email_id"] = secret_email
-        self.payload["body"]["Password"] = secret_passwd
-        self.payload["body"]["My2PIN"] = secret_dob
-        self.payload["head"]["requestCode"] = "5PLoginV3"
+        self.login_payload["body"]["Email_id"] = secret_email
+        self.login_payload["body"]["Password"] = secret_passwd
+        self.login_payload["body"]["My2PIN"] = secret_dob
+        self.login_payload["head"]["requestCode"] = "5PLoginV3"
         res = self._login_request(self.LOGIN_ROUTE)
         message = res["body"]["Message"]
         if message == "":
@@ -68,7 +69,8 @@ class FivePaisaClient:
         return self._user_info_request("POSITIONS")
 
     def _login_request(self, route):
-        res = self.session.post(route, json=self.payload, headers=HEADERS)
+        res = self.session.post(
+            route, json=self.login_payload, headers=HEADERS)
         return res.json()
 
     def _set_client_code(self, client_code):
