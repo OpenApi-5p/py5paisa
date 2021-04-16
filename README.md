@@ -72,8 +72,11 @@ client.order_book()
 
 Scrip codes reference:
 
+Note : Use these Links for getting scrip codes
+
 BSE: https://www.bseindia.com/
-NSE: https://nse-scrips.herokuapp.com/
+NSE FO: https://www.5paisa.com/docs/default-source/scrip-master/contract.txt
+NSE CASH : https://www.5paisa.com/docs/default-source/scrip-master/security.txt
 
 #### Placing an order
 
