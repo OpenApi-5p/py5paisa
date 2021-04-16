@@ -82,8 +82,7 @@ NSE: https://nse-scrips.herokuapp.com/
 
 from py5paisa.order import Order, OrderType, Exchange, ExchangeType
 
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10)
-
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=True,atmarket=False)
 client.place_order(test_order)
 
 ```
@@ -91,13 +90,14 @@ client.place_order(test_order)
 #### Modifying an order
 
 ```py
-client.modify_order(exch_order_id="12345678", traded_qty=10, scrip_code=11111)
+test_order = Order(order_type='B', scrip_code=1660, quantity=1, price=205,is_intraday=False,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="12345678" )
+client.modify_order(test_order)
 ```
 
 #### Canceling an order
 
 ```py
-client.cancel_order(exch_order_id="12345678", traded_qty=10, scrip_code=11111)
+client.cancel_order(order_type='B', scrip_code=1660, quantity=1,exchange='N',exchange_segment='C',exch_order_id='12345678')
 ```
 
 #### Fetching Order Status and Trade Information
