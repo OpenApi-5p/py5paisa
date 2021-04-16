@@ -171,21 +171,20 @@ class FivePaisaClient:
         self.set_payload(order)
         return self.order_request("OP")
 
-    def modify_order(self, exch_order_id: str, traded_qty: int, scrip_code: int):
+    def modify_order(self, order: Order):
         """
         Modifies an existing order
-        Only exch_order_id, traded_qty and scrip_code makes sense here.
         """
-        order = Order(order_type=OrderType.BUY, scrip_code=scrip_code,
-                      quantity=0, order_for=OrderFor.MODIFY, exch_order_id=exch_order_id, traded_qty=traded_qty)
+   
         self.set_payload(order)
+        self.payload["body"]["OrderFor"] = "M"
         return self.order_request("OP")
 
-    def cancel_order(self, exch_order_id: str, traded_qty: int, scrip_code: int):
+    def cancel_order(self,order_type:str, scrip_code:int, quantity:int,exchange:str,exchange_segment:str,exch_order_id:str):
         """
         Cancels an existing order
         """
-        order = Order(order_type=OrderType.BUY, scrip_code=scrip_code,
-                      quantity=0, order_for=OrderFor.CANCEL, exch_order_id=exch_order_id, traded_qty=traded_qty)
+        order = Order(order_type=order_type, scrip_code=scrip_code,
+                      quantity=quantity,exchange=exchange,exchange_segment=exchange_segment, exch_order_id=exch_order_id, price=0.0,atmarket=False,is_intraday=False,order_for=OrderFor.CANCEL)
         self.set_payload(order)
         return self.order_request("OP")
