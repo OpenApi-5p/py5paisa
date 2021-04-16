@@ -19,7 +19,7 @@ Read the docs hosted [here](https://5paisa.github.io/)
 
 ### Installation
 
-`pip install pyp5aisa`
+`pip install py5paisa`
 
 ### Usage
 
