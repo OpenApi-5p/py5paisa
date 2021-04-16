@@ -52,20 +52,20 @@ class AHPlaced(Enum):
 
 class Order:
 
-    def __init__(self, order_type: OrderType, scrip_code: int, quantity: int, order_for: OrderFor = OrderFor.PLACE, exchange: Exchange = Exchange.BSE,
-                 exchange_segment: ExchangeSegment = ExchangeSegment.CASH, price: float = 0.0, order_id: int = 0,
-                 atmarket: bool = True, remote_order_id: int = 1, exch_order_id: int = 0,
+    def __init__(self, order_type: str, scrip_code: int, quantity: int, exchange: str,
+                 exchange_segment: str, price: float ,is_intraday: bool , atmarket: bool ,order_id: int = 0,
+                  remote_order_id: int = 1, exch_order_id: int = 0, order_for: OrderFor = OrderFor.PLACE,
                  stoploss_price: float = 0, is_stoploss_order: bool = False, ioc_order: bool = False,
-                 is_intraday: bool = False, is_vtd: bool = False, vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
+                  is_vtd: bool = False, vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
                  ahplaced: AHPlaced = AHPlaced.NORMAL_ORDER, public_ip: str = '192.168.1.1',
                  order_validity: OrderValidity = OrderValidity.DAY, traded_qty: int = 0):
 
         self.order_for = order_for.value
-        self.exchange = exchange.value
-        self.exchange_segment = exchange_segment.value
+        self.exchange = exchange
+        self.exchange_segment = exchange_segment
         self.price = price
         self.order_id = order_id
-        self.order_type = order_type.value
+        self.order_type = order_type
         self.quantity = quantity
         self.scrip_code = scrip_code
         self.atmarket = atmarket
