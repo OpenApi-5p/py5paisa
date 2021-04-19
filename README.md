@@ -54,14 +54,15 @@ client.login()
 After successful authentication, you should get a `Logged in!!` message
 #### Market Feed
 
-'''py
+```py
 #NOTE : Symbol has to be in the same format as specified in the example below.
 
 req_list_=[{"Exch":"N","ExchType":"D","Symbol":"NIFTY 22 APR 2021 CE 15200.00","Expiry":"20210422","StrikePrice":"15200","OptionType":"CE"},
             {"Exch":"N","ExchType":"D","Symbol":"NIFTY 22 APR 2021 PE 15200.00","Expiry":"20210422","StrikePrice":"15200","OptionType":"PE"}]
             
 client.fetch_market_feed(req_list_)
-'''
+```
+
 #### Fetching user info
 
 ```py
@@ -113,7 +114,7 @@ client.cancel_order(order_type='B', scrip_code=1660, quantity=1,exchange='N',exc
 ```
 #### Bracket Order 
 
-'''py
+```py
 #For placing Braket order
 
 test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=204,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,RequestType='P',AtMarket=False)
@@ -136,7 +137,8 @@ client.mod_bo_order(test_order)
 #test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intraday=True,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="123456789" ,stoploss_price=201.50,is_stoploss_order=True,order_for=OrderFor.MODIFY)
 
 #Note : You have pass atmarket=true while modifying stoploss price, Pass ExchorderId for the particular leg to modify.
-'''
+```
+
 #### Fetching Order Status and Trade Information
 
 ```py
