@@ -107,7 +107,6 @@ class bo_co_order:
         self.TriggerPriceInitialOrder=TriggerPriceInitialOrder
         self.LimitPriceProfitOrder=LimitPriceProfitOrder
         self.AtMarket=AtMarket
-        #self.LimitPriceForSL=LimitPriceForSL
         self.TriggerPriceForSL=TriggerPriceForSL
         self.TrailingSL=TrailingSL
         self.StopLoss=StopLoss
