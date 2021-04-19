@@ -52,7 +52,16 @@ client.login()
 ```
 
 After successful authentication, you should get a `Logged in!!` message
+#### Market Feed
 
+'''py
+#NOTE : Symbol has to be in the same format as specified in the example below.
+
+req_list_=[{"Exch":"N","ExchType":"D","Symbol":"NIFTY 22 APR 2021 CE 15200.00","Expiry":"20210422","StrikePrice":"15200","OptionType":"CE"},
+            {"Exch":"N","ExchType":"D","Symbol":"NIFTY 22 APR 2021 PE 15200.00","Expiry":"20210422","StrikePrice":"15200","OptionType":"PE"}]
+            
+client.fetch_market_feed(req_list_)
+'''
 #### Fetching user info
 
 ```py
@@ -102,23 +111,59 @@ client.modify_order(test_order)
 ```py
 client.cancel_order(order_type='B', scrip_code=1660, quantity=1,exchange='N',exchange_segment='C',exch_order_id='12345678')
 ```
+#### Bracket Order 
 
+'''py
+#For placing Braket order
+
+test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=204,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,RequestType='P',AtMarket=False)
+
+client.bo_order(test_order)
+
+#For Modifying Bracket Order only for Initial order (entry)
+test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,RequestType='M',AtMarket=False,ExchOrderId='12345678')
+
+client.bo_order(test_order)
+
+#Note : For cover order just pass LimitPriceProfitOrder equal to Zero.
+
+#For Modifying LimitPriceProfitOrder 
+test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=208.50,is_intraday=True,exchange='N',exchange_segment='C',atmarket=False,exch_order_id="12345678" ,order_for=OrderFor.MODIFY)
+
+client.mod_bo_order(test_order)
+
+#For Modifying TriggerPriceForSL
+#test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intraday=True,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="123456789" ,stoploss_price=201.50,is_stoploss_order=True,order_for=OrderFor.MODIFY)
+
+#Note : You have pass atmarket=true while modifying stoploss price, Pass ExchorderId for the particular leg to modify.
+'''
 #### Fetching Order Status and Trade Information
 
 ```py
-from py5paisa.order import OrderForStatus, Exchange, ExchangeType, RequestList
+from py5paisa.order import  Exchange, ExchangeType
 
-test_order_status = OrderForStatus(exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, scrip_code=500875, order_id=0)
+req_list= [
 
-req_list = RequestList()
-# Add multiple orders to the RequestList to know status of multiple orders at once.
-req_list.add_order(test_order_status)
+        {
+            "Exch": "N",
+            "ExchType": "C",
+            "ScripCode": 20374,
+            "ExchOrderID": "1000000015310807"
+        }]
 
 # Fetches the trade details
 client.fetch_trade_info(req_list)
 
+req_list_= [
+
+        {
+            "Exch": "N",
+            "ExchType": "C",
+            "ScripCode": 20374,
+            "RemoteOrderID": "90980441"
+        }]
 # Fetches the order status
-client.fetch_order_status(req_list)
+client.fetch_order_status(req_list_)
 
 ```
 
