@@ -84,40 +84,45 @@ class Order:
         self.traded_qty = traded_qty
         self.app_source = int(APP_SOURCE)
 
+class bo_co_order:
 
-class OrderForStatus:
-    """
-    Order class for representing an order for only Status and trade information request.
-    """
+    def __init__(self,scrip_code: int, Qty: int,LimitPriceInitialOrder:float,TriggerPriceInitialOrder:float
+                 ,LimitPriceProfitOrder:float,
+                 TriggerPriceForSL:float,TrailingSL:int=0,StopLoss:int=0,
+                 LocalOrderIDNormal:int=0,LocalOrderIDSL:int=0,LocalOrderIDLimit:int=0,
+                 public_ip: str = '192.168.1.1',traded_qty: int = 0,RequestType: str ='P',BuySell:OrderType=OrderType.BUY,
+                 order_for: str="S",Exch: Exchange = Exchange.NSE,
+                 ExchType: ExchangeSegment = ExchangeSegment.CASH,DisQty: int=0,ExchOrderId:str="0",AtMarket: bool = False,UniqueOrderIDNormal:str="",
+                 UniqueOrderIDSL:str="",UniqueOrderIDLimit:str=""):
+        
 
-    def __init__(self, exchange: Exchange, exchange_segment: ExchangeSegment, scrip_code: int, order_id: str) -> None:
-        self.exchange = exchange
-        self.exchange_segment = exchange_segment
-        self.scrip_code = scrip_code
-        self.order_id = order_id
+        self.order_for = order_for
+        self.Exch = Exch.value
+        self.ExchType = ExchType.value
+        self.RequestType=RequestType
+        self.BuySell=BuySell.value
+        self.scrip_code=scrip_code
+        self.DisQty=DisQty
+        self.LimitPriceInitialOrder=LimitPriceInitialOrder
+        self.TriggerPriceInitialOrder=TriggerPriceInitialOrder
+        self.LimitPriceProfitOrder=LimitPriceProfitOrder
+        self.AtMarket=AtMarket
+        #self.LimitPriceForSL=LimitPriceForSL
+        self.TriggerPriceForSL=TriggerPriceForSL
+        self.TrailingSL=TrailingSL
+        self.StopLoss=StopLoss
+        self.UniqueOrderIDNormal=UniqueOrderIDNormal
+        self.UniqueOrderIDSL=UniqueOrderIDSL
+        self.UniqueOrderIDLimit=UniqueOrderIDLimit
+        self.LocalOrderIDNormal=LocalOrderIDNormal
+        self.LocalOrderIDSL=LocalOrderIDSL
+        self.LocalOrderIDLimit=LocalOrderIDLimit
+        self.public_ip=public_ip
+        self.ExchOrderId=ExchOrderId
+        self.app_source = int(APP_SOURCE)
+        self.traded_qty =traded_qty
+        self.Qty=Qty
+        
+        if LimitPriceProfitOrder==0:
+            self.order_for="C"
 
-    def __str__(self):
-        return f"Order -> Exchange:{self.exchange}, Type: {self.exchange_segment}, Scrip Code: {self.scrip_code}, Order ID: {self.order_id}"
-
-    def __repr__(self) -> dict:
-        """
-        Overriding repr to return dict which can be directly appended to the orders list.
-        """
-        return {
-            "Exch": self.exchange,
-            "ExchSegment": self.exchange_segment,
-            "ScripCode": self.scrip_code,
-            "RemoteOrderID": self.order_id
-        }
-
-
-class RequestList:
-
-    def __init__(self):
-        self.orders = []
-
-    def add_order(self, order: OrderForStatus) -> None:
-        """
-        Adds order to the RequestList object required in the request payload.
-        """
-        self.orders.append(order.__repr__())
