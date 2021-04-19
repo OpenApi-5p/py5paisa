@@ -160,7 +160,8 @@ class FivePaisaClient:
         self.payload["body"]["MarketFeedData"] = req_list
         self.payload["body"]["ClientLoginType"] = 0
         self.payload["body"]["LastRequestTime"] = f"/Date({TODAY_TIMESTAMP})/"
-        self.payload["body"]["RefreshRa
+        self.payload["body"]["RefreshRate"] = "H"
+        return self.order_request("MF")
 
     def set_payload(self, order: Order) -> None:
         self.payload["body"]["OrderFor"] = order.order_for
