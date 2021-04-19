@@ -2,7 +2,7 @@ import requests
 from .auth import EncryptionClient
 from .const import GENERIC_PAYLOAD, LOGIN_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
 from .conf import APP_SOURCE
-from .order import Order, RequestList, OrderType, OrderFor
+from .order import Order, bo_co_order, OrderType, OrderFor
 from .logging import log_response
 import datetime
 from typing import Union
@@ -20,7 +20,12 @@ class FivePaisaClient:
     ORDER_PLACEMENT_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/V1/OrderRequest"
     ORDER_STATUS_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/OrderStatus"
     TRADE_INFO_ROUTE = "https://Openapi.5paisa.com/VendorsAPI/Service1.svc/TradeInformation"
-
+    
+    BRACKET_MOD_ROUTE="https://openapi.5paisa.com/VendorsAPI/Service1.svc/ModifySMOOrder"
+    BRACKET_ORDER_ROUTE="https://openapi.5paisa.com/VendorsAPI/Service1.svc/SMOOrderRequest"
+    
+    MARKET_FEED_ROUTE="https://Openapi.5paisa.com/VendorsAPI/Service1.svc/MarketFeed"
+    
     MARGIN_REQUEST_CODE = "5PMarginV3"
     ORDER_BOOK_REQUEST_CODE = "5POrdBkV2"
     HOLDINGS_REQUEST_CODE = "5PHoldingV2"
@@ -118,6 +123,19 @@ class FivePaisaClient:
         elif req_type == "TI":
             url = self.TRADE_INFO_ROUTE
             self.payload["head"]["requestCode"] = "5PTrdInfo"
+        elif req_type == "MF":
+            url = self.MARKET_FEED_ROUTE
+            self.payload["head"]["requestCode"] = "5PMF"
+            self.payload["body"]["COUNT"]=self.client_code
+        elif req_type == "BM":
+            url = self.BRACKET_MOD_ROUTE
+            self.payload["head"]["requestCode"] = "5PSModMOOrd"
+            self.payload["body"]["legtype"]=0
+            self.payload["body"]["TMOPartnerOrderID"]=0
+        elif req_type == "BO":
+            url = self.BRACKET_ORDER_ROUTE
+            self.payload["head"]["requestCode"] = "5PSMOOrd"
+            self.payload["body"]["OrderRequesterCode"]=self.client_code
         else:
             raise Exception("Invalid request type!")
 
@@ -126,13 +144,23 @@ class FivePaisaClient:
         log_response(res["body"]["Message"])
         return res["body"]
 
-    def fetch_order_status(self, req_list: RequestList) -> dict:
-        self.payload["body"]["OrdStatusReqList"] = req_list.orders
+    def fetch_order_status(self, req_list:list) :
+        self.payload["body"]["OrdStatusReqList"] = req_list
         return self.order_request("OS")
 
-    def fetch_trade_info(self, req_list: RequestList) -> dict:
-        self.payload["body"]["TradeDetailList"] = req_list.orders
+    def fetch_trade_info(self, req_list:list) :
+        self.payload["body"]["TradeInformationList"] = req_list
         return self.order_request("TI")
+    
+    def fetch_market_feed(self, req_list:list) :
+        """
+            market feed api
+        """
+        
+        self.payload["body"]["MarketFeedData"] = req_list
+        self.payload["body"]["ClientLoginType"] = 0
+        self.payload["body"]["LastRequestTime"] = f"/Date({TODAY_TIMESTAMP})/"
+        self.payload["body"]["RefreshRa
 
     def set_payload(self, order: Order) -> None:
         self.payload["body"]["OrderFor"] = order.order_for
@@ -151,7 +179,6 @@ class FivePaisaClient:
         self.payload["body"]["DisQty"] = order.disqty
         self.payload["body"]["IsStopLossOrder"] = str(
             order.is_stoploss_order).lower()
-        self.payload["body"]["StopLossPrice"] = order.stoploss_price
         self.payload["body"]["IsVTD"] = str(order.is_vtd).lower()
         self.payload["body"]["IOCOrder"] = str(order.ioc_order).lower()
         self.payload["body"]["IsIntraday"] = str(order.is_intraday).lower()
@@ -163,12 +190,43 @@ class FivePaisaClient:
         self.payload["body"]["OrderRequesterCode"] = self.client_code
         self.payload["body"]["AppSource"] = APP_SOURCE
         self.payload["body"]["iOrderValidity"] = order.order_validity
+        
+    def set_payload_bo(self,boco:bo_co_order)-> None:
+        """
+            this is for bo-co order placement
+        """
+        self.payload["body"]["RequestType"] = boco.RequestType
+        self.payload["body"]["BuySell"] = boco.BuySell
+        self.payload["body"]["Qty"] = boco.Qty
+        self.payload["body"]["Exch"] = boco.Exch
+        self.payload["body"]["ExchType"] = boco.ExchType
+        self.payload["body"]["DisQty"] = boco.DisQty
+        self.payload["body"]["AtMarket"] = boco.AtMarket
+        self.payload["body"]["ExchOrderId"] = boco.ExchOrderId
+        self.payload["body"]["LimitPriceInitialOrder"] = boco.LimitPriceInitialOrder
+        self.payload["body"]["TriggerPriceInitialOrder"] = boco.TriggerPriceInitialOrder
+        self.payload["body"]["LimitPriceProfitOrder"] = boco.LimitPriceProfitOrder
+        self.payload["body"]["TriggerPriceForSL"] = boco.TriggerPriceForSL
+        self.payload["body"]["TrailingSL"] = boco.TrailingSL
+        self.payload["body"]["StopLoss"] = boco.StopLoss
+        self.payload["body"]["ScripCode"] = boco.scrip_code
+        self.payload["body"]["OrderFor"] = boco.order_for
+        self.payload["body"]["UniqueOrderIDNormal"] = boco.UniqueOrderIDNormal
+        self.payload["body"]["UniqueOrderIDSL"] = boco.UniqueOrderIDSL
+        self.payload["body"]["UniqueOrderIDLimit"] = boco.UniqueOrderIDLimit
+        self.payload["body"]["LocalOrderIDNormal"] = boco.LocalOrderIDNormal
+        self.payload["body"]["LocalOrderIDSL"] = boco.LocalOrderIDSL
+        self.payload["body"]["LocalOrderIDLimit"] = boco.LocalOrderIDLimit
+        self.payload["body"]["PublicIP"] = boco.public_ip
+        self.payload["body"]["AppSource"] = boco.app_source
+        self.payload["body"]["TradedQty"] = boco.traded_qty
 
     def place_order(self, order: Order):
         """
         Places a fresh order
         """
         self.set_payload(order)
+        self.payload["body"]["StopLossPrice"] = order.stoploss_price
         return self.order_request("OP")
 
     def modify_order(self, order: Order):
@@ -177,7 +235,9 @@ class FivePaisaClient:
         """
    
         self.set_payload(order)
+        self.payload["body"]["StopLossPrice"] = order.stoploss_price
         self.payload["body"]["OrderFor"] = "M"
+        
         return self.order_request("OP")
 
     def cancel_order(self,order_type:str, scrip_code:int, quantity:int,exchange:str,exchange_segment:str,exch_order_id:str):
@@ -187,4 +247,14 @@ class FivePaisaClient:
         order = Order(order_type=order_type, scrip_code=scrip_code,
                       quantity=quantity,exchange=exchange,exchange_segment=exchange_segment, exch_order_id=exch_order_id, price=0.0,atmarket=False,is_intraday=False,order_for=OrderFor.CANCEL)
         self.set_payload(order)
+        self.payload["body"]["StopLossPrice"] = order.stoploss_price
         return self.order_request("OP")
+    
+    def bo_order(self,boco:bo_co_order):
+        self.set_payload_bo(boco)
+        return self.order_request("BO")
+
+    def mod_bo_order(self,order: Order):
+        self.set_payload(order)
+        self.payload["body"]["TriggerPriceForSL"] = order.stoploss_price
+        return self.order_request("BM")
