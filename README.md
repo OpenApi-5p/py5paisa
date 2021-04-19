@@ -136,6 +136,8 @@ client.mod_bo_order(test_order)
 #For Modifying TriggerPriceForSL
 #test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intraday=True,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="123456789" ,stoploss_price=201.50,is_stoploss_order=True,order_for=OrderFor.MODIFY)
 
+client.mod_bo_order(test_order)
+
 #Note : You have pass atmarket=true while modifying stoploss price, Pass ExchorderId for the particular leg to modify.
 ```
 
