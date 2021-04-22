@@ -9,3 +9,4 @@ Python SDK for 5paisa APIs natively written in VB .NET
 -   Order placement, modification and cancellation
 -   Fetching user info including holdings, positions, margin and order book.
 -   Fetching order status and trade information.
+-   Placing, modifying and deleting Bracket Order
