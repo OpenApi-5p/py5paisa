@@ -144,7 +144,7 @@ client.mod_bo_order(test_order)
 #### Fetching Order Status and Trade Information
 
 ```py
-from py5paisa.order import  Exchange, ExchangeType
+from py5paisa.order import  Exchange
 
 req_list= [
 
