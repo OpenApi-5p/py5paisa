@@ -7,13 +7,15 @@ test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder
 
 client.bo_order(test_order)
 ```
+Note : For cover order just pass LimitPriceProfitOrder equal to Zero.
+
 For Modifying Bracket Order only for Initial order (entry)
 ```py
 test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,RequestType='M',AtMarket=False,ExchOrderId='12345678')
 
 client.bo_order(test_order)
 
-#Note : For cover order just pass LimitPriceProfitOrder equal to Zero.
+
 ```
 For Modifying LimitPriceProfitOrder 
 ```py
