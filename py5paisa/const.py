@@ -45,6 +45,24 @@ LOGIN_PAYLOAD = {"head": {
     "ConnectionType": "1"
 }
 }
+LOGIN_CHECK_PAYLOAD={
+    "head" : {
+        "requestCode":"5PLoginCheck",
+        "key":USER_KEY,
+        "appVer":"1.0",
+        "appName":APP_NAME,
+        "osName":"WEB",
+        "LoginId":""
+        },
+    "body":{
+        "RegistrationID":""
+        }
+    }
+
+WS_PAYLOAD={"Method":"",
+            "Operation":"",
+            "ClientCode":"",
+            "MarketFeedData":""}
 
 TODAY_TIMESTAMP = int(datetime.datetime.today().timestamp())
 NEXT_DAY_TIMESTAMP = int(
