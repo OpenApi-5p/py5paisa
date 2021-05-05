@@ -1,11 +1,13 @@
 import requests
 from .auth import EncryptionClient
-from .const import GENERIC_PAYLOAD, LOGIN_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP
+from .const import GENERIC_PAYLOAD, LOGIN_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP,LOGIN_CHECK_PAYLOAD,WS_PAYLOAD
 from .conf import APP_SOURCE
 from .order import Order, bo_co_order, OrderType, OrderFor
 from .logging import log_response
 import datetime
 from typing import Union
+import json
+import websocket
 
 
 class FivePaisaClient:
@@ -41,7 +43,12 @@ class FivePaisaClient:
         self.dob = dob
         self.payload = GENERIC_PAYLOAD
         self.login_payload = LOGIN_PAYLOAD
+        self.login_check_payload= LOGIN_CHECK_PAYLOAD
+        self.ws_payload=WS_PAYLOAD
         self.client_code = None
+        self.Jwt_token = None
+        self.Aspx_auth = None
+        self.web_url= None
         self.session = requests.Session()
 
     def login(self):
@@ -74,8 +81,11 @@ class FivePaisaClient:
         return self._user_info_request("POSITIONS")
 
     def _login_request(self, route):
-        res = self.session.post(
-            route, json=self.login_payload, headers=HEADERS)
+        res = self.session.post(route, json=self.login_payload, headers=HEADERS)
+        session_cookies = res.cookies
+        cookies_dictionary = session_cookies.get_dict()
+        self.Jwt_token=cookies_dictionary['JwtToken']
+        #print(self.Jwt_token)
         return res.json()
 
     def _set_client_code(self, client_code):
@@ -259,3 +269,52 @@ class FivePaisaClient:
         self.set_payload(order)
         self.payload["body"]["TriggerPriceForSL"] = order.stoploss_price
         return self.order_request("BM")
+    
+    def Request_Feed(self,Method:str,Operation:str,req_list:list):
+        Method_dict={"mf":"MarketFeedV3"}
+        Operation_dict={"s":"Subscribe","u":"Unsubscribe"}
+        
+        self.ws_payload['Method']=Method_dict[Method]
+        self.ws_payload['Operation']=Operation_dict[Operation]
+        self.ws_payload['ClientCode']=self.client_code
+        self.ws_payload['MarketFeedData']=req_list
+        return self.ws_payload
+    def Streming_data(self,wsPayload : dict):
+        self.web_url=f'wss://openfeed.5paisa.com/Feeds/api/chat?Value1={self.Jwt_token}|{self.client_code}'
+        auth=self.Login_check()
+
+        def on_message(ws, message):
+            print(message)
+        
+        def on_error(ws, error):
+            print(error)
+            
+        def on_close(ws):
+            print("Streaming Stopped")
+        
+        def on_open(ws):
+            print("Streaming Started")
+            ws.send(json.dumps(wsPayload))
+        
+            
+        ws = websocket.WebSocketApp(self.web_url,
+                              on_open=on_open,
+                              on_message = on_message,
+                              on_error = on_error,
+                              on_close = on_close,
+                              cookie=auth)
+        
+        ws.run_forever()
+        
+    def Login_check(self):
+        self.login_check_payload["head"]["LoginId"]=self.client_code
+        self.login_check_payload["body"]["RegistrationID"]=self.Jwt_token
+        url=self.LOGIN_CHECK_ROUTE
+        resl=requests.post(url, json=self.login_check_payload,headers=HEADERS)
+        self.Aspx_auth = resl.cookies.get('.ASPXAUTH',domain='openfeed.5paisa.com')
+        
+        return f'.ASPXAUTH={self.Aspx_auth}'
+
+
+      
+     
