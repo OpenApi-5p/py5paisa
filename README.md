@@ -15,7 +15,10 @@ Read the docs hosted [here](https://5paisa.github.io/)
 
 -   Order placement, modification and cancellation
 -   Fetching user info including holdings, positions, margin and order book.
+-   Fetching live market streaming.
+-   Placing, modifying and deleting Bracket Order.
 -   Fetching order status and trade information.
+-   Getting live data streaming using websockets.
 
 ### Installation
 
