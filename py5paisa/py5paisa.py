@@ -27,6 +27,7 @@ class FivePaisaClient:
     BRACKET_ORDER_ROUTE="https://openapi.5paisa.com/VendorsAPI/Service1.svc/SMOOrderRequest"
     
     MARKET_FEED_ROUTE="https://Openapi.5paisa.com/VendorsAPI/Service1.svc/MarketFeed"
+    LOGIN_CHECK_ROUTE="https://openfeed.5paisa.com/Feeds/api/UserActivity/LoginCheck"
     
     MARGIN_REQUEST_CODE = "5PMarginV3"
     ORDER_BOOK_REQUEST_CODE = "5POrdBkV2"
