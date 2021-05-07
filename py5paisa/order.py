@@ -92,13 +92,13 @@ class bo_co_order:
                  LocalOrderIDNormal:int=0,LocalOrderIDSL:int=0,LocalOrderIDLimit:int=0,
                  public_ip: str = '192.168.1.1',traded_qty: int = 0,RequestType: str ='P',
                  order_for: str="S",Exch: Exchange = Exchange.NSE,
-                 ExchType: ExchangeSegment = ExchangeSegment.CASH,DisQty: int=0,ExchOrderId:str="0",AtMarket: bool = False,UniqueOrderIDNormal:str="",
+                 ExchType:str='C',DisQty: int=0,ExchOrderId:str="0",AtMarket: bool = False,UniqueOrderIDNormal:str="",
                  UniqueOrderIDSL:str="",UniqueOrderIDLimit:str=""):
         
 
         self.order_for = order_for
         self.Exch = Exch.value
-        self.ExchType = ExchType.value
+        self.ExchType = ExchType
         self.RequestType=RequestType
         self.BuySell=BuySell
         self.scrip_code=scrip_code
