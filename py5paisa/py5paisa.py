@@ -272,7 +272,7 @@ class FivePaisaClient:
         return self.order_request("BM")
     
     def Request_Feed(self,Method:str,Operation:str,req_list:list):
-        Method_dict={"mf":"MarketFeedV3"}
+        Method_dict={"mf":"MarketFeedV3","md":"MarketDepthService","oi":"GetScripInfoForFuture"}
         Operation_dict={"s":"Subscribe","u":"Unsubscribe"}
         
         self.ws_payload['Method']=Method_dict[Method]
