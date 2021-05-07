@@ -193,6 +193,7 @@ dict1=Client.Request_Feed('mf','s',req_list)
 client.Streming_data(dict1)
 ```
 Note: use the following abbreviations :
+
 Market Feed=mf
 Market Depth (upto 5)=md
 Open Interest=oi
