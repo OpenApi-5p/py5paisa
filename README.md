@@ -102,6 +102,14 @@ test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=
 client.place_order(test_order)
 
 ```
+#### Placing offline orders
+
+By default all orders are normal orders, pass `ahplaced=Y` to place offline orders.
+
+```py
+from py5paisa.order import Order, OrderType, AHPlaced
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False,atmarket=False, ahplaced='Y')
+```
 
 #### Modifying an order
 
@@ -121,7 +129,7 @@ client.cancel_order(order_type='B', scrip_code=1660, quantity=1,exchange='N',exc
 
 For placing Braket order
 ```py
-test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=204,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,RequestType='P',AtMarket=False)
+test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=205,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=215.0,TriggerPriceForSL=203,ExchType='C',Exch='N',RequestType='P',AtMarket=False)
 
 client.bo_order(test_order)
 ```
@@ -129,7 +137,7 @@ Note:For placing Bracket order in FNO segment pass ExchType='D'
 
 For Modifying Bracket Order only for Initial order (entry)
 ```py
-test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,RequestType='M',AtMarket=False,ExchOrderId='12345678')
+test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,ExchType='C',Exch='N',RequestType='M',AtMarket=False,ExchOrderId='12345678')
 
 client.bo_order(test_order)
 
@@ -138,13 +146,13 @@ client.bo_order(test_order)
 
 For Modifying LimitPriceProfitOrder 
 ```py
-test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=208.50,is_intraday=True,exchange='N',exchange_segment='C',atmarket=False,exch_order_id="12345678" ,order_for=OrderFor.MODIFY)
+test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=208.50,is_intraday=True,exchange='N',exchange_segment='C',atmarket=False,exch_order_id="12345678" ,order_for='M')
 
 client.mod_bo_order(test_order)
 ```
 For Modifying TriggerPriceForSL
 ```py
-test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intraday=True,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="123456789" ,stoploss_price=201.50,is_stoploss_order=True,order_for=OrderFor.MODIFY)
+test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intraday=True,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="123456789" ,stoploss_price=201.50,is_stoploss_order=True,order_for='M')
 
 client.mod_bo_order(test_order)
 
