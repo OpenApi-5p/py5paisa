@@ -88,21 +88,19 @@ Scrip codes reference:
 Note : Use these Links for getting scrip codes
 
 BSE: https://www.bseindia.com/
-NSE FO: https://www.5paisa.com/docs/default-source/scrip-master/contract.txt
-NSE CASH : https://www.5paisa.com/docs/default-source/scrip-master/security.txt
-
+Scrip Master - https://www.5paisa.com/docs/default-source/scrip-master/scripmaster-csv-format.csv
 #### Placing an order
 
 ```py
 # Note: This is an indicative order.
 
-from py5paisa.order import Order, OrderType, Exchange, ExchangeType
+from py5paisa.order import Order, OrderType, Exchange
 
 test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=True,atmarket=False)
 client.place_order(test_order)
 
 ```
-#### Placing offline orders
+#### Placing offline orders (After Market Orders)
 
 By default all orders are normal orders, pass `ahplaced=Y` to place offline orders.
 
@@ -165,7 +163,6 @@ client.mod_bo_order(test_order)
 from py5paisa.order import  Exchange
 
 req_list= [
-
         {
             "Exch": "N",
             "ExchType": "C",
