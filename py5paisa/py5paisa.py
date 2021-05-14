@@ -86,7 +86,7 @@ class FivePaisaClient:
         session_cookies = res.cookies
         cookies_dictionary = session_cookies.get_dict()
         self.Jwt_token=cookies_dictionary['JwtToken']
-        #print(self.Jwt_token)
+        
         return res.json()
 
     def _set_client_code(self, client_code):
@@ -257,7 +257,7 @@ class FivePaisaClient:
         Cancels an existing order
         """
         order = Order(order_type=order_type, scrip_code=scrip_code,
-                      quantity=quantity,exchange=exchange,exchange_segment=exchange_segment, exch_order_id=exch_order_id, price=0.0,atmarket=False,is_intraday=False,order_for=OrderFor.CANCEL)
+                      quantity=quantity,exchange=exchange,exchange_segment=exchange_segment, exch_order_id=exch_order_id, price=0.0,atmarket=False,is_intraday=False,order_for='C')
         self.set_payload(order)
         self.payload["body"]["StopLossPrice"] = order.stoploss_price
         return self.order_request("OP")
