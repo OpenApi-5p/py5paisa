@@ -54,13 +54,13 @@ class Order:
 
     def __init__(self, order_type: str, scrip_code: int, quantity: int, exchange: str,
                  exchange_segment: str, price: float ,is_intraday: bool , atmarket: bool ,order_id: int = 0,
-                  remote_order_id: int = 1, exch_order_id: int = 0, order_for: OrderFor = OrderFor.PLACE,
+                  remote_order_id: int = 1, exch_order_id: int = 0, order_for: str = 'P',
                  stoploss_price: float = 0, is_stoploss_order: bool = False, ioc_order: bool = False,
                   is_vtd: bool = False, vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
-                 ahplaced: AHPlaced = AHPlaced.NORMAL_ORDER, public_ip: str = '192.168.1.1',
-                 order_validity: OrderValidity = OrderValidity.DAY, traded_qty: int = 0):
+                 ahplaced: str= 'N', public_ip: str = '192.168.1.1',
+                 order_validity: int =0, traded_qty: int = 0):
 
-        self.order_for = order_for.value
+        self.order_for = order_for
         self.exchange = exchange
         self.exchange_segment = exchange_segment
         self.price = price
@@ -78,26 +78,26 @@ class Order:
         self.is_intraday = is_intraday
         self.is_vtd = is_vtd
         self.vtd = vtd
-        self.ahplaced = ahplaced.value
+        self.ahplaced = ahplaced
         self.public_ip = public_ip
-        self.order_validity = order_validity.value
+        self.order_validity = order_validity
         self.traded_qty = traded_qty
         self.app_source = int(APP_SOURCE)
 
 class bo_co_order:
 
     def __init__(self,scrip_code: int, Qty: int,LimitPriceInitialOrder:float,TriggerPriceInitialOrder:float
-                 ,LimitPriceProfitOrder:float,BuySell:str,
+                 ,LimitPriceProfitOrder:float,BuySell:str,Exch: str,ExchType:  str,RequestType: str,
                  TriggerPriceForSL:float,TrailingSL:int=0,StopLoss:int=0,
                  LocalOrderIDNormal:int=0,LocalOrderIDSL:int=0,LocalOrderIDLimit:int=0,
-                 public_ip: str = '192.168.1.1',traded_qty: int = 0,RequestType: str ='P',
-                 order_for: str="S",Exch: Exchange = Exchange.NSE,
-                 ExchType:str='C',DisQty: int=0,ExchOrderId:str="0",AtMarket: bool = False,UniqueOrderIDNormal:str="",
+                 public_ip: str = '192.168.1.1',traded_qty: int = 0,
+                 order_for: str="S",
+                 DisQty: int=0,ExchOrderId:str="0",AtMarket: bool = False,UniqueOrderIDNormal:str="",
                  UniqueOrderIDSL:str="",UniqueOrderIDLimit:str=""):
         
 
         self.order_for = order_for
-        self.Exch = Exch.value
+        self.Exch = Exch
         self.ExchType = ExchType
         self.RequestType=RequestType
         self.BuySell=BuySell
