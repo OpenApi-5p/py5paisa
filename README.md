@@ -221,16 +221,16 @@ Please use these at your own risk.
 #Create an Object:-
 strategy=strategies()
 
-Use the following to execute the strategy (note:- they are executed at market price only)
-iron_condor(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
+#Use the following to execute the strategy (note:- they are executed at market price only)
+#iron_condor(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.short_straddle("banknifty",['35300','37000'],'50','20210610','I')
 
 strategy.short_strangle("banknifty",['35300','37000'],'50','20210610','D')
 
-iron_condor(<symbol>,<List of buy strike prices>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
+#iron_condor(<symbol>,<List of buy strike prices>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.iron_condor("NIFTY",["15000","15200"],["15100","15150"],"75","20210603","I")
 
-iron_condor(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
+#iron_condor(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.iron_fly("NIFTY",["15000","15200"],"15100","75","20210610","I")
 
 ```
