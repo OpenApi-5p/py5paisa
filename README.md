@@ -42,6 +42,9 @@ USER_ID=YOUR_USER_ID_HERE
 PASSWORD=YOUR_PASSWORD_HERE
 USER_KEY=YOUR_USER_KEY_HERE
 ENCRYPTION_KEY=YOUR_ENCRYPTION_KEY_HERE
+user=YOUR_EMAIL_ID
+pass=YOUR_LOGIN_PASSWORD
+dob=YOUR_DOB
 ```
 
 
@@ -209,6 +212,27 @@ Subscribe= s
 
 Unsubscribe=u
 
+#### Strategy Execution
+
+Note: These single-commands are capable of trading multiple legs of pre-defined strategies.
+Like :- Short/Long Straddles and Strangles, Iron Fly and Iron Condor (many more to come)
+Please use these at your own risk.
+```py
+Create an Object:-
+strategy=strategies()
+
+iron_condor(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
+strategy.short_straddle("banknifty",['35300','37000'],'50','20210610','I')
+
+strategy.short_strangle("banknifty",['35300','37000'],'50','20210610','D')
+
+iron_condor(<symbol>,<List of buy strike prices>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
+strategy.iron_condor("NIFTY",["15000","15200"],["15100","15150"],"75","20210603","I")
+
+iron_condor(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
+strategy.iron_fly("NIFTY",["15000","15200"],"15100","75","20210610","I")
+
+```
 
 #### TODO
  - Write tests.
