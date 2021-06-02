@@ -218,9 +218,10 @@ Note: These single-commands are capable of trading multiple legs of pre-defined 
 Like :- Short/Long Straddles and Strangles, Iron Fly and Iron Condor (many more to come)
 Please use these at your own risk.
 ```py
-Create an Object:-
+#Create an Object:-
 strategy=strategies()
 
+Use the following to execute the strategy (note:- they are executed at market price only)
 iron_condor(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.short_straddle("banknifty",['35300','37000'],'50','20210610','I')
 
