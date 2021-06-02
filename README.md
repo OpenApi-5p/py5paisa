@@ -214,6 +214,8 @@ Unsubscribe=u
 
 #### Strategy Execution
 
+from py5paisa.strategy import *
+
 Note: These single-commands are capable of trading multiple legs of pre-defined strategies.
 Like :- Short/Long Straddles and Strangles, Iron Fly and Iron Condor (many more to come)
 Please use these at your own risk.
