@@ -213,28 +213,36 @@ Subscribe= s
 Unsubscribe=u
 
 #### Strategy Execution
-
+```py
+#Import strategy package
 from py5paisa.strategy import *
-
+```
 Note: These single-commands are capable of trading multiple legs of pre-defined strategies.
 Like :- Short/Long Straddles and Strangles, Iron Fly and Iron Condor (many more to come)
 Please use these at your own risk.
 ```py
 #Create an Object:-
 strategy=strategies()
-
-#Use the following to execute the strategy (note:- they are executed at market price only)
-#iron_condor(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
+```
+Use the following to execute the strategy (note:- they are executed at market price only)
+```py
+#short_straddle(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.short_straddle("banknifty",['35300','37000'],'50','20210610','I')
-
+```
+```py
 strategy.short_strangle("banknifty",['35300','37000'],'50','20210610','D')
-
+```
+```py
 #iron_condor(<symbol>,<List of buy strike prices>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.iron_condor("NIFTY",["15000","15200"],["15100","15150"],"75","20210603","I")
-
-#iron_condor(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
+```
+```py
+#iron_fly(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.iron_fly("NIFTY",["15000","15200"],"15100","75","20210610","I")
-
+```
+```py
+#call_calendar(<symbol>,<List of sell strike price>,<qty>,<list of expiry(first one will be bought and the second sold based on expiry)>,<Order Type>)
+ob.put_calendar("nifty",'15600','75',['20210603','20210610'],'I')
 ```
 
 #### TODO
