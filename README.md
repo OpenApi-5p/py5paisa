@@ -213,6 +213,15 @@ Subscribe= s
 Unsubscribe=u
 
 #### Strategy Execution
+#### List Of Strategies Available
+ - Short Straddle
+ - Short Strangle
+ - Long Straddle
+ - Long Strangle
+ - Iron Fly(Butterfly)
+ - Iron Condor
+ - Call Calendar Spread
+ - Put Calendar Spread
 ```py
 #Import strategy package
 from py5paisa.strategy import *
