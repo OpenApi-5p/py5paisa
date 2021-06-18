@@ -19,7 +19,8 @@ requirements = [
     "urllib3>=1.25.8",
     "idna>=2.9",
     "loguru>=0.5.1",
-    "websocket-client"
+    "websocket-client",
+    "pandas",
 ]
 
 setup_requirements = []
