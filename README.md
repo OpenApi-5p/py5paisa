@@ -212,6 +212,21 @@ Subscribe= s
 
 Unsubscribe=u
 
+#### Market Depth
+```py
+a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
+   {"Exchange":"N","ExchangeType":"C","ScripCode":"1660"},
+   ]
+print(Client.fetch_market_depth(a))
+```
+#### Historical Data
+```py
+df=Client.historical_data('N','C',1660,'1d','2021-05-25','2021-06-16')
+print(df)
+
+# Note : TimeFrame Should be from this list ['1m','5m','10m','15m','30m','60m','1d']
+```
+
 #### Strategy Execution
 #### List Of Strategies Available
  - Short Straddle
