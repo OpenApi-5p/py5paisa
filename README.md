@@ -212,7 +212,7 @@ Subscribe= s
 
 Unsubscribe=u
 
-#### Market Depth
+#### Full Market Snapshot 
 ```py
 a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
    {"Exchange":"N","ExchangeType":"C","ScripCode":"1660"},
