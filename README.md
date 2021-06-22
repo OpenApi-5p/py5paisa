@@ -272,10 +272,12 @@ strategy.long_strangle("banknifty",['35300','37000'],'50','20210610','D')
 #iron_condor(<symbol>,<List of buy strike prices>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.iron_condor("NIFTY",["15000","15200"],["15100","15150"],"75","20210603","I")
 ```
+
 ```py
 #iron_fly(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.iron_fly("NIFTY",["15000","15200"],"15100","75","20210610","I")
 ```
+
 ```py
 #call_calendar(<symbol>,<List of sell strike price>,<qty>,<list of expiry(first one will be bought and the second sold based on expiry)>,<Order Type>)
 strategy.call_calendar("nifty",'15600','75',['20210603','20210610'],'I')
@@ -284,6 +286,21 @@ strategy.call_calendar("nifty",'15600','75',['20210603','20210610'],'I')
 ```py
 #put_calendar(<symbol>,<List of sell strike price>,<qty>,<list of expiry(first one will be bought and the second sold based on expiry)>,<Order Type>)
 strategy.put_calendar("nifty",'15600','75',['20210603','20210610'],'I')
+```
+
+```py
+#call_ladder(<symbol>,<Buy strike prices>,<List of Sell strike price>,<qty>,<expiry>,<Order Type>)
+strategy.call_ladder("NIFTY","15100",["15300","15400"],"75","20210610","I")
+```
+
+```py
+#put_ladder(<symbol>,<Buy strike prices>,<List of Sell strike price>,<qty>,<expiry>,<Order Type>)
+strategy.put_ladder("NIFTY","15000",["14800","14500"],"75","20210610","I")
+```
+
+```py
+#ladder(<symbol>,<List of Buy strike prices>,<List of Sell strike price>,<qty>,<expiry>,<Order Type>)
+strategy.ladder("sbin",["400","420"],["350","370","450","500"],"1500","20210729","D")
 ```
 
 #### TODO
