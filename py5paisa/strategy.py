@@ -234,3 +234,105 @@ class strategies:
         order_status=Client.place_order(test_order)
         test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
         order_status=Client.place_order(test_order)
+    def call_ladder(self,symbol,buy_strike,sell_strike,qty,expiry,intra):
+        sell_strike.sort()
+        self.symbol=symbol
+        self.buy_strike=buy_strike
+        self.sell_strike=sell_strike
+        self.qty=qty
+        self.expiry=expiry
+        self.intra=intra
+        buy_scrip=[]
+        sell_scrip=[]
+        j=0
+        options =['CE','CE']
+        buy_scrip.append(self.get_scripcode(self.symbol,self.buy_strike,self.expiry,options[0]))
+        for opt in options:
+            sc=self.get_scripcode(self.symbol,self.sell_strike[j],self.expiry,opt)
+            j=j+1
+            sell_scrip.append(sc)
+            
+        for s in buy_scrip:
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True,)
+            order_status=Client.place_order(test_order)
+            if order_status['Message']=='Success':
+                continue
+            else:
+                break
+        for s in sell_scrip:
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            order_status=Client.place_order(test_order)
+            if order_status['Message']=='Success':
+                continue
+            else:
+                break
+
+    def put_ladder(self,symbol,buy_strike,sell_strike,qty,expiry,intra):
+        sell_strike.sort()
+        self.symbol=symbol
+        self.buy_strike=buy_strike
+        self.sell_strike=sell_strike
+        self.qty=qty
+        self.expiry=expiry
+        self.intra=intra
+        buy_scrip=[]
+        sell_scrip=[]
+        j=0
+        options =['PE','PE']
+        buy_scrip.append(self.get_scripcode(self.symbol,self.buy_strike,self.expiry,options[0]))
+        for opt in options:
+            sc=self.get_scripcode(self.symbol,self.sell_strike[j],self.expiry,opt)
+            j=j+1
+            sell_scrip.append(sc)
+        for s in buy_scrip:
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True,)
+            order_status=Client.place_order(test_order)
+            if order_status['Message']=='Success':
+                continue
+            else:
+                break
+        for s in sell_scrip:
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            order_status=Client.place_order(test_order)
+            if order_status['Message']=='Success':
+                continue
+            else:
+                break
+
+    def ladder(self,symbol,buy_strike,sell_strike,qty,expiry,intra):
+        buy_strike.sort()
+        sell_strike.sort()
+        self.symbol=symbol
+        self.buy_strike=buy_strike
+        self.sell_strike=sell_strike
+        self.qty=qty
+        self.expiry=expiry
+        self.intra=intra
+        buy_scrip=[]
+        sell_scrip=[]
+        i=0
+        j=0
+        options =['PE','CE']
+        for opt in options:
+            sc=self.get_scripcode(self.symbol,self.buy_strike[i],self.expiry,opt)
+            i=i+1
+            buy_scrip.append(sc)
+        for opt in options:
+            sell_scrip.append(self.get_scripcode(self.symbol,self.sell_strike[j],self.expiry,opt))
+            sell_scrip.append(self.get_scripcode(self.symbol,self.sell_strike[j+1],self.expiry,opt))
+            j=j+2
+        for s in buy_scrip:
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True,)
+            order_status=Client.place_order(test_order)
+            if order_status['Message']=='Success':
+                continue
+            else:
+                break
+        for s in sell_scrip:
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            order_status=Client.place_order(test_order)
+            if order_status['Message']=='Success':
+                continue
+            else:
+                break
+    
