@@ -302,6 +302,13 @@ strategy.put_ladder("NIFTY","15000",["14800","14500"],"75","20210610","I")
 #ladder(<symbol>,<List of Buy strike prices>,<List of Sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.ladder("sbin",["400","420"],["350","370","450","500"],"1500","20210729","D")
 ```
+#### Ideas
+```py
+print(Client.get_buy())
+
+print(Client.get_trade())
+
+```
 
 #### TODO
  - Write tests.
