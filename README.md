@@ -308,7 +308,7 @@ To get actionable buy trades use:-
 print(Client.get_buy())
 
 
-To get list current trades use:-
+To get list of current trades use:-
 print(Client.get_trade())
 
 ```
