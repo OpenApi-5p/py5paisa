@@ -30,30 +30,21 @@ Read the docs hosted [here](https://5paisa.github.io/)
 
 Get your API keys from https://www.5paisa.com/developerapi/apikeys
 
-Configure these keys in a file named `keys.conf` in the same directory as your python script exists
-
-A sample `keys.conf` is given below:
-
-```conf
-[KEYS]
-APP_NAME=YOUR_APP_NAME_HERE
-APP_SOURCE=YOUR_APP_SOURCE_HERE
-USER_ID=YOUR_USER_ID_HERE
-PASSWORD=YOUR_PASSWORD_HERE
-USER_KEY=YOUR_USER_KEY_HERE
-ENCRYPTION_KEY=YOUR_ENCRYPTION_KEY_HERE
-user=YOUR_EMAIL_ID
-pass=YOUR_LOGIN_PASSWORD
-dob=YOUR_DOB
-```
-
 
 #### Authentication
 
 ```py
 from py5paisa import FivePaisaClient
+cred={
+    "APP_NAME":"YOUR APP_NAME",
+    "APP_SOURCE":YOUR APP_SOURCE,
+    "USER_ID":"YOUR USER_ID",
+    "PASSWORD":"YOUR PASSWORD",
+    "USER_KEY":"YOUR USERKEY",
+    "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
+    }
 
-client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="YYYYMMDD")
+client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="YYYYMMDD",cred=cred)
 client.login()
 ```
 
@@ -217,13 +208,13 @@ Unsubscribe=u
 a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
    {"Exchange":"N","ExchangeType":"C","ScripCode":"1660"},
    ]
-print(Client.fetch_market_depth(a))
+print(client.fetch_market_depth(a))
 ```
 #### Historical Data
 ```py
 #historical_data(<Exchange>,<Exchange Type>,<Scrip Code>,<Time Frame>,<From Data>,<To Date>)
 
-df=Client.historical_data('N','C',1660,'15m','2021-05-25','2021-06-16')
+df=client.historical_data('N','C',1660,'15m','2021-05-25','2021-06-16')
 print(df)
 
 # Note : TimeFrame Should be from this list ['1m','5m','10m','15m','30m','60m','1d']
@@ -248,7 +239,15 @@ Like :- Short/Long Straddles and Strangles, Iron Fly and Iron Condor (many more 
 Please use these at your own risk.
 ```py
 #Create an Object:-
-strategy=strategies()
+cred={
+    "APP_NAME":"YOUR APP_NAME",
+    "APP_SOURCE":YOUR APP_SOURCE,
+    "USER_ID":"YOUR USER_ID",
+    "PASSWORD":"YOUR PASSWORD",
+    "USER_KEY":"YOUR USERKEY",
+    "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
+    }
+strategy=strategies(user="random_email@xyz.com", passw="password", dob="YYYYMMDD",cred=cred)
 ```
 Use the following to execute the strategy (note:- they are executed at market price only)
 ```py
