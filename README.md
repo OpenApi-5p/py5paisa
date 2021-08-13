@@ -29,7 +29,8 @@ Read the docs hosted [here](https://5paisa.github.io/)
 #### Configuring API keys
 
 Get your API keys from https://www.5paisa.com/developerapi/apikeys
-
+Note:- We have deprecated the exisitng method which involved the use of keys.conf file.
+       Kindly go through this updated documentation.
 
 #### Authentication
 
@@ -37,7 +38,7 @@ Get your API keys from https://www.5paisa.com/developerapi/apikeys
 from py5paisa import FivePaisaClient
 cred={
     "APP_NAME":"YOUR APP_NAME",
-    "APP_SOURCE":YOUR APP_SOURCE,
+    "APP_SOURCE":"YOUR APP_SOURCE",
     "USER_ID":"YOUR USER_ID",
     "PASSWORD":"YOUR PASSWORD",
     "USER_KEY":"YOUR USERKEY",
@@ -81,8 +82,7 @@ Scrip codes reference:
 
 Note : Use these Links for getting scrip codes
 
-BSE: https://www.bseindia.com/
-Scrip Master - https://www.5paisa.com/docs/default-source/scrip-master/scripmaster-csv-format.csv
+Scrip Master - https://images.5paisa.com/website/scripmaster-csv-format.csv
 #### Placing an order
 
 ```py
