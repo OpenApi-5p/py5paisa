@@ -29,6 +29,7 @@ Read the docs hosted [here](https://5paisa.github.io/)
 #### Configuring API keys
 
 Get your API keys from https://www.5paisa.com/developerapi/apikeys
+
 Note:- We have deprecated the exisitng method which involved the use of keys.conf file.
        Kindly go through this updated documentation.
 
