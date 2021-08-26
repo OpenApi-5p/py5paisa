@@ -77,6 +77,9 @@ client.positions()
 # Fetches the order book of the client
 client.order_book()
 
+# Fetches Trade book
+client.get_tradebook()
+
 ```
 
 Scrip codes reference:
