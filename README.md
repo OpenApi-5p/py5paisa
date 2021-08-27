@@ -234,6 +234,9 @@ print(df)
  - Iron Condor
  - Call Calendar Spread
  - Put Calendar Spread
+ - Call Ladder
+ - Put Ladder
+ - Ladder
 ```py
 #Import strategy package
 from py5paisa.strategy import *
