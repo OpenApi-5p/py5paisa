@@ -30,7 +30,7 @@ Read the docs hosted [here](https://5paisa.github.io/)
 
 Get your API keys from https://invest.5paisa.com/DeveloperAPI/APIKeys
 
-Note:- We have deprecated the exisitng method which involved the use of keys.conf file.
+Note:- We have deprecated the existing method which involved the use of keys.conf file.
        Kindly go through this updated documentation.
 
 #### Authentication
