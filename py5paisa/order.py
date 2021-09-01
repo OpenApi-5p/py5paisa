@@ -70,7 +70,7 @@ class Order:
         self.atmarket = atmarket
         self.remote_order_id = remote_order_id
         self.exch_order_id = exch_order_id
-        self.disqty = quantity
+        self.disqty = 0
         self.stoploss_price = stoploss_price
         self.is_stoploss_order = is_stoploss_order
         self.ioc_order = ioc_order
