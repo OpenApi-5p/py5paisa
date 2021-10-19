@@ -94,8 +94,10 @@ Scrip Master - https://images.5paisa.com/website/scripmaster-csv-format.csv
 
 from py5paisa.order import Order, OrderType, Exchange
 
-test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=True,atmarket=False)
-client.place_order(test_order)
+#This is comodity order. You can pass scripdata either you can pass scripcode also.
+
+test_order = Order(order_type='B',exchange='M',exchange_segment='D', scripdata = 'GOLDM 03 Nov 2021_20211103', quantity=1, price=47900,is_intraday=True,IsGTCOrder=False,IsEOSOrder=True)
+Client.place_order(test_order)
 
 ```
 #### Placing offline orders (After Market Orders)
@@ -104,20 +106,20 @@ By default all orders are normal orders, pass `ahplaced=Y` to place offline orde
 
 ```py
 from py5paisa.order import Order, OrderType, AHPlaced
-test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False,atmarket=False, ahplaced='Y')
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False, ahplaced='Y')
 ```
 
 #### Modifying an order
 
 ```py
-test_order = Order(order_type='B', scrip_code=1660, quantity=1, price=205,is_intraday=False,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="12345678" )
+test_order = Order(order_type='B', scrip_code=1660, quantity=1, price=205,is_intraday=False,exchange='N',exchange_segment='C',exch_order_id="12345678" )
 client.modify_order(test_order)
 ```
 
 #### Canceling an order
 
 ```py
-client.cancel_order(order_type='B', scrip_code=1660, quantity=1,exchange='N',exchange_segment='C',exch_order_id='12345678')
+client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='1100000007044987')
 ```
 #### Bracket Order 
 
