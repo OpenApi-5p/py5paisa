@@ -97,7 +97,10 @@ from py5paisa.order import Order, OrderType, Exchange
 #This is comodity order. You can pass scripdata either you can pass scripcode also.
 
 test_order = Order(order_type='B',exchange='M',exchange_segment='D', scripdata = 'GOLDM 03 Nov 2021_20211103', quantity=1, price=47900,is_intraday=True,IsGTCOrder=False,IsEOSOrder=True)
-Client.place_order(test_order)
+client.place_order(test_order)
+
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code = 1660, quantity=1, price=236.5,is_intraday=True)
+client.place_order(test_order)
 
 ```
 #### Placing offline orders (After Market Orders)
