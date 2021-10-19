@@ -56,7 +56,7 @@ class Order:
                   unique_order_id: int = 1,  scrip_code: int=0, exch_order_id: int = 0,
                  stoploss_price: float = 0, is_stoploss_order: bool = False, ioc_order: bool = False,scripdata: str='',
                  order_id: int = 0,vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
-                 ahplaced: str= 'N'):
+                 ahplaced: str= 'N',IsGTCOrder:bool =False,IsEOSOrder:bool =False):
 
         self.exchange = exchange
         self.exchange_segment = exchange_segment
@@ -75,6 +75,8 @@ class Order:
         self.vtd = vtd
         self.ahplaced = ahplaced
         self.scripData=scripdata
+        self.IsGTCOrder=IsGTCOrder
+        self.IsEOSOrder=IsEOSOrder
         
 
 class bo_co_order:
