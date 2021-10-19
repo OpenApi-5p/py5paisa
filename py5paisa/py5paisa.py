@@ -253,6 +253,10 @@ class FivePaisaClient:
             self.payload["body"]["ScripCode"] = order.scrip_code
         else:
             self.payload["body"]["ScripData"] = order.scripData
+        if order.IsGTCOrder:
+            self.payload["body"]["IsGTCOrder"] = order.IsGTCOrder
+        if order.IsEOSOrder:
+            self.payload["body"]["IsEOSOrder"] = order.IsEOSOrder
         self.payload["body"]["Qty"] = order.quantity
         self.payload["body"]["IsAHOrder"] = order.ahplaced
         self.payload["body"]["DisQty"] = order.disqty
