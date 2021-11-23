@@ -82,7 +82,7 @@ class Order:
 class bo_co_order:
 
     def __init__(self,scrip_code: int, Qty: int,LimitPriceInitialOrder:float,TriggerPriceInitialOrder:float
-                 ,LimitPriceProfitOrder:float,BuySell:str,Exch: str,ExchType:  str,RequestType: str,
+                 ,LimitPriceProfitOrder:float,BuySell:str,Exch: str,ExchType:  str,RequestType: str,LimitPriceForSL:float,
                  TriggerPriceForSL:float,TrailingSL:int=0,StopLoss:int=0,
                  LocalOrderIDNormal:int=0,LocalOrderIDSL:int=0,LocalOrderIDLimit:int=0,
                  public_ip: str = '192.168.1.1',traded_qty: int = 0,
@@ -99,6 +99,7 @@ class bo_co_order:
         self.scrip_code=scrip_code
         self.DisQty=DisQty
         self.LimitPriceInitialOrder=LimitPriceInitialOrder
+        self.LimitPriceForSL=LimitPriceForSL
         self.TriggerPriceInitialOrder=TriggerPriceInitialOrder
         self.LimitPriceProfitOrder=LimitPriceProfitOrder
         self.AtMarket=AtMarket
