@@ -288,6 +288,7 @@ class FivePaisaClient:
         self.payload["body"]["AtMarket"] = boco.AtMarket
         self.payload["body"]["ExchOrderId"] = boco.ExchOrderId
         self.payload["body"]["LimitPriceInitialOrder"] = boco.LimitPriceInitialOrder
+        self.payload["body"]["LimitPriceForSL"] = boco.LimitPriceForSL
         self.payload["body"]["TriggerPriceInitialOrder"] = boco.TriggerPriceInitialOrder
         self.payload["body"]["LimitPriceProfitOrder"] = boco.LimitPriceProfitOrder
         self.payload["body"]["TriggerPriceForSL"] = boco.TriggerPriceForSL
