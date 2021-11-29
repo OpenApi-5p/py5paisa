@@ -94,11 +94,14 @@ Scrip Master - https://images.5paisa.com/website/scripmaster-csv-format.csv
 
 from py5paisa.order import Order, OrderType, Exchange
 
-#This is comodity order. You can pass scripdata either you can pass scripcode also.
+#This is example of a commodity order. You can pass scripdata either you can pass scripcode also.
+
+#Using Scrip Data :-
 
 test_order = Order(order_type='B',exchange='M',exchange_segment='D', scripdata = 'GOLDM 03 Nov 2021_20211103', quantity=1, price=47900,is_intraday=True,IsGTCOrder=False,IsEOSOrder=True)
 client.place_order(test_order)
 
+#Using Scrip Code :-
 test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code = 1660, quantity=1, price=236.5,is_intraday=True)
 client.place_order(test_order)
 
@@ -122,7 +125,7 @@ client.modify_order(test_order)
 #### Canceling an order
 
 ```py
-client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='1100000007044987')
+client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='12345678')
 ```
 #### Bracket Order 
 
@@ -130,7 +133,7 @@ client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='11000000070
 
 For placing Braket order
 ```py
-test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=205,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=215.0,TriggerPriceForSL=203,ExchType='C',Exch='N',RequestType='P',AtMarket=False)
+test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=205,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=215.0,TriggerPriceForSL=203,LimitPriceForSL=202,ExchType='C',Exch='N',RequestType='P',AtMarket=False)
 
 client.bo_order(test_order)
 ```
@@ -138,7 +141,7 @@ Note:For placing Bracket order in FNO segment pass ExchType='D'
 
 For Modifying Bracket Order only for Initial order (entry)
 ```py
-test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,ExchType='C',Exch='N',RequestType='M',AtMarket=False,ExchOrderId='12345678')
+test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,LimitPriceForSL=201,ExchType='C',Exch='N',RequestType='M',AtMarket=False,ExchOrderId='12345678')
 
 client.bo_order(test_order)
 
