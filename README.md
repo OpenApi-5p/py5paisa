@@ -112,7 +112,7 @@ By default all orders are normal orders, pass `ahplaced=Y` to place offline orde
 
 ```py
 from py5paisa.order import Order, OrderType, AHPlaced
-test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False, ahplaced='Y')
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False, ahplaced='Y',remote_order_id="tag")
 ```
 
 #### Modifying an order
