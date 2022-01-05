@@ -53,7 +53,7 @@ class Order:
 
     def __init__(self, order_type: str, quantity: int, exchange: str,
                  exchange_segment: str, price: float ,is_intraday: bool , 
-                  unique_order_id: int = 1,  scrip_code: int=0, exch_order_id: int = 0,
+                 remote_order_id: str = "tag",  scrip_code: int=0, exch_order_id: int = 0,
                  stoploss_price: float = 0, is_stoploss_order: bool = False, ioc_order: bool = False,scripdata: str='',
                  order_id: int = 0,vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
                  ahplaced: str= 'N',IsGTCOrder:bool =False,IsEOSOrder:bool =False):
@@ -65,7 +65,7 @@ class Order:
         self.order_type = order_type
         self.quantity = quantity
         self.scrip_code = scrip_code
-        self.unique_order_id = unique_order_id
+        self.remote_order_id = remote_order_id
         self.exch_order_id = exch_order_id
         self.disqty = quantity
         self.stoploss_price = stoploss_price
