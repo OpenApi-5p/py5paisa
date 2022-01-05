@@ -312,7 +312,7 @@ class FivePaisaClient:
         """
         self.set_payload(order)
         self.payload["body"]["OrderType"] = order.order_type
-        self.payload["body"]["UniqueOrderID"] = order.unique_order_id
+        self.payload["body"]["RemoteOrderID"] = order.remote_order_id
         
         return self.order_request("OP")
 
@@ -454,13 +454,3 @@ class FivePaisaClient:
     def get_tradebook(self):
         return self.order_request("TB")
         
-
-        
-        
-    
-        
-
-
-
-      
-     
