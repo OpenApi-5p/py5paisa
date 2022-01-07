@@ -42,6 +42,12 @@ class strategies:
             if char.isalnum():
                 a =a + char
         return a
+    
+    def opposite(self,type):
+        if type=='B':
+            return 'S'
+        if type=='S':
+            return 'B'
 
     def intraday(self,intra):
         if intra=='I':
@@ -258,3 +264,30 @@ class strategies:
         order_status=self.Client.place_order(test_order)
         test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
         order_status=self.Client.place_order(test_order)
+        
+    def squareoff(self, tag):
+        self.tag=self.filter_tag(tag)
+        id=[]
+        r=self.Client.fetch_order_status([
+                {
+                    "Exch": "N",
+                    "RemoteOrderID": self.tag
+                }])['OrdStatusResLst']
+        for order in r:
+            eoid=order['ExchOrderID']
+            if eoid!="":
+                id.append(eoid)
+        trdbook=self.Client.get_tradebook()['TradeBookDetail']
+        for eoid in id:
+            for trade in trdbook:
+                if eoid == int(trade['ExchOrderID']):
+                    self.type=self.opposite(trade['BuySell'])
+                    self.intra=trade['DelvIntra']
+                    self.scrip=trade['ScripCode']
+                    self.qty=trade['Qty']
+                    self.segment=trade['ExchType']
+                    test_order = Order(order_type=self.type,exchange='N',exchange_segment=self.segment, scrip_code=self.scrip, quantity=self.qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id="sq"+self.tag)
+                    order_status=self.Client.place_order(test_order)
+                else:
+                    continue
+
