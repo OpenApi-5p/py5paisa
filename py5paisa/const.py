@@ -7,13 +7,7 @@ HEADERS = {'Content-Type': 'application/json'}
 
 GENERIC_PAYLOAD = {
     "head": {
-        "appName": "",
-        "appVer": "1.0",
         "key": "",
-        "osName": "WEB",
-        "requestCode": "",
-        "userId": "",
-        "password": ""
     },
     "body": {
         "ClientCode": ""
@@ -71,6 +65,8 @@ JWT_PAYLOAD={
     "ClientCode":"",
     "JWTToken":""
     }
+
+
 
 TODAY_TIMESTAMP = int(datetime.datetime.today().timestamp())
 NEXT_DAY_TIMESTAMP = int(
