@@ -183,8 +183,6 @@ req_list_= [
 
         {
             "Exch": "N",
-            "ExchType": "C",
-            "ScripCode": 20374,
             "RemoteOrderID": "90980441"
         }]
 # Fetches the order status
