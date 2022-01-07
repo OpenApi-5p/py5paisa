@@ -56,7 +56,7 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True,)
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             print(order_status)
             if order_status['Message']=='Success':
@@ -80,7 +80,7 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
@@ -100,7 +100,7 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
@@ -123,7 +123,7 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
@@ -150,14 +150,14 @@ class strategies:
             sc=self.get_scripcode(self.symbol,self.sell_strike,self.expiry,opt)
             sell_scrip.append(sc)
         for s in buy_scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
             else:
                 break
         for s in sell_scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
@@ -187,14 +187,14 @@ class strategies:
             j=j+1
             sell_scrip.append(sc)
         for s in buy_scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True,)
+            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),)
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
             else:
                 break
         for s in sell_scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra))
             order_status=self.Client.place_order(test_order)
             if order_status['Message']=='Success':
                 continue
@@ -214,9 +214,9 @@ class strategies:
             sc=self.get_scripcode(self.symbol,self.strike,self.expiry[i],opt)
             scrip.append(sc)
             i=i+1 
-        test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=scrip[0], quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+        test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=scrip[0], quantity=qty, price=0,is_intraday=self.intraday(self.intra))
         order_status=self.Client.place_order(test_order)
-        test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+        test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra))
         order_status=self.Client.place_order(test_order)
     
     def put_calendar(self,symbol,strike,qty,expiry,intra):
@@ -232,7 +232,7 @@ class strategies:
             sc=self.get_scripcode(self.symbol,self.strike,self.expiry[i],opt)
             scrip.append(sc)
             i=i+1 
-        test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=scrip[0], quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+        test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=scrip[0], quantity=qty, price=0,is_intraday=self.intraday(self.intra))
         order_status=self.Client.place_order(test_order)
-        test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),atmarket=True)
+        test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra))
         order_status=self.Client.place_order(test_order)
