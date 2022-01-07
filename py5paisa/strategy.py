@@ -1,7 +1,6 @@
-# These are standard strategies to be used at your own risk only after complete information.
-
 from py5paisa import FivePaisaClient
 from py5paisa.order import Order,bo_co_order
+import json
 
 
 class strategies:
@@ -36,6 +35,13 @@ class strategies:
         res=self.Client.fetch_market_feed(req)
         token=res['Data'][0]['Token']
         return token
+    
+    def filter_tag(self ,tag):
+        a=""
+        for char in tag:
+            if char.isalnum():
+                a =a + char
+        return a
 
     def intraday(self,intra):
         if intra=='I':
@@ -43,13 +49,14 @@ class strategies:
         else:
             return False
 
-    def short_straddle(self,symbol,strike,qty,expiry,intra,tag):
+    def short_straddle(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         self.symbol=symbol
         self.strike=strike
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         scrip=[]
         options =['CE','PE']
         for opt in options:
@@ -65,14 +72,15 @@ class strategies:
             else:
                 break
 
-    def short_strangle(self,symbol,strike,qty,expiry,intra,tag):
+    def short_strangle(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         strike.sort()
         self.symbol=symbol
         self.strike=strike
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         scrip=[]
         i=0
         options =['PE','CE']
@@ -89,13 +97,14 @@ class strategies:
             else:
                 break
 
-    def long_straddle(self,symbol,strike,qty,expiry,intra,tag):
+    def long_straddle(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         self.symbol=symbol
         self.strike=strike
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         scrip=[]
         options =['CE','PE']
         for opt in options:
@@ -110,14 +119,15 @@ class strategies:
             else:
                 break
 
-    def long_strangle(self,symbol,strike,qty,expiry,intra,tag):
+    def long_strangle(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         strike.sort()
         self.symbol=symbol
         self.strike=strike
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         scrip=[]
         i=0
         options =['PE','CE']
@@ -134,7 +144,7 @@ class strategies:
             else:
                 break
     
-    def iron_fly(self,symbol,buy_strike,sell_strike,qty,expiry,intra,tag):
+    def iron_fly(self,symbol,buy_strike,sell_strike,qty,expiry,intra,*args, **kwargs):
         buy_strike.sort()
         self.symbol=symbol
         self.buy_strike=buy_strike
@@ -142,7 +152,8 @@ class strategies:
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         buy_scrip=[]
         sell_scrip=[]
         i=0
@@ -169,7 +180,7 @@ class strategies:
             else:
                 break
     
-    def iron_condor(self,symbol,buy_strike,sell_strike,qty,expiry,intra,tag):
+    def iron_condor(self,symbol,buy_strike,sell_strike,qty,expiry,intra,*args, **kwargs):
         buy_strike.sort()
         sell_strike.sort()
         self.symbol=symbol
@@ -178,7 +189,8 @@ class strategies:
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         buy_scrip=[]
         sell_scrip=[]
         i=0
@@ -207,13 +219,14 @@ class strategies:
             else:
                 break
 
-    def call_calendar(self,symbol,strike,qty,expiry,intra,tag):
+    def call_calendar(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         self.symbol=symbol
         self.strike=strike
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         scrip=[]
         i=0
         options =['CE','CE']
@@ -226,13 +239,14 @@ class strategies:
         test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
         order_status=self.Client.place_order(test_order)
     
-    def put_calendar(self,symbol,strike,qty,expiry,intra,tag):
+    def put_calendar(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         self.symbol=symbol
         self.strike=strike
         self.qty=qty
         self.expiry=expiry
         self.intra=intra
-        self.tag=tag
+        self.tag=kwargs.get('tag', None)
+        self.tag=self.filter_tag(self.tag)
         scrip=[]
         i=0
         options =['PE','PE']
