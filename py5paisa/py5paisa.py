@@ -340,7 +340,7 @@ class FivePaisaClient:
     
     def Request_Feed(self,Method:str,Operation:str,req_list:list):
         try:
-            Method_dict={"mf":"MarketFeedV3","md":"MarketDepthService"}
+            Method_dict={"mf":"MarketFeedV3","md":"MarketDepthService","oi":"GetScripInfoForFuture","i":"Indices"}
             Operation_dict={"s":"Subscribe","u":"Unsubscribe"}
         
             self.ws_payload['Method']=Method_dict[Method]
@@ -362,7 +362,7 @@ class FivePaisaClient:
                     ws.send(json.dumps(wspayload))
                 except Exception as e:
                     log_response(e)
-            self.ws = websocket.WebSocketApp(self.web_url,cookie=auth)
+            self.ws = websocket.WebSocketApp(self.web_url)
 
             self.ws.on_open=on_open
         except Exception as e:
@@ -395,19 +395,6 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
         
-    def Login_check(self):
-        try:
-            self.login_check_payload["head"]["key"]=self.USER_KEY
-            self.login_check_payload["head"]["appName"]=self.APP_NAME
-            self.login_check_payload["head"]["LoginId"]=self.client_code
-            self.login_check_payload["body"]["RegistrationID"]=self.Jwt_token
-            url=self.LOGIN_CHECK_ROUTE
-            resl=requests.post(url, json=self.login_check_payload,headers=HEADERS)
-            self.Aspx_auth = resl.cookies.get('.ASPXAUTH',domain='openfeed.5paisa.com')
-            
-            return f'.ASPXAUTH={self.Aspx_auth}'
-        except Exception as e:
-            log_response(e)
 
     def jwt_validate(self):
         try:
