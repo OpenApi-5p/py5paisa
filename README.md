@@ -271,7 +271,9 @@ strategy=strategies(user="random_email@xyz.com", passw="password", dob="YYYYMMDD
 Use the following to execute the strategy (note:- they are executed at market price only)
 ```py
 #short_straddle(<symbol>,<strike price>,<qty>,<expiry>,<Order Type>)
-strategy.short_straddle("banknifty",'37000','50','20210610','I')
+strategy.short_straddle("banknifty",'37000','50','20210610','I',tag='<Your strategy Name>')
+
+#Using tag is optional
 ```
 ```py
 #short_strangle(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
@@ -279,7 +281,9 @@ strategy.short_strangle("banknifty",['35300','37000'],'50','20210610','D')
 ```
 ```py
 #long_straddle(<symbol>,<strike price>,<qty>,<expiry>,<Order Type>)
-strategy.long_straddle("banknifty",'37000','50','20210610','I')
+strategy.long_straddle("banknifty",'37000','50','20210610','I',tag='<Your strategy Name>')
+
+#Using tag is optional
 ```
 ```py
 #long_strangle(<symbol>,<List of sell strike price>,<qty>,<expiry>,<Order Type>)
@@ -293,7 +297,9 @@ strategy.iron_condor("NIFTY",["15000","15200"],["15100","15150"],"75","20210603"
 
 ```py
 #iron_fly(<symbol>,<List of buy strike prices>,<Sell strike price>,<qty>,<expiry>,<Order Type>)
-strategy.iron_fly("NIFTY",["15000","15200"],"15100","75","20210610","I")
+strategy.iron_fly("NIFTY",["15000","15200"],"15100","75","20210610","I",tag='<Your strategy Name>')
+
+#Using tag is optional
 ```
 
 ```py
@@ -313,13 +319,16 @@ strategy.call_ladder("NIFTY","15100",["15300","15400"],"75","20210610","I")
 
 ```py
 #put_ladder(<symbol>,<Buy strike prices>,<List of Sell strike price>,<qty>,<expiry>,<Order Type>)
-strategy.put_ladder("NIFTY","15000",["14800","14500"],"75","20210610","I")
+strategy.put_ladder("NIFTY","15000",["14800","14500"],"75","20210610","I",tag='<Your strategy Name>')
+
+#Using tag is optional
 ```
 
 ```py
 #ladder(<symbol>,<List of Buy strike prices>,<List of Sell strike price>,<qty>,<expiry>,<Order Type>)
 strategy.ladder("sbin",["400","420"],["350","370","450","500"],"1500","20210729","D")
 ```
+
 #### Trading Ideas
 ```py
 To get actionable buy trades use:-
