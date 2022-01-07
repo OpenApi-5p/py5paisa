@@ -327,6 +327,13 @@ strategy.put_ladder("NIFTY","15000",["14800","14500"],"75","20210610","I",tag='<
 strategy.ladder("sbin",["400","420"],["350","370","450","500"],"1500","20210729","D")
 ```
 
+```py
+Squareoff a strategy Using tags
+strategy.squareoff('tag')
+
+# Use the same tag as used while executing the strategies
+```
+
 #### Trading Ideas
 ```py
 To get actionable buy trades use:-
