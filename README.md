@@ -196,12 +196,16 @@ client.fetch_order_status(req_list_)
 ```py
 req_list=[
             { "Exch":"N","ExchType":"C","ScripCode":1660},
-            
             ]
 
-dict1=Client.Request_Feed('mf','s',req_list)
+req_data=client.Request_Feed('mf','s',req_list)
+def on_message(ws, message):
+    print(message)
 
-client.Streming_data(dict1)
+
+client.connect(dict1)
+
+client.receive_data(on_message)
 ```
 Note: Use the following abbreviations :
 
