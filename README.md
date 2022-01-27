@@ -211,6 +211,8 @@ Market Feed=mf
 
 Market Depth (upto 5)=md
 
+Indices (Spot Feed) =i
+
 Open Interest=oi
 
 Subscribe= s
