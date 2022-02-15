@@ -8,7 +8,7 @@ import json
 import websocket
 import pandas as pd
 import websocket 
-from .urlconst  import LOGIN_ROUTE,MARGIN_ROUTE,ORDER_BOOK_ROUTE,HOLDINGS_ROUTE,POSITIONS_ROUTE,ORDER_PLACEMENT_ROUTE,ORDER_MODIFY_ROUTE,ORDER_CANCEL_ROUTE,ORDER_STATUS_ROUTE,TRADE_INFO_ROUTE,BRACKET_MOD_ROUTE,BRACKET_ORDER_ROUTE,MARKET_FEED_ROUTE,LOGIN_CHECK_ROUTE,MARKET_DEPTH_ROUTE,JWT_VALIDATION_ROUTE,HISTORICAL_DATA_ROUTE,IDEAS_ROUTE,TRADEBOOK_ROUTE
+from .urlconst  import *
 
 
 class FivePaisaClient:
@@ -28,6 +28,7 @@ class FivePaisaClient:
             self.web_url= None
             self.Res_Data= None
             self.ws= None
+            self.access_token= ""
             self.session = requests.Session()
             self.APP_SOURCE=cred["APP_SOURCE"]
             self.APP_NAME=cred["APP_NAME"]
@@ -119,7 +120,6 @@ class FivePaisaClient:
                 url = self.ORDER_BOOK_ROUTE
                 return_type = "OrderBookDetail"
             elif data_type == "HOLDINGS":
- 
                 url = self.HOLDINGS_ROUTE
                 return_type = "Data"
             elif data_type == "POSITIONS":
@@ -172,16 +172,23 @@ class FivePaisaClient:
                 url = self.MARKET_DEPTH_ROUTE
             elif req_type == "TB":
                 url = self.TRADEBOOK_ROUTE
-            
+            elif req_type == "MS":
+                url = self.MARKET_STATUS_ROUTE
+                self.payload["body"]["ClientCode"] = ""
+                HEADERS["Authorization"] = f'Bearer {self.access_token}'
+            elif req_type == "TH":
+                url = self.TRADE_HISTORY_ROUTE
+                HEADERS["Authorization"] = f'Bearer {self.access_token}'
                 
             else:
                 raise Exception("Invalid request type!")
             
-            
             res = self.session.post(url, json=self.payload,
                                     headers=HEADERS).json()
-            
-            log_response(res["body"]["Message"])
+            if req_type == "MS":
+                log_response(res["head"]["statusDescription"])
+            else:
+                log_response(res["body"]["Message"])
             return res["body"]
         except Exception as e:
             log_response(e)
@@ -354,7 +361,7 @@ class FivePaisaClient:
     def connect(self,wspayload:dict):
         try:
             self.web_url=f'wss://openfeed.5paisa.com/Feeds/api/chat?Value1={self.Jwt_token}|{self.client_code}'
-
+            
             def on_open(ws):
                 log_response("Streaming Started")
                 try: 
@@ -394,6 +401,19 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
         
+    def Login_check(self):
+        try:
+            self.login_check_payload["head"]["key"]=self.USER_KEY
+            self.login_check_payload["head"]["appName"]=self.APP_NAME
+            self.login_check_payload["head"]["LoginId"]=self.client_code
+            self.login_check_payload["body"]["RegistrationID"]=self.Jwt_token
+            url=self.LOGIN_CHECK_ROUTE
+            resl=requests.post(url, json=self.login_check_payload,headers=HEADERS)
+            self.Aspx_auth = resl.cookies.get('.ASPXAUTH',domain='openfeed.5paisa.com')
+            
+            return f'.ASPXAUTH={self.Aspx_auth}'
+        except Exception as e:
+            log_response(e)
 
     def jwt_validate(self):
         try:
@@ -487,6 +507,9 @@ class FivePaisaClient:
             self.HISTORICAL_DATA_ROUTE=HISTORICAL_DATA_ROUTE
             self.IDEAS_ROUTE=IDEAS_ROUTE
             self.TRADEBOOK_ROUTE=TRADEBOOK_ROUTE
+            self.ACCESS_TOKEN_ROUTE=ACCESS_TOKEN_ROUTE
+            self.MARKET_STATUS_ROUTE=MARKET_STATUS_ROUTE
+            self.TRADE_HISTORY_ROUTE=TRADE_HISTORY_ROUTE
         except Exception as e:
             log_response(e)
     
@@ -502,10 +525,39 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
         
-    
+    def get_access_token(self,request_token):
+        try:
+            self.payload["head"]["Key"] = self.USER_KEY
+            self.payload["body"]["RequestToken"] = request_token
+            self.payload["body"]["EncryKey"] = self.ENCRYPTION_KEY
+            self.payload["body"]["UserId"] = self.USER_ID
+            url=ACCESS_TOKEN_ROUTE
+
+            res = self.session.post(url, json=self.payload).json()
+            message = res["body"]["Message"]
+         
+            if message == "Success":
+                self.access_token=res["body"]["AccessToken"]
+                self._set_client_code(res["body"]["ClientCode"])
+                return self.access_token
+            else:
+                log_response(message)
+        except Exception as e:
+            log_response(e)
+
+    def get_market_status(self):
+        try:
+            market_status_response=self.order_request("MS")
+            return market_status_response["Data"]
+        except Exception as e:
+            log_response(e)
+
+    def get_trade_history(self,exchange_id):
+        try:
+            self.payload["body"]["ExchOrderID"] = exchange_id
+            if self.client_code != None:
+                return self.order_request("TH")
+        except Exception as e:
+            log_response(e)
         
-
-
-
-      
-     
+ 
