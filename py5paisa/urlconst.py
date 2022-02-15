@@ -13,7 +13,7 @@ POSITIONS_ROUTE = f'{BaseUrl}V1/NetPositionNetWise'
 ORDER_PLACEMENT_ROUTE = f'{BaseUrl}PlaceOrderRequest'
 ORDER_MODIFY_ROUTE= f'{BaseUrl}ModifyOrderRequest'
 ORDER_CANCEL_ROUTE= f'{BaseUrl}CancelOrderRequest'
-ORDER_STATUS_ROUTE = f'{BaseUrl}V1/OrderStatus'
+ORDER_STATUS_ROUTE = f'{BaseUrl}OrderStatus'
 TRADE_INFO_ROUTE = f'{BaseUrl}TradeInformation'
 
 BRACKET_MOD_ROUTE= f'{BaseUrl}ModifySMOOrder'
@@ -29,3 +29,8 @@ HISTORICAL_DATA_ROUTE="https://openapi.5paisa.com/historical/"
 IDEAS_ROUTE= f'{BaseUrl}TraderIDEAs'
 
 TRADEBOOK_ROUTE= f'{BaseUrl}V1/TradeBook'
+
+ACCESS_TOKEN_ROUTE=  f'{BaseUrl}GetAccessToken'
+MARKET_STATUS_ROUTE=  f'{BaseUrl}MarketStatus'
+TRADE_HISTORY_ROUTE=  f'{BaseUrl}TradeHistory'
+
