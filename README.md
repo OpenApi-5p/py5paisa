@@ -50,6 +50,16 @@ client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="Y
 client.login()
 ```
 
+#### OAUTH
+```py
+*Need not use Login function if using Oauth flow to use APIs
+
+First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
+
+Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
+
+client.get_access_token('Your Response Token')
+
 After successful authentication, you should get a `Logged in!!` message
 #### Market Feed
 
@@ -60,6 +70,10 @@ req_list_=[{"Exch":"N","ExchType":"D","Symbol":"NIFTY 22 APR 2021 CE 15200.00","
             {"Exch":"N","ExchType":"D","Symbol":"NIFTY 22 APR 2021 PE 15200.00","Expiry":"20210422","StrikePrice":"15200","OptionType":"PE"}]
             
 client.fetch_market_feed(req_list_)
+```
+#### Market Status
+```py
+print(client.get_market_status())
 ```
 
 #### Fetching user info
@@ -122,7 +136,7 @@ test_order = Order(order_type='B', scrip_code=1660, quantity=1, price=205,is_int
 client.modify_order(test_order)
 ```
 
-#### Canceling an order
+#### Cancelling an order
 
 ```py
 client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='12345678')
@@ -187,6 +201,10 @@ req_list_= [
         }]
 # Fetches the order status
 client.fetch_order_status(req_list_)
+
+# Fetch Trade History
+
+print(client.get_trade_history("PASS EXCHANGE ORDER ID"))
 
 ```
 #### Live Market Feed Streaming
