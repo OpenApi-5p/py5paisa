@@ -48,6 +48,9 @@ cred={
 
 client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="YYYYMMDD",cred=cred)
 client.login()
+
+After successful authentication, you should get a `Logged in!!` message
+
 ```
 
 #### OAUTH
@@ -59,8 +62,8 @@ First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLo
 Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
 
 client.get_access_token('Your Response Token')
+```
 
-After successful authentication, you should get a `Logged in!!` message
 #### Market Feed
 
 ```py
