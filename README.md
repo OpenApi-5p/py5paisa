@@ -222,7 +222,7 @@ def on_message(ws, message):
     print(message)
 
 
-client.connect(dict1)
+client.connect(req_data)
 
 client.receive_data(on_message)
 ```
