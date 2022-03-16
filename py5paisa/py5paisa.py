@@ -1,18 +1,21 @@
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from .auth import EncryptionClient
-from .const import GENERIC_PAYLOAD, LOGIN_PAYLOAD, HEADERS, NEXT_DAY_TIMESTAMP, TODAY_TIMESTAMP,LOGIN_CHECK_PAYLOAD,WS_PAYLOAD,JWT_PAYLOAD,JWT_HEADERS
-from .order import Order, bo_co_order
+from .const import *
+from .order import Order, Bo_co_order,RequestType,Basket_order
 from .logging import log_response
 import json
 import websocket
 import pandas as pd
 import websocket 
 from .urlconst  import *
+from enum import Enum
+
 
 
 class FivePaisaClient:
-   
+    
+    
     def __init__(self, email=None, passwd=None, dob=None,cred=None):
         """
         Main constructor for client.
@@ -22,10 +25,11 @@ class FivePaisaClient:
             self.email = email
             self.passwd = passwd
             self.dob = dob
-            self.client_code = None
+            self.client_code = ""
             self.Jwt_token = None
             self.Aspx_auth = None
             self.web_url= None
+            self.market_depth_url= None
             self.Res_Data= None
             self.ws= None
             self.access_token= ""
@@ -38,6 +42,7 @@ class FivePaisaClient:
             self.ENCRYPTION_KEY=cred["ENCRYPTION_KEY"]
             self.create_payload()
             self.set_url()
+            
         except Exception as e:
             log_response(e)
     
@@ -97,6 +102,7 @@ class FivePaisaClient:
             res = self.session.post(route, json=self.login_payload, headers=HEADERS)
             resp=res.json()
             self.Jwt_token=resp["body"]["JWTToken"]
+            self.access_token=self.Jwt_token
             return res.json()
         except Exception as e:
             log_response(e)
@@ -145,51 +151,88 @@ class FivePaisaClient:
         try:
             self.payload["body"]["ClientCode"] = self.client_code
             self.payload["head"]["key"] = self.USER_KEY
+            HEADERS["Authorization"] = f'Bearer {self.access_token}'
             if req_type == "OP":
                 url = self.ORDER_PLACEMENT_ROUTE
-                HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
+                #self.payload["head"]["requestCode"] = "5PPlaceOrdReq"
+                if self.access_token != "" :
+                    HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
             elif req_type == "OC":
                 url = self.ORDER_CANCEL_ROUTE
-                HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
+                #self.payload["head"]["requestCode"] = "5PCancelOrdReq"
+                if self.access_token != "" :
+                    HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
             elif req_type == "OM":
                 url = self.ORDER_MODIFY_ROUTE
-                HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
+                #self.payload["head"]["requestCode"] = "5PModifyOrdReq"
+                if self.access_token != "" :
+                    HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
             elif req_type == "OS":
                 url = self.ORDER_STATUS_ROUTE
+                self.payload["head"]["requestCode"] = "5POrdStatus"
             elif req_type == "TI":
                 url = self.TRADE_INFO_ROUTE
+                self.payload["head"]["requestCode"] = "5PTrdInfo"
             elif req_type == "MF":
                 url = self.MARKET_FEED_ROUTE
+                self.payload["head"]["requestCode"] = "5PMF"
                 self.payload["body"]["COUNT"]=self.client_code
             elif req_type == "BM":
                 url = self.BRACKET_MOD_ROUTE
+                #self.payload["head"]["requestCode"] = "5PSModMOOrd"
                 self.payload["body"]["legtype"]=0
                 self.payload["body"]["TMOPartnerOrderID"]=0
             elif req_type == "BO":
                 url = self.BRACKET_ORDER_ROUTE
+                self.payload["head"]["requestCode"] = "5PSMOOrd"
                 self.payload["body"]["OrderRequesterCode"]=self.client_code
             elif req_type == "MD":
                 url = self.MARKET_DEPTH_ROUTE
+                #self.payload["head"]["requestCode"] = "5PMD"
+            elif req_type == "MDS":
+                url = self.MARKET_DEPTH_BY_SYMBOL_ROUTE
+                #self.payload["head"]["requestCode"] = "5PMD"
             elif req_type == "TB":
                 url = self.TRADEBOOK_ROUTE
-            elif req_type == "MS":
-                url = self.MARKET_STATUS_ROUTE
-                self.payload["body"]["ClientCode"] = ""
-                HEADERS["Authorization"] = f'Bearer {self.access_token}'
-            elif req_type == "TH":
-                url = self.TRADE_HISTORY_ROUTE
-                HEADERS["Authorization"] = f'Bearer {self.access_token}'
-                
+                #self.payload["head"]["requestCode"] = "5PTrdBkV1"
+            elif req_type == "GB":
+                url = self.GET_BASKET_ROUTE
+            elif req_type == "CB":
+                url = self.CREATE_BASKET_ROUTE
+            elif req_type == "RB":
+                url = self.RENAME_BASKET_ROUTE
+            elif req_type == "DB":
+                url = self.DELETE_BASKET_ROUTE
+            elif req_type == "CL":
+                url = self.CLONE_BASKET_ROUTE
+            elif req_type == "EB":
+                url = self.EXECUTE_BASKET_ROUTE
+            elif req_type == "GO":
+                url = self.GET_ORDER_IN_BASKET_ROUTE
+            elif req_type == "AB":
+                url = self.ADD_BASKET_ORDER_ROUTE
+            elif req_type == "GE":
+                url = self.OPTION_CHAIN_ROUTE
+            elif req_type == "GOC":
+                url = self.GET_OPTION_CHAIN_ROUTE
+            elif req_type == "CBO":
+                url = self.CANCEL_BULK_ORDER_ROUTE
+            elif req_type == "SO":
+                url = self.SQUAREOFF_ROUTE
+            elif req_type == "PO":
+                url = self.POSITION_CONVERSION_ROUTE
             else:
                 raise Exception("Invalid request type!")
-            
+
             res = self.session.post(url, json=self.payload,
                                     headers=HEADERS).json()
+            
             if req_type == "MS":
                 log_response(res["head"]["statusDescription"])
             else:
                 log_response(res["body"]["Message"])
             return res["body"]
+            
         except Exception as e:
             log_response(e)
 
@@ -213,6 +256,15 @@ class FivePaisaClient:
             self.payload["body"]["Data"]=req_list
         
             return self.order_request("MD")
+        except Exception as e:
+            log_response(e)
+            
+    def fetch_market_depth_by_symbol(self, req_list:list):
+        try:
+            self.payload["body"]["Count"]="1"
+            self.payload["body"]["Data"]=req_list
+        
+            return self.order_request("MDS")
         except Exception as e:
             log_response(e)
     
@@ -258,7 +310,7 @@ class FivePaisaClient:
             log_response(e)
         
         
-    def set_payload_bo(self,boco:bo_co_order)-> None:
+    def set_payload_bo(self,boco:Bo_co_order)-> None:
         """
             this is for bo-co order placement
         """
@@ -291,6 +343,34 @@ class FivePaisaClient:
             self.payload["body"]["TradedQty"] = boco.traded_qty
         except Exception as e:
             log_response(e)
+
+    def set_basket_payload(self,basket_order:Basket_order,basket_list:list)-> None:
+        """
+            this is for Basket order placement
+        """
+        try:
+            self.payload["body"]["Exchange"] = basket_order.Exchange
+            self.payload["body"]["ExchangeType"] = basket_order.ExchangeType
+            self.payload["body"]["Price"] = basket_order.Price
+            self.payload["body"]["OrderType"] = basket_order.OrderType
+            self.payload["body"]["Qty"] = basket_order.Qty
+            self.payload["body"]["ScripCode"] = basket_order.ScripCode
+            self.payload["body"]["AtMarket"] = basket_order.AtMarket
+            self.payload["body"]["StopLossPrice"] = basket_order.StopLossPrice
+            self.payload["body"]["IsStopLossOrder"] = basket_order.IsStopLossOrder
+            self.payload["body"]["IOCOrder"] = basket_order.IOCOrder
+            self.payload["body"]["DelvIntra"] = basket_order.DelvIntra
+            self.payload["body"]["AppSource"] = self.APP_SOURCE
+            self.payload["body"]["IsIntraday"] = basket_order.IsIntraday
+            self.payload["body"]["ValidTillDate"] =f"/Date({NEXT_DAY_TIMESTAMP})/"
+            self.payload["body"]["AHPlaced"] = basket_order.AHPlaced
+            self.payload["body"]["PublicIP"] = basket_order.PublicIP
+            self.payload["body"]["DisQty"] = basket_order.DisQty
+            self.payload["body"]["iOrderValidity"] = basket_order.iOrderValidity
+            self.payload["body"]["BasketIDs"] = basket_list
+        except Exception as e:
+            log_response(e)
+
 
     def place_order(self, order: Order):
         """
@@ -330,7 +410,7 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
 
-    def bo_order(self,boco:bo_co_order):
+    def bo_order(self,boco:Bo_co_order):
         try:
             self.set_payload_bo(boco)
             return self.order_request("BO")
@@ -510,6 +590,21 @@ class FivePaisaClient:
             self.ACCESS_TOKEN_ROUTE=ACCESS_TOKEN_ROUTE
             self.MARKET_STATUS_ROUTE=MARKET_STATUS_ROUTE
             self.TRADE_HISTORY_ROUTE=TRADE_HISTORY_ROUTE
+            self.GET_BASKET_ROUTE=GET_BASKET_ROUTE
+            self.CREATE_BASKET_ROUTE=CREATE_BASKET_ROUTE
+            self.RENAME_BASKET_ROUTE=RENAME_BASKET_ROUTE
+            self.DELETE_BASKET_ROUTE=DELETE_BASKET_ROUTE
+            self.CLONE_BASKET_ROUTE=CLONE_BASKET_ROUTE
+            self.EXECUTE_BASKET_ROUTE=EXECUTE_BASKET_ROUTE
+            self.GET_ORDER_IN_BASKET_ROUTE=GET_ORDER_IN_BASKET_ROUTE
+            self.ADD_BASKET_ORDER_ROUTE=ADD_BASKET_ORDER_ROUTE
+            self.OPTION_CHAIN_ROUTE=OPTION_CHAIN_ROUTE
+            self.GET_OPTION_CHAIN_ROUTE=GET_OPTION_CHAIN_ROUTE
+            self.CANCEL_BULK_ORDER_ROUTE=CANCEL_BULK_ORDER_ROUTE
+            self.SQUAREOFF_ROUTE=SQUAREOFF_ROUTE
+            self.MARKET_DEPTH_ROUTE=MARKET_DEPTH_ROUTE
+            self.POSITION_CONVERSION_ROUTE=POSITION_CONVERSION_ROUTE
+            self.MARKET_DEPTH_BY_SYMBOL_ROUTE=MARKET_DEPTH_BY_SYMBOL_ROUTE
         except Exception as e:
             log_response(e)
     
@@ -522,6 +617,7 @@ class FivePaisaClient:
             self.ws_payload=WS_PAYLOAD
             self.jwt_headers=JWT_HEADERS
             self.jwt_payload=JWT_PAYLOAD
+            self.SOCKET_DEPTH_PAYLOAD=SOCKET_DEPTH_PAYLOAD
         except Exception as e:
             log_response(e)
         
@@ -559,5 +655,148 @@ class FivePaisaClient:
                 return self.order_request("TH")
         except Exception as e:
             log_response(e)
-        
+
+    def get_basket(self):
+        try:
+            if self.client_code != None:
+                #self.payload["body"]["ClientCode"] = self.client_code
+                return self.order_request("GB")
+        except Exception as e:
+            log_response(e)
+
+    def create_basket(self,basket_name:str):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["BasketName"] = basket_name
+                return self.order_request("CB")
+        except Exception as e:
+            log_response(e)
+
+    def rename_basket(self,basket_name:str,basket_id:int):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["NewBasketName"] = basket_name
+                self.payload["body"]["BasketID"] = basket_id
+                return self.order_request("RB")
+        except Exception as e:
+            log_response(e)
+
+    def delete_basket(self,basket_id:list):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["BasketIDs"] = basket_id
+                return self.order_request("DB")
+        except Exception as e:
+            log_response(e)
+
+    def clone_basket(self,basket_id:int):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["BasketID"] = basket_id
+                return self.order_request("CL")
+        except Exception as e:
+            log_response(e)
+
+    def execute_basket(self,basket_id:int):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["BasketID"] = basket_id
+                return self.order_request("EB")
+        except Exception as e:
+            log_response(e)
+
+    def get_order_in_basket(self,basket_id:int):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["BasketID"] = basket_id
+                return self.order_request("GO")
+        except Exception as e:
+            log_response(e)
+
+    def add_basket_order(self,basket_order:Basket_order,basket_list:list):
+        try:
+            if self.client_code != None:
+                self.set_basket_payload(basket_order,basket_list)
+                return self.order_request("AB")
+        except Exception as e:
+            log_response(e)
+
+    def get_expiry(self,exch:str,symbol:str):
+        try:
+            self.payload["body"]["Exch"] = exch
+            self.payload["body"]["Symbol"] = symbol
+            return self.order_request("GE")
+        except Exception as e:
+            log_response(e)
+
+    def get_option_chain(self,exch:str,symbol:str,expire:int):
+        try:
+            self.payload["body"]["Exch"] = exch
+            self.payload["body"]["Symbol"] = symbol
+            self.payload["body"]["ExpiryDate"] = f"/Date({expire})/"
+            return self.order_request("GOC")
+        except Exception as e:
+            log_response(e)
+
+    def cancel_bulk_order(self,ExchOrderIDs:list):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["ExchOrderIDs"] = ExchOrderIDs
+            return self.order_request("CBO")
+        except Exception as e:
+            log_response(e)
+
+    def squareoff_all(self):
+        try:
+            if self.client_code != None:
+                return self.order_request("SO")
+        except Exception as e:
+            log_response(e)
+
+    def position_convertion(self,Exch:str,ExchType:str,ScripData:str,TradeType:str,ConvertQty:int,ConvertFrom:str,ConvertTo:str):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["Exch"] = Exch
+                self.payload["body"]["ExchType"] = ExchType
+                self.payload["body"]["ScripData"] = ScripData
+                self.payload["body"]["TradeType"] = TradeType
+                self.payload["body"]["ConvertQty"] = ConvertQty
+                self.payload["body"]["ConvertFrom"] = ConvertFrom
+                self.payload["body"]["ConvertTo"] = ConvertTo
+                return self.order_request("PO")
+        except Exception as e:
+            log_response(e)
+
+    def socket_20_depth(self,socket_payload:dict):
+        try:
+            self.token=self.market_depth_token()
+            """
+            self.SOCKET_DEPTH_PAYLOAD["operation"]=operation
+            self.SOCKET_DEPTH_PAYLOAD["method"]=method
+            self.SOCKET_DEPTH_PAYLOAD["instruments"]=instruments
+            """
+            self.subscription_key=SUBSCRIPTION_KEY
+            
+
+            self.market_depth_url=f'wss://openapi.5paisa.com/ws?subscription-key={self.subscription_key}&access_token={self.token}'
+            
+            def on_open(ws):
+                
+                try:
+                    ws.send(json.dumps(socket_payload))
+                except Exception as e:
+                    log_response(e)
+                   
+            self.ws = websocket.WebSocketApp(self.market_depth_url,on_open=on_open)
+            #self.ws.run_forever()
+        except Exception as e:
+            log_response(e)
+
+    def market_depth_token(self):
+        try:
+            response = self.session.post(self.MARKET_DEPTH_ROUTE, headers=self.jwt_headers).json()
+            return response["access_token"]
+        except Exception as e:
+            log_response(e)
+    
  
