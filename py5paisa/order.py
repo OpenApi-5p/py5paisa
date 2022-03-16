@@ -49,6 +49,23 @@ class AHPlaced(Enum):
     NORMAL_ORDER = "N"
 
 
+class RequestType(Enum):
+    ORDER_PLACE="OP"
+    ORDER_CANCEL="OC"
+    ORDER_MODIFY="OM"
+    ORDER_STATUS="OS"
+    TRADE_INFO="TI"
+    MARKET_FEED="MF"
+    MARKET_DEPTH="MD"
+    TRADE_BOOK="TB"
+    MARKET_STATUS="MS"
+    MARKET_HISTORY="MH"
+    GET_BASKET="GB"
+    BRACKET_ORDER="BO"
+    BRACKET_MODIFY="BM"
+    CREATE_BASKET="CB"
+
+
 class Order:
 
     def __init__(self, order_type: str, quantity: int, exchange: str,
@@ -79,7 +96,7 @@ class Order:
         self.IsEOSOrder=IsEOSOrder
         
 
-class bo_co_order:
+class Bo_co_order:
 
     def __init__(self,scrip_code: int, Qty: int,LimitPriceInitialOrder:float,TriggerPriceInitialOrder:float
                  ,LimitPriceProfitOrder:float,BuySell:str,Exch: str,ExchType:  str,RequestType: str,LimitPriceForSL:float,
@@ -120,3 +137,30 @@ class bo_co_order:
         if LimitPriceProfitOrder==0:
             self.order_for="C"
 
+class Basket_order:
+
+    def __init__(self,Exchange:str,ExchangeType:str,Price:float,OrderType:str,Qty:int,ScripCode:str,DelvIntra:str,AtMarket:bool= False,StopLossPrice:float=0,
+                 IsStopLossOrder:bool =False,IOCOrder: bool =False,IsIntraday:bool = False,AHPlaced:str='N',PublicIP:str='0.0.0.0',DisQty:int=0,iOrderValidity:float=0):
+        
+
+        self.Exchange = Exchange
+        self.ExchangeType = ExchangeType
+        self.Price = Price
+        self.OrderType=OrderType
+        self.Qty=Qty
+        self.ScripCode=ScripCode
+        self.DelvIntra=DelvIntra
+
+        self.AtMarket=AtMarket
+        self.StopLossPrice=StopLossPrice
+        self.IsStopLossOrder=IsStopLossOrder
+        self.IOCOrder=IOCOrder
+        
+        self.AHPlaced=AHPlaced
+
+        self.PublicIP=PublicIP
+        self.DisQty=DisQty
+        self.iOrderValidity=iOrderValidity
+
+        if DelvIntra == 'I':
+            self.IsIntraday=True
