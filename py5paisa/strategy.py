@@ -1,5 +1,5 @@
 from py5paisa import FivePaisaClient
-from py5paisa.order import Order,bo_co_order
+from py5paisa.order import Order,Bo_co_order
 import json
 
 
