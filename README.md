@@ -99,6 +99,14 @@ client.get_tradebook()
 
 ```
 
+#### Position Conversion
+
+```py
+# Convert positions
+client.position_convertion(<Exchange>,<Exchange Type>,<Scrip Name>,<Buy/Sell>,<Qty>,<From Delivery/Intraday>,<From Delivery/Intraday>)
+client.position_convertion("N","C","BPCL_EQ","B",5,"D","I")
+```
+
 Scrip codes reference:
 
 Note : Use these Links for getting scrip codes
@@ -144,6 +152,16 @@ client.modify_order(test_order)
 ```py
 client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='12345678')
 ```
+```py
+cancel_bulk=[
+            {
+                "ExchOrderID": "<Exchange Order ID 1>"
+            },
+            {
+                "ExchOrderID": "<Exchange Order ID 2>"
+            },
+client.cancel_bulk_order(cancel_bulk)
+```
 #### Bracket Order 
 
 
@@ -178,6 +196,42 @@ test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intrada
 client.mod_bo_order(test_order)
 
 #Note : You have pass atmarket=true while modifying stoploss price, Pass ExchorderId for the particular leg to modify.
+```
+
+#### Basket Orders
+
+```py
+# Create a new Basket
+client.create_basket("<New Basket Name>")
+
+# Rename existing basket
+client.rename_basket("<Modified Basket Name>",<Exisiting Basket ID>)
+
+# Clone existing basket
+client.clone_basket(<Exisiting Basket ID>)
+
+# Delete bulk baskets
+delete_basket_list=[{"BasketID":"<Exisiting Basket ID>"},{"BasketID":"<Exisiting Basket ID>"}]
+client.delete_basket(delete_basket_list)
+
+
+# Get list of all baskets (Open/Closed)
+client.get_basket()
+
+basket_list= [
+            {
+                "BasketID": "<Exisiting Basket ID>"
+            },
+            {
+                "BasketID": "<Exisiting Basket ID>"
+            }
+        ]
+order_to_basket=Basket_order("N","C",23000,"BUY",1,"1660","I")
+client.add_basket_order(order_to_basket,basket_list)
+
+# Get orders in basket
+client.get_order_in_basket(<Exisiting Basket ID>)
+
 ```
 
 #### Fetching Order Status and Trade Information
@@ -240,6 +294,22 @@ Subscribe= s
 
 Unsubscribe=u
 
+#### Live Market Depth Streaming (Depth 20)
+
+```py
+a={
+                "method":"subscribe",
+                "operation":"20depth",
+                "instruments":["NC2885"]
+            }
+print(client.socket_20_depth(a))
+def on_message(ws, message):
+    print(message)
+client.receive_data(on_message)
+
+Note:- Instruments in payload above is a list(array) in format as <exchange><exchange type><scrip code>
+```
+
 #### Full Market Snapshot 
 ```py
 a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
@@ -247,6 +317,24 @@ a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
    ]
 print(client.fetch_market_depth(a))
 ```
+
+#### Full Market Snapshot(By Symbol)
+```py
+a=[{"Exchange":"N","ExchangeType":"C","Symbol":"ITC"},
+   {"Exchange":"N","ExchangeType":"D","ScripCode":"BANKNIFTY 31 Feb 2022 CE 41600.00"},
+   ]
+print(client.fetch_market_depth_by_symbol(a))
+```
+
+#### Option Chain
+```py
+client.get_expiry("N","NIFTY")
+--Returns list of all active expiries
+
+--client.get_option_chain("N","NIFTY",<Pass expiry timestamp from get_expiry response)
+client.get_option_chain("N","NIFTY",1647507600000)
+```
+
 #### Historical Data
 ```py
 #historical_data(<Exchange>,<Exchange Type>,<Scrip Code>,<Time Frame>,<From Data>,<To Date>)
