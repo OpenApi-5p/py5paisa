@@ -321,7 +321,7 @@ print(client.fetch_market_depth(a))
 #### Full Market Snapshot(By Symbol)
 ```py
 a=[{"Exchange":"N","ExchangeType":"C","Symbol":"ITC"},
-   {"Exchange":"N","ExchangeType":"D","ScripCode":"BANKNIFTY 31 Feb 2022 CE 41600.00"},
+   {"Exchange":"N","ExchangeType":"D","Symbol":"BANKNIFTY 31 Feb 2022 CE 41600.00"},
    ]
 print(client.fetch_market_depth_by_symbol(a))
 ```
