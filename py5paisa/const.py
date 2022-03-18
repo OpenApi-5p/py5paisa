@@ -65,9 +65,12 @@ JWT_PAYLOAD={
     "ClientCode":"",
     "JWTToken":""
     }
+SOCKET_DEPTH_PAYLOAD={
+            "operation":"",
+            "method":"",
+            "instruments":""}
 
-
-
+SUBSCRIPTION_KEY="c89fab8d895a426d9e00db380b433027"
 TODAY_TIMESTAMP = int(datetime.datetime.today().timestamp())
 NEXT_DAY_TIMESTAMP = int(
     (datetime.datetime.today()+datetime.timedelta(days=1)).timestamp())
