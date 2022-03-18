@@ -331,7 +331,7 @@ print(client.fetch_market_depth_by_symbol(a))
 client.get_expiry("N","NIFTY")
 # Returns list of all active expiries
 
-# client.get_option_chain("N","NIFTY",<Pass expiry timestamp from get_expiry response)
+# client.get_option_chain("N","NIFTY",<Pass expiry timestamp from get_expiry response>)
 client.get_option_chain("N","NIFTY",1647507600000)
 ```
 
