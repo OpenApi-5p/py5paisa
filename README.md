@@ -103,7 +103,7 @@ client.get_tradebook()
 
 ```py
 # Convert positions
-client.position_convertion(<Exchange>,<Exchange Type>,<Scrip Name>,<Buy/Sell>,<Qty>,<From Delivery/Intraday>,<From Delivery/Intraday>)
+# client.position_convertion(<Exchange>,<Exchange Type>,<Scrip Name>,<Buy/Sell>,<Qty>,<From Delivery/Intraday>,<From Delivery/Intraday>)
 client.position_convertion("N","C","BPCL_EQ","B",5,"D","I")
 ```
 
