@@ -55,11 +55,11 @@ After successful authentication, you should get a `Logged in!!` message
 
 #### OAUTH
 ```py
-*Need not use Login function if using Oauth flow to use APIs
+# *Need not use Login function if using Oauth flow to use APIs
 
-First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
+# First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
 
-Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
+# Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
 
 client.get_access_token('Your Response Token')
 ```
