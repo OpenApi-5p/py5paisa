@@ -173,6 +173,10 @@ class FivePaisaClient:
             elif req_type == "TI":
                 url = self.TRADE_INFO_ROUTE
                 self.payload["head"]["requestCode"] = "5PTrdInfo"
+            elif req_type == "MS":
+                url = self.MARKET_STATUS_ROUTE
+            elif req_type == "TH":
+                url = self.TRADE_HISTORY_ROUTE
             elif req_type == "MF":
                 url = self.MARKET_FEED_ROUTE
                 self.payload["head"]["requestCode"] = "5PMF"
