@@ -622,6 +622,7 @@ class FivePaisaClient:
             self.jwt_headers=JWT_HEADERS
             self.jwt_payload=JWT_PAYLOAD
             self.SOCKET_DEPTH_PAYLOAD=SOCKET_DEPTH_PAYLOAD
+            self.subscription_key = SUBSCRIPTION_KEY
         except Exception as e:
             log_response(e)
         
