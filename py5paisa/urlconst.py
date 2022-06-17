@@ -10,20 +10,25 @@ ORDER_BOOK_ROUTE = f'{BaseUrl}V2/OrderBook'
 HOLDINGS_ROUTE = f'{BaseUrl}V2/Holding'
 POSITIONS_ROUTE = f'{BaseUrl}V1/NetPositionNetWise'
 
-ORDER_PLACEMENT_ROUTE = f'{BaseUrl}/V1/PlaceOrderRequest'
-ORDER_MODIFY_ROUTE= f'{BaseUrl}/V1/ModifyOrderRequest'
-ORDER_CANCEL_ROUTE= f'{BaseUrl}/V1/CancelOrderRequest'
-ORDER_STATUS_ROUTE = f'{BaseUrl}/V1/OrderStatus'
+ORDER_PLACEMENT_ROUTE = f'{BaseUrl}V1/PlaceOrderRequest'
+ORDER_MODIFY_ROUTE= f'{BaseUrl}V1/ModifyOrderRequest'
+ORDER_CANCEL_ROUTE= f'{BaseUrl}V1/CancelOrderRequest'
+ORDER_STATUS_ROUTE = f'{BaseUrl}V1/OrderStatus'
 TRADE_INFO_ROUTE = f'{BaseUrl}TradeInformation'
 
-BRACKET_MOD_ROUTE= f'{BaseUrl}ModifySMOOrder'
-BRACKET_ORDER_ROUTE= f'{BaseUrl}SMOOrderRequest'
+BRACKET_MOD_ROUTE= f'{BaseUrl}ModifyBracketOrderRequest'
+BRACKET_ORDER_ROUTE= f'{BaseUrl}BracketOrderRequest'
+BRACKET_CANCEL_ROUTE= f'{BaseUrl}CancelBracketOrderRequest'
+
+COVER_MOD_ROUTE= f'{BaseUrl}ModifyCoverOrderequest'
+COVER_ORDER_ROUTE= f'{BaseUrl}CoverOrderRequest'
+COVER_CANCEL_ROUTE= f'{BaseUrl}CancelCoverOrderRequest'
 
 MARKET_FEED_ROUTE= f'{BaseUrl}MarketFeed'
 LOGIN_CHECK_ROUTE="https://openfeed.5paisa.com/Feeds/api/UserActivity/LoginCheck"
 
 MARKET_DEPTH_ROUTE= f'{BaseUrl}/MarketDepth'
-MARKET_DEPTH_BY_SYMBOL_ROUTE= f'{BaseUrl}/V1/MarketDepth'
+MARKET_DEPTH_BY_SYMBOL_ROUTE= f'{BaseUrl}V1/MarketDepth'
 JWT_VALIDATION_ROUTE="https://Openapi.indiainfoline.com/VendorsAPI/Service1.svc/JWTOpenApiValidation"
 HISTORICAL_DATA_ROUTE="https://openapi.5paisa.com/historical/"
 
@@ -48,4 +53,4 @@ GET_OPTION_CHAIN_ROUTE=f'{BaseUrl}GetOptionsForSymbol'
 CANCEL_BULK_ORDER_ROUTE=f'{BaseUrl}CancelOrderBulk'
 SQUAREOFF_ROUTE=f'{BaseUrl}SquareOffAll'
 POSITION_CONVERSION_ROUTE=f'{BaseUrl}PositionConversion'
-MARKET_DEPTH_ROUTE="https://openapi.5paisa.com/marketfeed-token/token"
+MARKET_DEPTH_ROUTE=f'{BaseUrl}MarketDepth'
