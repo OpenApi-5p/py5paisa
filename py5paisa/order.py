@@ -72,8 +72,8 @@ class Order:
                  exchange_segment: str, price: float ,is_intraday: bool , 
                  remote_order_id: str = "tag",  scrip_code: int=0, exch_order_id: int = 0,
                  stoploss_price: float = 0, is_stoploss_order: bool = False, ioc_order: bool = False,scripdata: str='',
-                 order_id: int = 0,vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
-                 ahplaced: str= 'N',IsGTCOrder:bool =False,IsEOSOrder:bool =False):
+                 order_id: int = 0,vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",AtMarket: bool = False,
+                 ahplaced: str= 'N',IsGTCOrder:bool =False,IsEOSOrder:bool =False,order_for: str="M"):
 
         self.exchange = exchange
         self.exchange_segment = exchange_segment
@@ -90,13 +90,15 @@ class Order:
         self.ioc_order = ioc_order
         self.is_intraday = is_intraday
         self.vtd = vtd
+        self.AtMarket = AtMarket
         self.ahplaced = ahplaced
         self.scripData=scripdata
         self.IsGTCOrder=IsGTCOrder
         self.IsEOSOrder=IsEOSOrder
-        
+        self.order_for = order_for
 
-class Bo_co_order:
+
+class bo_co_order:
 
     def __init__(self,scrip_code: int, Qty: int,LimitPriceInitialOrder:float,TriggerPriceInitialOrder:float
                  ,LimitPriceProfitOrder:float,BuySell:str,Exch: str,ExchType:  str,RequestType: str,LimitPriceForSL:float,
