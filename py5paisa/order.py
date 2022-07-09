@@ -70,7 +70,7 @@ class Order:
 
     def __init__(self, order_type: str, quantity: int, exchange: str,
                  exchange_segment: str, price: float ,is_intraday: bool , 
-                 remote_order_id: str = "tag",  scrip_code: int=0, exch_order_id: int = 0,
+                 remote_order_id: str = "",  scrip_code: int=0, exch_order_id: int = 0,
                  stoploss_price: float = 0, is_stoploss_order: bool = False, ioc_order: bool = False,scripdata: str='',
                  order_id: int = 0,vtd: str = f"/Date({NEXT_DAY_TIMESTAMP})/",
                  ahplaced: str= 'N',IsGTCOrder:bool =False,IsEOSOrder:bool =False):
