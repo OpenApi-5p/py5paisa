@@ -123,11 +123,10 @@ from py5paisa.order import Order, OrderType, Exchange
 
 #Using Scrip Data :-
 
-client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
 
 #Using Scrip Code :-
-test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code = 1660, quantity=1, price=236.5,is_intraday=True,remote_order_id="tag")
-client.place_order(test_order)
+client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
+
 
 ```
 #### Placing offline orders (After Market Orders)
