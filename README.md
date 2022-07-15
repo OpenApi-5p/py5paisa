@@ -123,8 +123,7 @@ from py5paisa.order import Order, OrderType, Exchange
 
 #Using Scrip Data :-
 
-test_order = Order(order_type='B',exchange='M',exchange_segment='D', scripdata = 'GOLDM 03 Nov 2021_20211103', quantity=1, price=47900,is_intraday=True,IsGTCOrder=False,IsEOSOrder=True,remote_order_id="tag")
-client.place_order(test_order)
+client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
 
 #Using Scrip Code :-
 test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code = 1660, quantity=1, price=236.5,is_intraday=True,remote_order_id="tag")
@@ -143,14 +142,13 @@ test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=
 #### Modifying an order
 
 ```py
-test_order = Order(order_type='B', scrip_code=1660, quantity=1, price=205,is_intraday=False,exchange='N',exchange_segment='C',exch_order_id="12345678" )
-client.modify_order(test_order)
+client.modify_order(ExchOrderID="1100000017861430", Qty=2,Price=261)
 ```
 
 #### Cancelling an order
 
 ```py
-client.cancel_order(exchange='N',exchange_segment='C',exch_order_id='12345678')
+client.cancel_order(exch_order_id="1100000017795041")
 ```
 ```py
 cancel_bulk=[
