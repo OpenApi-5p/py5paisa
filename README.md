@@ -33,33 +33,15 @@ Get your API keys from https://invest.5paisa.com/DeveloperAPI/APIKeys
 Note:- We have deprecated the existing method which involved the use of keys.conf file.
        Kindly go through this updated documentation.
 
-#### Authentication
-
-```py
-from py5paisa import FivePaisaClient
-cred={
-    "APP_NAME":"YOUR APP_NAME",
-    "APP_SOURCE":"YOUR APP_SOURCE",
-    "USER_ID":"YOUR USER_ID",
-    "PASSWORD":"YOUR PASSWORD",
-    "USER_KEY":"YOUR USERKEY",
-    "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
-    }
-
-client = FivePaisaClient(email="random_email@xyz.com", passwd="password", dob="YYYYMMDD",cred=cred)
-client.login()
-
-After successful authentication, you should get a `Logged in!!` message
-
-```
-
-#### OAUTH
+#### AUTHENTICATION USING OAUTH
 ```py
 # *Need not use Login function if using Oauth flow to use APIs
 
 # First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
 
 # Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
+
+# Please note that you need to copy the token from URL and paste in this code and start the code within 30s.
 
 client.get_access_token('Your Response Token')
 ```
