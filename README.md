@@ -103,7 +103,7 @@ Scrip Master - https://images.5paisa.com/website/scripmaster-csv-format.csv
 from py5paisa.order import Order, OrderType, Exchange
 
 #This is example of a commodity order. You can pass scripdata either you can pass scripcode also.
-
+# please use price = 0 for market Order
 #Using Scrip Data :-
 
 
