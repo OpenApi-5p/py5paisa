@@ -658,7 +658,9 @@ class FivePaisaClient:
          
             if message == "Success":
                 self.access_token=res["body"]["AccessToken"]
+                self.Jwt_token = self.access_token
                 self._set_client_code(res["body"]["ClientCode"])
+                log_response("Logged in!!")
                 return self.access_token
             else:
                 log_response(message)

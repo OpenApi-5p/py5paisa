@@ -35,7 +35,15 @@ Note:- We have deprecated the existing method which involved the use of login cr
 
 #### AUTHENTICATION USING OAUTH
 ```py
-
+from py5paisa import FivePaisaClient
+cred={
+    "APP_NAME":"YOUR APP_NAME",
+    "APP_SOURCE":"YOUR APP_SOURCE",
+    "USER_ID":"YOUR USER_ID",
+    "PASSWORD":"YOUR PASSWORD",
+    "USER_KEY":"YOUR USERKEY",
+    "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
+    }
 # First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
 
 # Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
@@ -44,9 +52,10 @@ Note:- We have deprecated the existing method which involved the use of login cr
 
 #This function will automatically take care of generating and sending access token for all your API's
 
+client = FivePaisaClient(cred=cred)
 client.get_access_token('Your Response Token')
 ```
-
+After successful authentication, you should get a `Logged in!!` message
 #### Market Feed
 
 ```py
