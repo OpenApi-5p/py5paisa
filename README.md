@@ -54,8 +54,10 @@ cred={
 
 client = FivePaisaClient(cred=cred)
 client.get_access_token('Your Response Token')
-```
+
 After successful authentication, you should get a `Logged in!!` message
+```
+
 #### Market Feed
 
 ```py
