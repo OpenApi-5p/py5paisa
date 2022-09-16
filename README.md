@@ -114,14 +114,18 @@ Scrip Master - https://images.5paisa.com/website/scripmaster-csv-format.csv
 
 from py5paisa.order import Order, OrderType, Exchange
 
-#This is example of a commodity order. You can pass scripdata either you can pass scripcode also.
+#You can pass scripdata either you can pass scripcode also.
 # please use price = 0 for market Order
 #Using Scrip Data :-
 
 
 #Using Scrip Code :-
 client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
+#Sample For SL order
+client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=350, IsIntraday=False, IsStopLossOrder=True, StopLossPrice=345)
 
+Please refer below documentation link for paramaters to be passed in cleint.place_order function
+https://www.5paisa.com/developerapi/order-request-place-order
 
 ```
 #### Placing offline orders (After Market Orders)
