@@ -116,8 +116,9 @@ from py5paisa.order import Order, OrderType, Exchange
 
 #You can pass scripdata either you can pass scripcode also.
 # please use price = 0 for market Order
-#Using Scrip Data :-
+#use IsIntraday= true for intraday orders
 
+#Using Scrip Data :-
 
 #Using Scrip Code :-
 client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
