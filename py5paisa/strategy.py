@@ -70,8 +70,9 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
             print(order_status)
             if order_status['Message']=='Success':
                 continue
@@ -96,8 +97,7 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='S',Exchange='N',ExchangeType='D', ScripCode=s, Qty=qty, Price=0,IsIntraday=self.intraday(self.intra),remote_order_id=self.tag)
             if order_status['Message']=='Success':
                 continue
             else:
@@ -118,8 +118,9 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
             if order_status['Message']=='Success':
                 continue
             else:
@@ -143,8 +144,9 @@ class strategies:
             scrip.append(sc)
          
         for s in scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
             if order_status['Message']=='Success':
                 continue
             else:
@@ -172,15 +174,17 @@ class strategies:
             sc=self.get_scripcode(self.symbol,self.sell_strike,self.expiry,opt)
             sell_scrip.append(sc)
         for s in buy_scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
             if order_status['Message']=='Success':
                 continue
             else:
                 break
         for s in sell_scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
             if order_status['Message']=='Success':
                 continue
             else:
@@ -211,15 +215,18 @@ class strategies:
             j=j+1
             sell_scrip.append(sc)
         for s in buy_scrip:
-            test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
+            print(order_status)
             if order_status['Message']=='Success':
                 continue
             else:
                 break
         for s in sell_scrip:
-            test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=s, quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-            order_status=self.Client.place_order(test_order)
+            order_status = self.Client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=s, Qty=qty,
+                                                   Price=0, IsIntraday=self.intraday(self.intra),
+                                                   remote_order_id=self.tag)
             if order_status['Message']=='Success':
                 continue
             else:
@@ -239,11 +246,14 @@ class strategies:
         for opt in options:
             sc=self.get_scripcode(self.symbol,self.strike,self.expiry[i],opt)
             scrip.append(sc)
-            i=i+1 
-        test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=scrip[0], quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-        order_status=self.Client.place_order(test_order)
-        test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-        order_status=self.Client.place_order(test_order)
+            i=i+1
+        order_status = self.Client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=scrip[0], Qty=qty,
+                                               Price=0, IsIntraday=self.intraday(self.intra),
+                                               remote_order_id=self.tag)
+        order_status = self.Client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=scrip[1],
+                                               Qty=qty,
+                                               Price=0, IsIntraday=self.intraday(self.intra),
+                                               remote_order_id=self.tag)
     
     def put_calendar(self,symbol,strike,qty,expiry,intra,*args, **kwargs):
         self.symbol=symbol
@@ -260,10 +270,14 @@ class strategies:
             sc=self.get_scripcode(self.symbol,self.strike,self.expiry[i],opt)
             scrip.append(sc)
             i=i+1 
-        test_order = Order(order_type='B',exchange='N',exchange_segment='D', scrip_code=scrip[0], quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-        order_status=self.Client.place_order(test_order)
-        test_order = Order(order_type='S',exchange='N',exchange_segment='D', scrip_code=scrip[1], quantity=qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id=self.tag)
-        order_status=self.Client.place_order(test_order)
+        order_status = self.Client.place_order(OrderType='B', Exchange='N', ExchangeType='D', ScripCode=scrip[0],
+                                               Qty=qty,
+                                               Price=0, IsIntraday=self.intraday(self.intra),
+                                               remote_order_id=self.tag)
+        order_status = self.Client.place_order(OrderType='S', Exchange='N', ExchangeType='D', ScripCode=scrip[1],
+                                               Qty=qty,
+                                               Price=0, IsIntraday=self.intraday(self.intra),
+                                               remote_order_id=self.tag)
         
     def squareoff(self, tag):
         self.tag=self.filter_tag(tag)
@@ -286,8 +300,11 @@ class strategies:
                     self.scrip=trade['ScripCode']
                     self.qty=trade['Qty']
                     self.segment=trade['ExchType']
-                    test_order = Order(order_type=self.type,exchange='N',exchange_segment=self.segment, scrip_code=self.scrip, quantity=self.qty, price=0,is_intraday=self.intraday(self.intra),remote_order_id="sq"+self.tag)
-                    order_status=self.Client.place_order(test_order)
+                    order_status = self.Client.place_order(OrderType=self.type, Exchange='N', ExchangeType=self.segment,
+                                                           ScripCode=self.scrip,
+                                                           Qty=self.qty,
+                                                           Price=0, IsIntraday=self.intraday(self.intra),
+                                                           remote_order_id="sq"+self.tag)
                 else:
                     continue
 
