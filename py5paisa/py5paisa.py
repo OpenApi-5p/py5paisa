@@ -626,7 +626,7 @@ class FivePaisaClient:
             self.GET_OPTION_CHAIN_ROUTE=GET_OPTION_CHAIN_ROUTE
             self.CANCEL_BULK_ORDER_ROUTE=CANCEL_BULK_ORDER_ROUTE
             self.SQUAREOFF_ROUTE=SQUAREOFF_ROUTE
-            self.MARKET_DEPTH_ROUTE=MARKET_DEPTH_ROUTE
+            self.MARKET_DEPTH_ROUTE_20=MARKET_DEPTH_ROUTE_20
             self.POSITION_CONVERSION_ROUTE=POSITION_CONVERSION_ROUTE
             self.MARKET_DEPTH_BY_SYMBOL_ROUTE=MARKET_DEPTH_BY_SYMBOL_ROUTE
         except Exception as e:
@@ -820,7 +820,7 @@ class FivePaisaClient:
 
     def market_depth_token(self):
         try:
-            response = self.session.post(self.MARKET_DEPTH_ROUTE, headers=self.jwt_headers).json()
+            response = self.session.post(self.MARKET_DEPTH_ROUTE_20, headers=self.jwt_headers).json()
             return response["access_token"]
         except Exception as e:
             log_response(e)
