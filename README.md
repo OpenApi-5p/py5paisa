@@ -124,6 +124,8 @@ from py5paisa.order import Order, OrderType, Exchange
 client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
 #Sample For SL order
 client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=350, IsIntraday=False, IsStopLossOrder=True, StopLossPrice=345)
+#Derivative Order
+client.place_order(OrderType='B',Exchange='N',ExchangeType='D', ScripCode = 57633, Qty=50, Price=1.5)
 
 Please refer below documentation link for paramaters to be passed in cleint.place_order function
 https://www.5paisa.com/developerapi/order-request-place-order
@@ -131,11 +133,10 @@ https://www.5paisa.com/developerapi/order-request-place-order
 ```
 #### Placing offline orders (After Market Orders)
 
-By default all orders are normal orders, pass `ahplaced=Y` to place offline orders.
+By default all orders are normal orders, pass `AHPlaced=Y` to place offline orders.
 
 ```py
-from py5paisa.order import Order, OrderType, AHPlaced
-test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False, ahplaced='Y',remote_order_id="tag")
+client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=325, AHPlaced="Y")
 ```
 
 #### Modifying an order
