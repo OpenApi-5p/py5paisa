@@ -46,7 +46,7 @@ cred={
     }
 # First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
 # VendorKey is UesrKey for individuals user
-# for e.g. you can use ResponseURL as https://www.google.com/
+# for e.g. you can use ResponseURL as https://www.5paisa.com/technology/developer-apis
 # Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
 
 # Please note that you need to copy the request token from URL and paste in this code and start the code within 30s.
