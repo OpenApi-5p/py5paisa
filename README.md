@@ -373,7 +373,11 @@ cred={
     "USER_KEY":"YOUR USERKEY",
     "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
     }
+--Old approach
 strategy=strategies(user="random_email@xyz.com", passw="password", dob="YYYYMMDD",cred=cred)
+--New Approach
+strategy=strategies(cred=cred,request_token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjUwMDUyNzcwIiwicm9sZSI6ImdpUUlvYXR5R2NYQUR3eFYwNXVXSGlPVzJRT1dOTGNzIiwibmJmIjoxNjY3ODMwODczLCJleHAiOjE2Njc4MzA5MDMsImlhdCI6MTY2NzgzMDg3M30.iP_FZtFy-nj6QeRd0sEhaKS-jr-wu-pCwtcdYCGPeO4")
+
 ```
 Use the following to execute the strategy (note:- they are executed at market price only)
 ```py
