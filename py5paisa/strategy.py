@@ -7,7 +7,7 @@ class strategies:
 
     def __init__(self, user=None, passw=None, dob=None, cred=None, request_token=None):
         if request_token is None:
-            self.Client = FivePaisaClient(email=user, passwd=passw, dob=dob, cred=cred, request_token=request_token)
+            self.Client = FivePaisaClient(email=user, passwd=passw, dob=dob, cred=cred)
             self.Client.login()
         else:
             self.Client = FivePaisaClient(cred=cred)
