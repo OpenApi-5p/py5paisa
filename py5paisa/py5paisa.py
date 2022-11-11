@@ -118,6 +118,7 @@ class FivePaisaClient:
             payload = GENERIC_PAYLOAD
             payload["body"]["ClientCode"] = self.client_code
             payload["head"]["key"] = self.USER_KEY
+            HEADERS["Authorization"] = f'Bearer {self.access_token}'
             return_type = ""
             if data_type == "MARGIN":
                 url = self.MARGIN_ROUTE
