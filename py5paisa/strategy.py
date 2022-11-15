@@ -1,4 +1,4 @@
-#from py5paisa import FivePaisaClient
+from py5paisa import FivePaisaClient
 from py5paisa.order import Order,Bo_co_order
 import json
 
@@ -13,7 +13,6 @@ class strategies:
             self.Client = FivePaisaClient(cred=cred)
             self.Client.get_access_token(request_token)
 
-    email = user, passwd = passw, dob = dob,
     def get_scripcode(self,symbol,strike,expiry,opt):
         month={
             "01":'JAN',
