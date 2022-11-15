@@ -60,7 +60,7 @@ client.get_access_token('Your Response Token')
 #AUTH Using UserName and Psw - Not Recommended
 Please keep the cred same as above and pass your email,psw and dob
 
-client = FivePaisaClient(email="YOuremail@gmail.com", passwd="Password", dob="YYYYMMDD",cred=cred)
+client = FivePaisaClient(email="youremail@gmail.com", passwd="Password", dob="YYYYMMDD",cred=cred)
 client.login()
 After successful authentication, you should get a `Logged in!!` message
 ```
