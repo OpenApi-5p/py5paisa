@@ -529,18 +529,24 @@ class FivePaisaClient:
 
     def historical_data(self,Exch:str,ExchangeSegment:str,ScripCode: int,time: str,From:str,To: str):
         try:
-            self.jwt_headers['x-clientcode']=self.client_code
-            self.jwt_headers['x-auth-token']=self.Jwt_token
-            url=f'{self.HISTORICAL_DATA_ROUTE}{Exch}/{ExchangeSegment}/{ScripCode}/{time}?from={From}&end={To}'
-            timeList=['1m','5m','10m','15m','30m','60m','1d']
-            if time not in timeList:
-                return 'Invalid Time Frame. it should be within [1m,5m,10m,15m,30m,60m,1d].'
+            validation=self.jwt_validate()
+            
+            
+            if validation=='Authorization Successful':
+                self.jwt_headers['x-clientcode']=self.client_code
+                self.jwt_headers['x-auth-token']=self.Jwt_token
+                url=f'{self.HISTORICAL_DATA_ROUTE}{Exch}/{ExchangeSegment}/{ScripCode}/{time}?from={From}&end={To}'
+                timeList=['1m','5m','10m','15m','30m','60m','1d']
+                if time not in timeList:
+                    return 'Invalid Time Frame. it should be within [1m,5m,10m,15m,30m,60m,1d].'
+                else:
+                    response = self.session.get(url, headers=self.jwt_headers).json()
+                    candleList=response['data']['candles']
+                    df=pd.DataFrame(candleList)
+                    df.columns=['Datetime','Open','High','Low','Close','Volume']
+                    return df
             else:
-                response = self.session.get(url, headers=self.jwt_headers).json()
-                candleList=response['data']['candles']
-                df=pd.DataFrame(candleList)
-                df.columns=['Datetime','Open','High','Low','Close','Volume']
-                return df
+                return 'Invalid JWT.'
         except Exception as e:
             log_response(e)
 
