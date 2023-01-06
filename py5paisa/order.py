@@ -150,7 +150,7 @@ class Basket_order:
         self.Qty=Qty
         self.ScripCode=ScripCode
         self.DelvIntra=DelvIntra
-
+        self.IsIntraday = IsIntraday
         self.AtMarket=AtMarket
         self.StopLossPrice=StopLossPrice
         self.IsStopLossOrder=IsStopLossOrder
