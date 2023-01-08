@@ -30,10 +30,14 @@ Read the docs hosted [here](https://5paisa.github.io/)
 
 Get your API keys from https://invest.5paisa.com/DeveloperAPI/APIKeys
 
-Note:- We have deprecated the existing method which involved the use of login credentials.
-       Kindly go through this updated documentation of using Access token for API Access.
+Note:- 
 
-#### AUTHENTICATION USING OAUTH
+#### Authentication [New Method]
+* First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
+* VendorKey is UesrKey for individuals user. For example - You can use ResponseURL as https://www.5paisa.com/technology/developer-apis
+* Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use). 
+* Please note that you need to copy the request token from URL and paste in this code and start the code within 30s.
+       
 ```py
 from py5paisa import FivePaisaClient
 cred={
@@ -44,27 +48,30 @@ cred={
     "USER_KEY":"YOUR USERKEY",
     "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
     }
-# First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
-# VendorKey is UesrKey for individuals user
-# for e.g. you can use ResponseURL as https://www.5paisa.com/technology/developer-apis
-# Pass the token received in the response url after successful login to get an access token (this also sets the token for all the APIs you use)-
-
-# Please note that you need to copy the request token from URL and paste in this code and start the code within 30s.
-
-#This function will automatically take care of generating and sending access token for all your API's
-
 client = FivePaisaClient(cred=cred)
-client.get_access_token('Your Response Token')
-
-
-#AUTH Using UserName and Psw - Not Recommended
-Please keep the cred same as above and pass your email,psw and dob
-
+client.get_access_token('Your Response Token') #Put the Response Token here.
+```
+       
+#### Authentication [Old Method] [Deprecated]
+We have deprecated the existing method which involved the use of login credentials. 
+       
+```py
+from py5paisa import FivePaisaClient
+cred={
+    "APP_NAME":"YOUR APP_NAME",
+    "APP_SOURCE":"YOUR APP_SOURCE",
+    "USER_ID":"YOUR USER_ID",
+    "PASSWORD":"YOUR PASSWORD",
+    "USER_KEY":"YOUR USERKEY",
+    "ENCRYPTION_KEY":"YOUR ENCRYPTION_KEY"
+    }
 client = FivePaisaClient(email="youremail@gmail.com", passwd="Password", dob="YYYYMMDD",cred=cred)
 client.login()
-After successful authentication, you should get a `Logged in!!` message
 ```
 
+After successful authentication, you should get a `Logged in!!` message
+
+       
 #### Market Feed
 
 ```py
