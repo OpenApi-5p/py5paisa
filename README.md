@@ -172,9 +172,8 @@ client.cancel_bulk_order(cancel_bulk)
 
 For placing Braket order
 ```py
-test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=205,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=215.0,TriggerPriceForSL=203,LimitPriceForSL=202,ExchType='C',Exch='N',RequestType='P',AtMarket=False)
+client.bo_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,TargetPrice=345,StopLossPrice=320,LimitPriceForSL=319,TrailingSL=1.5)
 
-client.bo_order(test_order)
 ```
 Note:For placing Bracket order in FNO segment pass ExchType='D'
 
