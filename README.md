@@ -28,7 +28,7 @@ Read the docs hosted [here](https://5paisa.github.io/)
 
 #### Configuring API keys
 
-Get your API keys from https://invest.5paisa.com/DeveloperAPI/APIKeys
+Get your API keys from https://tradestation.5paisa.com/apidoc
 
 Note:- We have deprecated the existing method which involved the use of login credentials.
        Kindly go through this updated documentation of using Access token for API Access.
