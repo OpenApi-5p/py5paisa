@@ -175,13 +175,18 @@ For placing Braket order
 client.bo_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,TargetPrice=345,StopLossPrice=320,LimitPriceForSL=319,TrailingSL=1.5)
 
 ```
+For placing Cover order
+```py
+client.cover_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,StopLossPrice=320,LimitPriceForSL=319,TrailingSL=1.5)
+```
+
 Note:For placing Bracket order in FNO segment pass ExchType='D'
 
-For Modifying Bracket Order only for Initial order (entry)
+For Modifying Bracket/Cover Order only for Initial order (entry)
 ```py
-test_order=bo_co_order(scrip_code=1660,BuySell='B',Qty=1, LimitPriceInitialOrder=203,TriggerPriceInitialOrder=0,LimitPriceProfitOrder=208.0,TriggerPriceForSL=202,LimitPriceForSL=201,ExchType='C',Exch='N',RequestType='M',AtMarket=False,ExchOrderId='12345678')
 
-client.bo_order(test_order)
+client.modify_bo_order(ExchOrderID="1100000017861430",LimitPrice=330)
+client.modify_cover_order(ExchOrderID="1100000017861430",LimitPriceForSL=330)
 
 #Note : For cover order just pass LimitPriceProfitOrder equal to Zero.
 ```
