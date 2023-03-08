@@ -186,22 +186,21 @@ For Modifying Bracket/Cover Order only for Initial order (entry)
 ```py
 
 client.modify_bo_order(ExchOrderID="1100000017861430",LimitPrice=330)
-client.modify_cover_order(ExchOrderID="1100000017861430",LimitPriceForSL=330)
+client.modify_cover_order(ExchOrderID="1100000017861430",LimitPrice=330)
 
 #Note : For cover order just pass LimitPriceProfitOrder equal to Zero.
 ```
 
 For Modifying LimitPriceProfitOrder 
 ```py
-test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=208.50,is_intraday=True,exchange='N',exchange_segment='C',atmarket=False,exch_order_id="12345678" ,order_for='M')
-
-client.mod_bo_order(test_order)
+client.modify_bo_order(ExchOrderID="1100000017861430",TargetPrice=330)
+client.modify_cover_order(ExchOrderID="1100000017861430",TargetPrice=330)
 ```
 For Modifying TriggerPriceForSL
 ```py
-test_order=Order(order_type='S', scrip_code=1660, quantity=1, price=0,is_intraday=True,exchange='N',exchange_segment='C',atmarket=True,exch_order_id="123456789" ,stoploss_price=201.50,is_stoploss_order=True,order_for='M')
 
-client.mod_bo_order(test_order)
+client.modify_bo_order(ExchOrderID="1100000017861430",LimitPriceForSL=330)
+client.modify_bo_order(ExchOrderID="1100000017861430",LimitPriceForSL=330)
 
 #Note : You have pass atmarket=true while modifying stoploss price, Pass ExchorderId for the particular leg to modify.
 ```
