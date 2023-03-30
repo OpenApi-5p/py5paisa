@@ -166,6 +166,12 @@ cancel_bulk=[
             },
 client.cancel_bulk_order(cancel_bulk)
 ```
+#### SquareOffAll Orders
+
+```py
+client.squareoff_all()
+```
+
 #### Bracket Order 
 
 
