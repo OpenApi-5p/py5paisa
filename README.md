@@ -128,8 +128,8 @@ from py5paisa.order import Order, OrderType, Exchange
 
 #Using Scrip Code :-
 client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=260)
-#Sample For SL order
-client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=350, IsIntraday=False, IsStopLossOrder=True, StopLossPrice=345)
+#Sample For SL order (for order to be treated as SL order just pass StopLossPrice)
+client.place_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, Price=350, IsIntraday=False, StopLossPrice=345)
 #Derivative Order
 client.place_order(OrderType='B',Exchange='N',ExchangeType='D', ScripCode = 57633, Qty=50, Price=1.5)
 
