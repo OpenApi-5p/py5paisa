@@ -539,7 +539,8 @@ class FivePaisaClient:
                 response = self.session.get(url, headers=self.jwt_headers).json()
                 candleList=response['data']['candles']
                 df=pd.DataFrame(candleList)
-                df.columns=['Datetime','Open','High','Low','Close','Volume']
+                if df.empty != True:
+                    df.columns=['Datetime','Open','High','Low','Close','Volume']
                 return df
 
         except Exception as e:
