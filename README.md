@@ -54,7 +54,12 @@ cred={
 #This function will automatically take care of generating and sending access token for all your API's
 
 client = FivePaisaClient(cred=cred)
-client.get_access_token('Your Response Token')
+
+# New TOTP based authentication
+client.get_totp_session('Your ClientCode','TOTP from authenticator app','Your Pin')
+
+# If you have the have the token
+client.get_oauth_session('Your Response Token')
 
 
 #AUTH Using UserName and Psw - Not Recommended
