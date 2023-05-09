@@ -645,6 +645,12 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
 
+    def get_oauth_session(self, request_token):
+        try:
+            self.get_access_token(self, request_token)
+        except Exception as e:
+            log_response(e)
+
     def get_access_token(self, request_token):
         try:
             self.payload["head"]["Key"] = self.USER_KEY
@@ -684,6 +690,14 @@ class FivePaisaClient:
                 return self.request_token
             else:
                 log_response(res["body"])
+        except Exception as e:
+            log_response(e)
+
+    def get_totp_session(self, client_code, totp, pin):
+        try:
+            self.get_request_token(self, client_code, totp, pin)
+            if self.request_token is not None:
+                return self.get_oauth_session(self.request_token)
         except Exception as e:
             log_response(e)
 
