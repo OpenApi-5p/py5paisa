@@ -58,16 +58,10 @@ client = FivePaisaClient(cred=cred)
 # New TOTP based authentication
 client.get_totp_session('Your ClientCode','TOTP from authenticator app','Your Pin')
 
-# If you have the have the token
+# If you have the have the token(OAUTH Approach)
 client.get_oauth_session('Your Response Token')
 
-
-#AUTH Using UserName and Psw - Not Recommended
-Please keep the cred same as above and pass your email,psw and dob
-
-client = FivePaisaClient(email="youremail@gmail.com", passwd="Password", dob="YYYYMMDD",cred=cred)
-client.login()
-After successful authentication, you should get a `Logged in!!` message
+After successful authentication, you should get a `Logged in!!` message in console
 ```
 
 #### Market Feed
