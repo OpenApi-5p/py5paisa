@@ -12,7 +12,7 @@ POSITIONS_ROUTE = f'{BaseUrl}V1/NetPositionNetWise'
 ORDER_PLACEMENT_ROUTE = f'{BaseUrl}V1/PlaceOrderRequest'
 ORDER_MODIFY_ROUTE = f'{BaseUrl}V1/ModifyOrderRequest'
 ORDER_CANCEL_ROUTE = f'{BaseUrl}V1/CancelOrderRequest'
-ORDER_STATUS_ROUTE = f'{BaseUrl}V1/OrderStatus'
+ORDER_STATUS_ROUTE = f'{BaseUrl}V2/OrderStatus'
 TRADE_INFO_ROUTE = f'{BaseUrl}TradeInformation'
 
 BRACKET_MOD_ROUTE = f'{BaseUrl}ModifyBracketOrderRequest'

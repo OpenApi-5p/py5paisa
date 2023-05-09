@@ -534,7 +534,7 @@ class FivePaisaClient:
             self.jwt_headers['x-clientcode'] = self.client_code
             self.jwt_headers['x-auth-token'] = self.Jwt_token
             url = f'{self.HISTORICAL_DATA_ROUTE}{Exch}/{ExchangeSegment}/{ScripCode}/{time}?from={From}&end={To}'
-            timeList = ['1m', '5m', '10m', '15m', '30m', '60m', '1d']
+            timeList = ['1m', '3m','5m', '10m', '15m', '30m', '60m', '1d']
             if time not in timeList:
                 return 'Invalid Time Frame. it should be within [1m,5m,10m,15m,30m,60m,1d].'
             else:
