@@ -647,7 +647,7 @@ class FivePaisaClient:
 
     def get_oauth_session(self, request_token):
         try:
-            self.get_access_token(self, request_token)
+            return self.get_access_token(self, request_token)
         except Exception as e:
             log_response(e)
 
