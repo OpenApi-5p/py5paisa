@@ -647,7 +647,7 @@ class FivePaisaClient:
 
     def get_oauth_session(self, request_token):
         try:
-            return self.get_access_token(self, request_token)
+            return self.get_access_token(request_token)
         except Exception as e:
             log_response(e)
 
@@ -695,7 +695,7 @@ class FivePaisaClient:
 
     def get_totp_session(self, client_code, totp, pin):
         try:
-            self.get_request_token(self, client_code, totp, pin)
+            self.get_request_token(client_code, totp, pin)
             if self.request_token is not None:
                 return self.get_oauth_session(self.request_token)
         except Exception as e:
