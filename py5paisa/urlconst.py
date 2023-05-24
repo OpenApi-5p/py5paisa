@@ -7,7 +7,7 @@ LOGIN_ROUTE = f'{BaseUrl}V4/LoginRequestMobileNewbyEmail'
 MARGIN_ROUTE = f'{BaseUrl}V3/Margin'
 ORDER_BOOK_ROUTE = f'{BaseUrl}V2/OrderBook'
 HOLDINGS_ROUTE = f'{BaseUrl}V3/Holding'
-POSITIONS_ROUTE = f'{BaseUrl}V1/NetPositionNetWise'
+POSITIONS_ROUTE = f'{BaseUrl}V2/NetPositionNetWise'
 
 ORDER_PLACEMENT_ROUTE = f'{BaseUrl}V1/PlaceOrderRequest'
 ORDER_MODIFY_ROUTE = f'{BaseUrl}V1/ModifyOrderRequest'
