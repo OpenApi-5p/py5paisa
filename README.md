@@ -323,6 +323,12 @@ client.receive_data(on_message)
 Note:- Instruments in payload above is a list(array) in format as <exchange><exchange type><scrip code>
 ```
 
+#### Level 5 Market Depth 
+```py
+print(client.fetch_market_depth_by_scrip(Exchange="N",ExchangeType="C",ScripCode="1660"))
+print(client.fetch_market_depth_by_scrip(Exchange="N",ExchangeType="C",ScripData="RELIANCE_EQ"))
+```
+
 #### Full Market Snapshot 
 ```py
 a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
@@ -330,6 +336,8 @@ a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
    ]
 print(client.fetch_market_depth(a))
 ```
+
+
 
 #### Full Market Snapshot(By Symbol)
 ```py

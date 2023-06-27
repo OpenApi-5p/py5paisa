@@ -4,10 +4,10 @@ BaseUrl = 'https://Openapi.5paisa.com/VendorsAPI/Service1.svc/'
 
 LOGIN_ROUTE = f'{BaseUrl}V4/LoginRequestMobileNewbyEmail'
 
-MARGIN_ROUTE = f'{BaseUrl}V3/Margin'
-ORDER_BOOK_ROUTE = f'{BaseUrl}V2/OrderBook'
+MARGIN_ROUTE = f'{BaseUrl}V4/Margin'
+ORDER_BOOK_ROUTE = f'{BaseUrl}V3/OrderBook'
 HOLDINGS_ROUTE = f'{BaseUrl}V3/Holding'
-POSITIONS_ROUTE = f'{BaseUrl}V1/NetPositionNetWise'
+POSITIONS_ROUTE = f'{BaseUrl}V2/NetPositionNetWise'
 
 ORDER_PLACEMENT_ROUTE = f'{BaseUrl}V1/PlaceOrderRequest'
 ORDER_MODIFY_ROUTE = f'{BaseUrl}V1/ModifyOrderRequest'
@@ -24,10 +24,12 @@ COVER_ORDER_ROUTE = f'{BaseUrl}CoverOrderRequest'
 COVER_CANCEL_ROUTE = f'{BaseUrl}CancelCoverOrderRequest'
 
 MARKET_FEED_ROUTE = f'{BaseUrl}MarketFeed'
+MARKET_FEED_ROUTE_BY_SCRIP = f'{BaseUrl}V1/MarketFeed'
 LOGIN_CHECK_ROUTE = "https://openfeed.5paisa.com/Feeds/api/UserActivity/LoginCheck"
 
 MARKET_DEPTH_ROUTE = f'{BaseUrl}/MarketDepth'
 MARKET_DEPTH_BY_SYMBOL_ROUTE = f'{BaseUrl}V1/MarketDepth'
+MARKET_DEPTH_BY_SCRIP = f'{BaseUrl}V2/MarketDepth'
 JWT_VALIDATION_ROUTE = "https://Openapi.indiainfoline.com/VendorsAPI/Service1.svc/JWTOpenApiValidation"
 HISTORICAL_DATA_ROUTE = "https://openapi.5paisa.com/historical/"
 
@@ -37,7 +39,7 @@ TRADEBOOK_ROUTE = f'{BaseUrl}V1/TradeBook'
 GET_REQUEST_TOKEN_ROUTE = f'{BaseUrl}TOTPLogin'
 ACCESS_TOKEN_ROUTE = f'{BaseUrl}GetAccessToken'
 MARKET_STATUS_ROUTE = f'{BaseUrl}MarketStatus'
-TRADE_HISTORY_ROUTE = f'{BaseUrl}TradeHistory'
+TRADE_HISTORY_ROUTE = f'{BaseUrl}V1/TradeHistory'
 
 GET_BASKET_ROUTE = f'{BaseUrl}GetBaskets'
 CREATE_BASKET_ROUTE = f'{BaseUrl}CreateBasket'
