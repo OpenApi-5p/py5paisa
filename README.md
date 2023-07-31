@@ -172,45 +172,6 @@ client.cancel_bulk_order(cancel_bulk)
 client.squareoff_all()
 ```
 
-#### Bracket Order 
-
-
-
-For placing Braket order
-```py
-client.bo_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,TargetPrice=345,StopLossPrice=320,LimitPriceForSL=319,TrailingSL=1.5)
-
-```
-For placing Cover order
-```py
-client.cover_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,StopLossPrice=320,LimitPriceForSL=319,TrailingSL=1.5)
-```
-
-Note:For placing Bracket order in FNO segment pass ExchType='D'
-
-For Modifying Bracket/Cover Order only for Initial order (entry)
-```py
-
-client.modify_bo_order(ExchOrderID="1100000017861430",LimitPrice=330)
-client.modify_cover_order(ExchOrderID="1100000017861430",LimitPrice=330)
-
-#Note : For cover order just pass LimitPriceProfitOrder equal to Zero.
-```
-
-For Modifying LimitPriceProfitOrder 
-```py
-client.modify_bo_order(ExchOrderID="1100000017861430",TargetPrice=330)
-client.modify_cover_order(ExchOrderID="1100000017861430",TargetPrice=330)
-```
-For Modifying TriggerPriceForSL
-```py
-
-client.modify_bo_order(ExchOrderID="1100000017861430",LimitPriceForSL=330)
-client.modify_bo_order(ExchOrderID="1100000017861430",LimitPriceForSL=330)
-
-#Note : You have pass atmarket=true while modifying stoploss price, Pass ExchorderId for the particular leg to modify.
-```
-
 #### Basket Orders
 
 ```py
