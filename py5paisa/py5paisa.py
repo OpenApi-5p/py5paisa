@@ -476,9 +476,12 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
 
-    def send_data(self, open_: any):
+    def send_data(self, wspayload: dict):
         try:
-            self.ws.on_open = open_
+            if self.ws is not None:
+                self.ws.send(json.dumps(wspayload))
+            else:
+                log_response("Websocket Connection not established call connect method first")
         except Exception as e:
             log_response(e)
 
