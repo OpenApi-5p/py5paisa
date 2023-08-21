@@ -365,10 +365,14 @@ class FivePaisaClient:
         """
         Places a fresh order
         """
+        order_list = ['ScripData','ScripCode']
         try:
-            if (order['Price'] >= 0 and order["ScripCode"] and order['Exchange'] and order['OrderType'] and order['Qty'] and order['ExchangeType']):
-                self.set_payload(order)
-                return self.order_request("OP")
+            if (order['Price'] >= 0  and order['Exchange'] and order['OrderType'] and order['Qty'] and order['ExchangeType']):
+                if (order_list[0] in order) or (order_list[1] in order) :
+                    self.set_payload(order)
+                    return self.order_request("OP")
+                else :
+                     return log_response("please enter valid input")
             else:
                 return log_response("please enter valid input")
 
