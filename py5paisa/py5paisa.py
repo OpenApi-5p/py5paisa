@@ -384,7 +384,7 @@ class FivePaisaClient:
         Modifies an existing order
         """
         try:
-            if (order['Price'] and order['ExchOrderID']):
+            if (order['Price'] >= 0 and order['ExchOrderID']):
                 self.set_payload(order)
                 return self.order_request("OM")
         except Exception as e:
