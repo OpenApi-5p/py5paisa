@@ -39,7 +39,7 @@ TRADEBOOK_ROUTE = f'{BaseUrl}V1/TradeBook'
 GET_REQUEST_TOKEN_ROUTE = f'{BaseUrl}TOTPLogin'
 ACCESS_TOKEN_ROUTE = f'{BaseUrl}GetAccessToken'
 MARKET_STATUS_ROUTE = f'{BaseUrl}MarketStatus'
-TRADE_HISTORY_ROUTE = f'{BaseUrl}V1/TradeHistory'
+TRADE_HISTORY_ROUTE = f'{BaseUrl}TradeHistory'
 
 GET_BASKET_ROUTE = f'{BaseUrl}GetBaskets'
 CREATE_BASKET_ROUTE = f'{BaseUrl}CreateBasket'
