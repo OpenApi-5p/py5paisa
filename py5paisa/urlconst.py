@@ -55,3 +55,4 @@ CANCEL_BULK_ORDER_ROUTE = f'{BaseUrl}CancelOrderBulk'
 SQUAREOFF_ROUTE = f'{BaseUrl}SquareOffAll'
 POSITION_CONVERSION_ROUTE = f'{BaseUrl}PositionConversion'
 MARKET_DEPTH_ROUTE_20 = "https://openapi.5paisa.com/marketfeed-token/token"
+APIUID = 'ka7SFqAU6SC'
