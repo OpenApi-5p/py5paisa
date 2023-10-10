@@ -36,6 +36,7 @@ class FivePaisaClient:
             self.PASSWORD = cred["PASSWORD"]
             self.USER_KEY = cred["USER_KEY"]
             self.ENCRYPTION_KEY = cred["ENCRYPTION_KEY"]
+            self.APIUID = APIUID
             self.create_payload()
             self.set_url()
 
@@ -69,6 +70,7 @@ class FivePaisaClient:
     def _login_request(self, route):
         try:
             requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+            HEADERS["5Paisa-API-Uid"] = self.APIUID
             res = self.session.post(
                 route, json=self.login_payload, headers=HEADERS)
             resp = res.json()
@@ -90,6 +92,7 @@ class FivePaisaClient:
             payload["body"]["ClientCode"] = self.client_code
             payload["head"]["key"] = self.USER_KEY
             HEADERS["Authorization"] = f'Bearer {self.access_token}'
+            HEADERS["5Paisa-API-Uid"] = self.APIUID
             return_type = ""
             if data_type == "MARGIN":
                 url = self.MARGIN_ROUTE
@@ -124,6 +127,7 @@ class FivePaisaClient:
             self.payload["body"]["ClientCode"] = self.client_code
             self.payload["head"]["key"] = self.USER_KEY
             HEADERS["Authorization"] = f'Bearer {self.access_token}'
+            HEADERS["5Paisa-API-Uid"] = self.APIUID
             if req_type == "OP":
                 url = self.ORDER_PLACEMENT_ROUTE
                 # self.payload["head"]["requestCode"] = "5PPlaceOrdReq"
@@ -511,6 +515,7 @@ class FivePaisaClient:
             self.login_check_payload["head"]["appName"] = self.APP_NAME
             self.login_check_payload["head"]["LoginId"] = self.client_code
             self.login_check_payload["body"]["RegistrationID"] = self.Jwt_token
+            HEADERS["5Paisa-API-Uid"] = self.APIUID
             url = self.LOGIN_CHECK_ROUTE
             resl = requests.post(
                 url, json=self.login_check_payload, headers=HEADERS)
@@ -525,6 +530,7 @@ class FivePaisaClient:
         try:
             self.jwt_payload['ClientCode'] = self.client_code
             self.jwt_payload['JwtCode'] = self.Jwt_token
+            HEADERS["5Paisa-API-Uid"] = self.APIUID
             url = self.JWT_VALIDATION_ROUTE
             response = self.session.post(
                 url, json=self.jwt_payload, headers=HEADERS).json()
@@ -537,6 +543,7 @@ class FivePaisaClient:
         try:
             self.jwt_headers['x-clientcode'] = self.client_code
             self.jwt_headers['x-auth-token'] = self.Jwt_token
+            self.jwt_headers["5Paisa-API-Uid"] = self.APIUID
             url = f'{self.HISTORICAL_DATA_ROUTE}{Exch}/{ExchangeSegment}/{ScripCode}/{time}?from={From}&end={To}'
             timeList = ['1m', '3m', '5m', '10m', '15m', '30m', '60m', '1d']
             if time not in timeList:
