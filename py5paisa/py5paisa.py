@@ -219,7 +219,6 @@ class FivePaisaClient:
                 url = self.POSITION_CONVERSION_ROUTE
             elif req_type == "OMC":
                 url = self.ORDERMARGIN_ROUTE
-                # self.payload["head"]["requestCode"] = "5PCancelOrdReq"
                 if self.access_token != "":
                     HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
             else:
