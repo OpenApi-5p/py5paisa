@@ -217,6 +217,11 @@ class FivePaisaClient:
                 url = self.SQUAREOFF_ROUTE
             elif req_type == "PO":
                 url = self.POSITION_CONVERSION_ROUTE
+            elif req_type == "OMC":
+                url = self.ORDERMARGIN_ROUTE
+                # self.payload["head"]["requestCode"] = "5PCancelOrdReq"
+                if self.access_token != "":
+                    HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -655,6 +660,7 @@ class FivePaisaClient:
             self.jwt_headers = JWT_HEADERS
             self.jwt_payload = JWT_PAYLOAD
             self.SOCKET_DEPTH_PAYLOAD = SOCKET_DEPTH_PAYLOAD
+            self.ORDERMARGIN_ROUTE = ORDERMARGIN_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -870,5 +876,20 @@ class FivePaisaClient:
             response = self.session.post(
                 self.MARKET_DEPTH_ROUTE_20, headers=self.jwt_headers).json()
             return response["access_token"]
+        except Exception as e:
+            log_response(e)
+
+
+    def Order_margin(self,**order):
+        try:
+
+            if (order['AtMarket'] == 'Y' and order['LimitRate'] != 0 ):
+                log_response('Price must be 0')
+            elif (order['AtMarket'] == 'N' and order['LimitRate'] > 0 ):
+                log_response('Price should not be 0')
+                
+               
+            self.set_payload(order)
+            return self.order_request("OMC")
         except Exception as e:
             log_response(e)
