@@ -166,6 +166,12 @@ cancel_bulk=[
             },
 client.cancel_bulk_order(cancel_bulk)
 ```
+
+#### Order Margin Calculation
+
+```py
+client.Order_margin( Exch= "N", ExchType = "C", OrderRequestorCode = "51959929", ScripCode = "1660", PlaceModifyCancel = "P",  TransactionType = "B", AtMarket = "Y", LimitRate = 0, Volume = 5, OldTradedQty = 0, ProductType = "D", ExchOrderId = "0", CoverPositions ="N")
+```
 #### SquareOffAll Orders
 
 ```py
