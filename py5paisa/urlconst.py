@@ -56,3 +56,4 @@ SQUAREOFF_ROUTE = f'{BaseUrl}SquareOffAll'
 POSITION_CONVERSION_ROUTE = f'{BaseUrl}PositionConversion'
 MARKET_DEPTH_ROUTE_20 = "https://openapi.5paisa.com/marketfeed-token/token"
 APIUID = 'ka7SFqAU6SC'
+ORDERMARGIN_ROUTE='https://Swarajtrade.5paisa.com/5P_PreOrderMargin/Service1.svc/V1/PreOrdMarginCalculationVendor'
