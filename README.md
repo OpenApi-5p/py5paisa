@@ -188,7 +188,7 @@ client.bo_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Q
 ```
 For placing Cover order
 ```py
-client.cover_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,StopLossPrice=320,LimitPriceForSL=319,TrailingSL=1.5)
+client.cover_order(OrderType='B',Exchange='N',ExchangeType='C', ScripCode = 1660, Qty=1, LimitPrice=330,StopLossPrice=320,TrailingSL=1.5)
 ```
 
 Note:For placing Bracket order in FNO segment pass ExchType='D'
