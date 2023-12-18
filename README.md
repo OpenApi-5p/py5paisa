@@ -33,6 +33,12 @@ Get your API keys from https://tradestation.5paisa.com/apidoc
 Note:- We have deprecated the existing method which involved the use of login credentials.
        Kindly go through this updated documentation of using Access token for API Access.
 
+Scrip codes reference:
+
+Note : Use these Links for getting scrip codes
+
+Scrip Master - [https://images.5paisa.com/website/scripmaster-csv-format.csv](https://openapi.5paisa.com/VendorsAPI/Service1.svc/ScripMaster/segment/All)
+
 #### AUTHENTICATION USING OAUTH
 ```py
 from py5paisa import FivePaisaClient
@@ -108,11 +114,7 @@ client.get_tradebook()
 client.position_convertion("N","C","BPCL_EQ","B",5,"D","I")
 ```
 
-Scrip codes reference:
 
-Note : Use these Links for getting scrip codes
-
-Scrip Master - https://images.5paisa.com/website/scripmaster-csv-format.csv
 #### Placing an order
 
 ```py
