@@ -33,7 +33,7 @@ Get your API keys from https://tradestation.5paisa.com/apidoc
 Note:- We have deprecated the existing method which involved the use of login credentials.
        Kindly go through this updated documentation of using Access token for API Access.
 
-Scrip codes reference:
+#### Scrip codes reference:
 
 Note : Use these Links for getting scrip codes
 
