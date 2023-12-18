@@ -37,7 +37,7 @@ Scrip codes reference:
 
 Note : Use these Links for getting scrip codes
 
-Scrip Master - [https://images.5paisa.com/website/scripmaster-csv-format.csv](https://openapi.5paisa.com/VendorsAPI/Service1.svc/ScripMaster/segment/All)
+Scrip Master - Downaload ScripMaster [here](https://openapi.5paisa.com/VendorsAPI/Service1.svc/ScripMaster/segment/All)
 
 #### AUTHENTICATION USING OAUTH
 ```py
