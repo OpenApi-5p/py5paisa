@@ -476,16 +476,6 @@ strategy.squareoff('tag')
 # Use the same tag as used while executing the strategies
 ```
 
-#### Trading Ideas
-```py
-To get actionable buy trades use:-
-print(Client.get_buy())
-
-
-To get list of current trades use:-
-print(Client.get_trade())
-
-```
 
 #### TODO
  - Write tests.
