@@ -37,6 +37,7 @@ class FivePaisaClient:
             self.USER_KEY = cred["USER_KEY"]
             self.ENCRYPTION_KEY = cred["ENCRYPTION_KEY"]
             self.APIUID = APIUID
+            self.VTT_TYPE = VTT_TYPE
             self.create_payload()
             self.set_url()
 
@@ -221,6 +222,16 @@ class FivePaisaClient:
                 url = self.ORDERMARGIN_ROUTE
                 if self.access_token != "":
                     HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
+            elif req_type == "VTT":
+                url = self.ADDVTTORDER_ROUTE
+            elif req_type == "MVTT":
+                url = self.MODVTTORDER_ROUTE
+            elif req_type == "CVTT":
+                url = self.CALVTTORDER_ROUTE
+            elif req_type == "GVTT":
+                url = self.GETVTTORDER_ROUTE
+            elif req_type == "HVTT":
+                url = self.HISVTTORDER_ROUTE
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -647,6 +658,11 @@ class FivePaisaClient:
             self.POSITION_CONVERSION_ROUTE = POSITION_CONVERSION_ROUTE
             self.MARKET_DEPTH_BY_SYMBOL_ROUTE = MARKET_DEPTH_BY_SYMBOL_ROUTE
             self.MARKET_DEPTH_BY_SCRIP = MARKET_DEPTH_BY_SCRIP
+            self.ADDVTTORDER_ROUTE = ADDVTTORDER_ROUTE
+            self.CALVTTORDER_ROUTE = CALVTTORDER_ROUTE
+            self.MODVTTORDER_ROUTE = MODVTTORDER_ROUTE
+            self.GETVTTORDER_ROUTE = GETVTTORDER_ROUTE
+            self.HISVTTORDER_ROUTE = HISVTTORDER_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -890,5 +906,17 @@ class FivePaisaClient:
                
             self.set_payload(order)
             return self.order_request("OMC")
+        except Exception as e:
+            log_response(e)
+
+    def vtt_order(self, order_type, **order):
+        try:
+            self.set_payload(order)
+            order_type_str = self.VTT_TYPE[order_type].value
+            print(order_type_str)
+            return self.order_request(order_type_str)
+        except KeyError:
+            # Handle unknown order_type if needed
+            pass
         except Exception as e:
             log_response(e)

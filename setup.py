@@ -21,6 +21,7 @@ requirements = [
     "loguru>=0.5.1",
     "websocket-client>=0.58.0",
     "pandas>=1.2.4",
+    "Enum"
 ]
 
 setup_requirements = []

@@ -2,6 +2,7 @@
 Contains reusable payloads across requests
 """
 import datetime
+from enum import Enum
 
 HEADERS = {'Content-Type': 'application/json'}
 
@@ -69,6 +70,13 @@ SOCKET_DEPTH_PAYLOAD={
             "operation":"",
             "method":"",
             "instruments":""}
+
+class VTT_TYPE(Enum):
+    P = 'VTT'
+    M = 'MVTT'
+    C = 'CVTT'
+    G = 'GVTT'
+    H = 'HVTT'
 
 SUBSCRIPTION_KEY="c89fab8d895a426d9e00db380b433027"
 TODAY_TIMESTAMP = int(datetime.datetime.today().timestamp())
