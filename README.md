@@ -389,16 +389,7 @@ client.vtt_order('P', Exch="N", ExchType="C", ScripCode=1660, InitialLimitPrice=
 
 #modify VTT Order
 
-client.vtt_order('M',
-                 VTTOrderId=3121,
-                 InitialLimitPrice=0.0,
-                 StopLossLimitPrice=0.0,
-                 InitialTriggerPrice=337,
-                 StopLossTriggerPrice=0.0,
-                 ProfitLimitPrice=0.0,
-                 ProfitTriggerPrice=0.0,
-                 MatchingCondition="GT",
-                 Qty=1)
+client.vtt_order('M', VTTOrderId=3121, InitialLimitPrice=0.0, StopLossLimitPrice=0.0, InitialTriggerPrice=337, StopLossTriggerPrice=0.0,                 ProfitLimitPrice=0.0, ProfitTriggerPrice=0.0, MatchingCondition="GT", Qty=1)
 
 #cancel VTT Order
 
