@@ -372,6 +372,46 @@ print(df)
 # Note : TimeFrame Should be from this list ['1m','5m','10m','15m','30m','60m','1d']
 ```
 
+#### VTT
+
+```py
+client.vtt_order('P', Exch="N",
+                 ExchType="C",
+                 ScripCode=1660,
+                 InitialLimitPrice=489,
+                 StopLossLimitPrice=0.0,
+                 InitialTriggerPrice=450,
+                 StopLossTriggerPrice=0.0,
+                 ProfitLimitPrice=0.0,
+                 ProfitTriggerPrice=0.0,
+                 Quantity=1,
+                 BuySell="Buy",
+                 MatchingCondition="LT",
+                 Symbol="ITC")
+
+modify VTT Order
+
+client.vtt_order('M',
+                 VTTOrderId=3121,
+                 InitialLimitPrice=0.0,
+                 StopLossLimitPrice=0.0,
+                 InitialTriggerPrice=337,
+                 StopLossTriggerPrice=0.0,
+                 ProfitLimitPrice=0.0,
+                 ProfitTriggerPrice=0.0,
+                 MatchingCondition="GT",
+                 Qty=1)
+
+cancel VTT Order
+
+client.vtt_order('C',
+                 VTTOrderId=3121)
+
+get all VTT Orders
+
+client.vtt_order('G')
+```
+
 #### Strategy Execution
 #### List Of Strategies Available
  - Short Straddle
