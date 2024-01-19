@@ -5,10 +5,13 @@ from .const import *
 from .order import Order, Bo_co_order, RequestType, Basket_order
 from .logging import log_response
 import json
+import csv
 import websocket
 import pandas as pd
 import websocket
 from .urlconst import *
+
+from io import StringIO
 from enum import Enum
 
 
@@ -29,6 +32,7 @@ class FivePaisaClient:
             self.ws = None
             self.access_token = ""
             self.request_token = None
+            self.scrip_data = None
             self.session = requests.Session()
             self.APP_SOURCE = cred["APP_SOURCE"]
             self.APP_NAME = cred["APP_NAME"]
@@ -41,6 +45,30 @@ class FivePaisaClient:
             self.create_payload()
             self.set_url()
 
+        except Exception as e:
+            log_response(e)
+
+    def get_scrips(self):
+        try:
+            if self.scrip_data is None:
+                response = self.session.get(
+                    self.SCRIP_MASTER_ROUTE, headers=HEADERS)
+
+                data = response.content.decode("utf-8").strip()
+
+                reader = csv.DictReader(StringIO(data))
+                records = pd.DataFrame(reader)
+
+                self.scrip_data = records
+            return self.scrip_data
+        except Exception as e:
+            log_response(e)
+
+    def query_scrips(self, exchange, exchangetype, symbol, strike, type, expiry):
+        try:
+            if self.scrip_data is None:
+                self.get_scrips()
+            return self.scrip_data.query('Exch=="'+exchange+'" & ExchType=="'+exchangetype+'" & SymbolRoot=="'+symbol+'" & StrikeRate=="'+strike+'" & ScripType=="'+type+'" & Expiry=="'+expiry+'"')
         except Exception as e:
             log_response(e)
 
@@ -614,6 +642,7 @@ class FivePaisaClient:
 
     def set_url(self):
         try:
+            self.SCRIP_MASTER_ROUTE = SCRIP_MASTER_ROUTE
             self.LOGIN_ROUTE = LOGIN_ROUTE
             self.MARGIN_ROUTE = MARGIN_ROUTE
             self.ORDER_BOOK_ROUTE = ORDER_BOOK_ROUTE
