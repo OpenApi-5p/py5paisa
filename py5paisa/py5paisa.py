@@ -155,7 +155,10 @@ class FivePaisaClient:
         try:
             self.payload["body"]["ClientCode"] = self.client_code
             self.payload["head"]["key"] = self.USER_KEY
-            HEADERS["Authorization"] = f'Bearer {self.access_token}'
+            if self.access_token != "":
+                    HEADERS["Authorization"] = f'Bearer {self.Jwt_token}'
+            else:
+                HEADERS["Authorization"] = f'Bearer {self.access_token}'
             HEADERS["5Paisa-API-Uid"] = self.APIUID
             if req_type == "OP":
                 url = self.ORDER_PLACEMENT_ROUTE
@@ -260,6 +263,8 @@ class FivePaisaClient:
                 url = self.GETVTTORDER_ROUTE
             elif req_type == "HVTT":
                 url = self.HISVTTORDER_ROUTE
+            elif req_type == "BMC":
+                url = self.BASKETMARGIN_ROUTE
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -692,6 +697,7 @@ class FivePaisaClient:
             self.MODVTTORDER_ROUTE = MODVTTORDER_ROUTE
             self.GETVTTORDER_ROUTE = GETVTTORDER_ROUTE
             self.HISVTTORDER_ROUTE = HISVTTORDER_ROUTE
+            self.BASKETMARGIN_ROUTE = BASKETMARGIN_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -947,5 +953,14 @@ class FivePaisaClient:
         except KeyError:
             # Handle unknown order_type if needed
             pass
+        except Exception as e:
+            log_response(e)
+
+    def basket_margin(self, BasketID: str,CoverPositions : str):
+        try:
+            if self.client_code != None:
+                self.payload["body"]["BasketID"] = BasketID
+                self.payload["body"]["CoverPositions"] = CoverPositions
+            return self.order_request("BMC")
         except Exception as e:
             log_response(e)
