@@ -33,8 +33,8 @@ MARKET_DEPTH_ROUTE = f'{BaseUrl}/MarketDepth'
 MARKET_DEPTH_BY_SYMBOL_ROUTE = f'{BaseUrl}V1/MarketDepth'
 MARKET_DEPTH_BY_SCRIP = f'{BaseUrl}V2/MarketDepth'
 JWT_VALIDATION_ROUTE = "https://Openapi.indiainfoline.com/VendorsAPI/Service1.svc/JWTOpenApiValidation"
-HISTORICAL_DATA_ROUTE = "https://openapi.5paisa.com/historical/"
-
+#HISTORICAL_DATA_ROUTE = "https://openapi.5paisa.com/historical/" old url
+HISTORICAL_DATA_ROUTE = "https://openapi.5paisa.com/V2/historical/"
 IDEAS_ROUTE = f'{BaseUrl}TraderIDEAs'
 
 TRADEBOOK_ROUTE = f'{BaseUrl}V1/TradeBook'
@@ -65,3 +65,4 @@ MODVTTORDER_ROUTE=f'{BaseUrl}ModifyVTTOrder'
 GETVTTORDER_ROUTE=f'{BaseUrl}GetVTTOrder'
 HISVTTORDER_ROUTE=f'{BaseUrl}GetHistoryVTTOrder'
 BASKETMARGIN_ROUTE= f'{BaseUrl}PreOrdMarginCalculationBulkVendor'
+PLACEORDERBULK_ROUTE= f'{BaseUrl}PlaceOrderBulk'

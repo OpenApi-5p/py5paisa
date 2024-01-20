@@ -5,12 +5,11 @@ import json
 
 class strategies:
 
-    def __init__(self, user=None, passw=None, dob=None, cred=None, request_token=None):
+    def __init__(self, client_code=None, totp=None, pin=None, cred=None, request_token=None):
+        self.Client = FivePaisaClient(cred=cred)
         if request_token is None:
-            self.Client = FivePaisaClient(email=user, passwd=passw, dob=dob, cred=cred)
-            self.Client.login()
+            self.Client.get_totp_session(client_code,totp,pin)
         else:
-            self.Client = FivePaisaClient(cred=cred)
             self.Client.get_access_token(request_token)
 
     def get_scripcode(self,symbol,strike,expiry,opt):

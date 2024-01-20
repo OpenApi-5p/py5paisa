@@ -265,6 +265,10 @@ class FivePaisaClient:
                 url = self.HISVTTORDER_ROUTE
             elif req_type == "BMC":
                 url = self.BASKETMARGIN_ROUTE
+            elif req_type == "BLKO":
+                url = self.PLACEORDERBULK_ROUTE
+                # self.payload["head"]["requestCode"] = "5PSMOOrd"
+                self.payload["body"]["AppSource"]=self.APP_SOURCE
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -589,9 +593,7 @@ class FivePaisaClient:
 
     def historical_data(self, Exch: str, ExchangeSegment: str, ScripCode: int, time: str, From: str, To: str):
         try:
-            self.jwt_headers['x-clientcode'] = self.client_code
-            self.jwt_headers['x-auth-token'] = self.Jwt_token
-            self.jwt_headers["5Paisa-API-Uid"] = self.APIUID
+            self.jwt_headers["Authorization"] = f'Bearer {self.access_token}'
             url = f'{self.HISTORICAL_DATA_ROUTE}{Exch}/{ExchangeSegment}/{ScripCode}/{time}?from={From}&end={To}'
             timeList = ['1m', '3m', '5m', '10m', '15m', '30m', '60m', '1d']
             if time not in timeList:
@@ -698,6 +700,7 @@ class FivePaisaClient:
             self.GETVTTORDER_ROUTE = GETVTTORDER_ROUTE
             self.HISVTTORDER_ROUTE = HISVTTORDER_ROUTE
             self.BASKETMARGIN_ROUTE = BASKETMARGIN_ROUTE
+            self.PLACEORDERBULK_ROUTE = PLACEORDERBULK_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -720,25 +723,31 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
 
-    def get_access_token(self, request_token):
+    def get_access_token(self, request_token=None):
         try:
-            self.payload["head"]["Key"] = self.USER_KEY
-            self.payload["body"]["RequestToken"] = request_token
-            self.payload["body"]["EncryKey"] = self.ENCRYPTION_KEY
-            self.payload["body"]["UserId"] = self.USER_ID
-            url = ACCESS_TOKEN_ROUTE
-
-            res = self.session.post(url, json=self.payload).json()
-            message = res["body"]["Message"]
-
-            if message == "Success":
-                self.access_token = res["body"]["AccessToken"]
-                self.Jwt_token = self.access_token
-                self._set_client_code(res["body"]["ClientCode"])
-                log_response("Logged in!!")
-                return self.access_token
+            if request_token is None:
+                if self.access_token != "":
+                    return self.access_token
+                else:
+                    log_response("Please login first")
             else:
-                log_response(message)
+                self.payload["head"]["Key"] = self.USER_KEY
+                self.payload["body"]["RequestToken"] = request_token
+                self.payload["body"]["EncryKey"] = self.ENCRYPTION_KEY
+                self.payload["body"]["UserId"] = self.USER_ID
+                url = ACCESS_TOKEN_ROUTE
+
+                res = self.session.post(url, json=self.payload).json()
+                message = res["body"]["Message"]
+
+                if message == "Success":
+                    self.access_token = res["body"]["AccessToken"]
+                    self.Jwt_token = self.access_token
+                    self._set_client_code(res["body"]["ClientCode"])
+                    log_response("Logged in!!")
+                    return self.access_token
+                else:
+                    log_response(message)
         except Exception as e:
             log_response(e)
 
@@ -962,5 +971,15 @@ class FivePaisaClient:
                 self.payload["body"]["BasketID"] = BasketID
                 self.payload["body"]["CoverPositions"] = CoverPositions
             return self.order_request("BMC")
+        except Exception as e:
+            log_response(e)
+
+    def place_order_bulk(self, **order):
+        try:
+            self.set_payload(order)
+            return self.order_request('BLKO')
+        except KeyError:
+            # Handle unknown order_type if needed
+            pass
         except Exception as e:
             log_response(e)
