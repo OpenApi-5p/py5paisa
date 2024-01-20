@@ -58,8 +58,7 @@ WS_PAYLOAD={"Method":"",
 
 JWT_HEADERS={
     'Ocp-Apim-Subscription-Key': 'c89fab8d895a426d9e00db380b433027',
-    'x-clientcode':"",
-    'x-auth-token':""
+    'Authorization':''
     }
 
 JWT_PAYLOAD={
