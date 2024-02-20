@@ -19,6 +19,8 @@ requirements = [
     "urllib3>=1.25.8",
     "idna>=2.9",
     "loguru>=0.5.1",
+    "websocket-client>=0.58.0",
+    "pandas>=1.2.4"
 ]
 
 setup_requirements = []
@@ -47,6 +49,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/5paisa/py5paisa',
-    version='0.1.7',
+    version='0.7.12',
     zip_safe=False,
 )
