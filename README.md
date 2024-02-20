@@ -69,6 +69,9 @@ client.get_totp_session('Your ClientCode','TOTP from authenticator app','Your Pi
 client.get_oauth_session('Your Response Token')
 
 After successful authentication, you should get a `Logged in!!` message in console
+
+#Function to fetch access token after successful login
+print(client.get_access_token())
 ```
 
 #### Market Feed
@@ -399,6 +402,19 @@ client.vtt_order('C',
 #get all VTT Orders
 
 client.vtt_order('G')
+```
+
+#### Bulk Order Placement
+
+```py
+
+bulk_order=[{
+        "Exchange":"N", "ExchangeType":"C", "ScripCode":0, "ScripData":"ITC_EQ", "Price": "440", "OrderType": "Buy", "Qty": 1, "DisQty": "0", "StopLossPrice": "0", "IsIntraday": True, "iOrderValidity": "0", "RemoteOrderID":"50000091_220620"
+    },{
+        "Exchange":"N", "ExchangeType":"C", "ScripCode":0, "ScripData":"IDEA_EQ", "Price": "15", "OrderType": "Buy", "Qty": 1, "DisQty": "0", "StopLossPrice": "0", "IsIntraday": True, "iOrderValidity": "0", "RemoteOrderID":"50000091_220620"
+    }
+]
+client.place_order_bulk(OrderList=bulk_order)
 ```
 
 #### Strategy Execution
