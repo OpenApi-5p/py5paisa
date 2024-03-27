@@ -273,7 +273,7 @@ class FivePaisaClient:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
                                     headers=HEADERS).json()
-
+            self.payload={}
             if req_type == "MS":
                 log_response(res["head"]["statusDescription"])
             else:
@@ -738,6 +738,7 @@ class FivePaisaClient:
                 url = ACCESS_TOKEN_ROUTE
 
                 res = self.session.post(url, json=self.payload).json()
+                self.payload={}
                 message = res["body"]["Message"]
 
                 if message == "Success":
@@ -760,6 +761,7 @@ class FivePaisaClient:
             url = GET_REQUEST_TOKEN_ROUTE
 
             res = self.session.post(url, json=self.payload).json()
+            self.payload={}
             message = res["body"]["Status"]
 
             if message == 0:
@@ -983,3 +985,9 @@ class FivePaisaClient:
             pass
         except Exception as e:
             log_response(e)
+    
+
+    def set_access_token(self,accessToken,clientCode):
+        self.access_token=accessToken
+        self.client_code=clientCode
+        self.Jwt_token = self.access_token
