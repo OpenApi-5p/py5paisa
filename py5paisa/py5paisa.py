@@ -10,6 +10,7 @@ import websocket
 import pandas as pd
 import websocket
 from .urlconst import *
+import jwt
 
 from io import StringIO
 from enum import Enum
@@ -145,6 +146,7 @@ class FivePaisaClient:
                 raise Exception("Invalid data type requested")
             response = self.session.post(
                 url, json=payload, headers=HEADERS).json()
+            self.payload = GENERIC_PAYLOAD
 
             data = response["body"][return_type]
             return data
@@ -273,6 +275,7 @@ class FivePaisaClient:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
                                     headers=HEADERS).json()
+            self.payload = GENERIC_PAYLOAD
 
             if req_type == "MS":
                 log_response(res["head"]["statusDescription"])
@@ -522,7 +525,10 @@ class FivePaisaClient:
 
     def connect(self, wspayload: dict):
         try:
-            self.web_url = f'wss://openfeed.5paisa.com/Feeds/api/chat?Value1={self.Jwt_token}|{self.client_code}'
+            if self.WEBSOCKET_URL == '':
+                self.WEBSOCKET_URL=self.decode_token(self.Jwt_token)
+
+            self.web_url = f'{self.WEBSOCKET_URL}{self.Jwt_token}|{self.client_code}'
 
             def on_open(ws):
                 log_response("Streaming Started")
@@ -738,6 +744,7 @@ class FivePaisaClient:
                 url = ACCESS_TOKEN_ROUTE
 
                 res = self.session.post(url, json=self.payload).json()
+                self.payload = GENERIC_PAYLOAD
                 message = res["body"]["Message"]
 
                 if message == "Success":
@@ -760,6 +767,7 @@ class FivePaisaClient:
             url = GET_REQUEST_TOKEN_ROUTE
 
             res = self.session.post(url, json=self.payload).json()
+            self.payload = GENERIC_PAYLOAD
             message = res["body"]["Status"]
 
             if message == 0:
@@ -983,3 +991,28 @@ class FivePaisaClient:
             pass
         except Exception as e:
             log_response(e)
+
+    def decode_token(self,token):
+        try:
+            decoded = jwt.decode(token, options={"verify_signature": False}) 
+            #decoded_token = jwt.decode(token)
+            url=self.get_feed_url(decoded['RedirectServer'])
+            return url
+        except jwt.InvalidTokenError:
+            print("Invalid token")
+
+    def get_feed_url(self,redirect_server):
+        if redirect_server == "A":
+            return "wss://aopenfeed.5paisa.com/feeds/api/chat?Value1="
+        elif redirect_server == "B":
+            return "wss://bopenfeed.5paisa.com/feeds/api/chat?Value1="
+        elif redirect_server == "C":
+            return "wss://openfeed.5paisa.com/feeds/api/chat?Value1="
+        else:
+            return "wss://openfeed.5paisa.com/Feeds/api/chat?Value1="
+        
+
+    def set_access_token(self,accessToken,clientCode):
+        self.access_token=accessToken
+        self.client_code=clientCode
+        self.Jwt_token = self.access_token

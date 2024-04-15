@@ -20,7 +20,8 @@ requirements = [
     "idna>=2.9",
     "loguru>=0.5.1",
     "websocket-client>=0.58.0",
-    "pandas>=1.2.4"
+    "pandas>=1.2.4",
+    "pyjwt==2.3.0",
 ]
 
 setup_requirements = []
