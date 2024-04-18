@@ -269,8 +269,11 @@ class FivePaisaClient:
                 url = self.BASKETMARGIN_ROUTE
             elif req_type == "BLKO":
                 url = self.PLACEORDERBULK_ROUTE
-                # self.payload["head"]["requestCode"] = "5PSMOOrd"
                 self.payload["body"]["AppSource"]=self.APP_SOURCE
+            elif req_type == "NETPOS":
+                url = self.NETPOSITION_ROUTE 
+            elif req_type == "MFS":
+                url = self.MARKETSNAPSHOT_ROUTE 
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -707,6 +710,8 @@ class FivePaisaClient:
             self.HISVTTORDER_ROUTE = HISVTTORDER_ROUTE
             self.BASKETMARGIN_ROUTE = BASKETMARGIN_ROUTE
             self.PLACEORDERBULK_ROUTE = PLACEORDERBULK_ROUTE
+            self.NETPOSITION_ROUTE = NETPOSITION_ROUTE
+            self.MARKETSNAPSHOT_ROUTE = MARKETSNAPSHOT_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -965,7 +970,6 @@ class FivePaisaClient:
         try:
             self.set_payload(order)
             order_type_str = self.VTT_TYPE[order_type].value
-            print(order_type_str)
             return self.order_request(order_type_str)
         except KeyError:
             # Handle unknown order_type if needed
@@ -1016,3 +1020,17 @@ class FivePaisaClient:
         self.access_token=accessToken
         self.client_code=clientCode
         self.Jwt_token = self.access_token
+
+
+    def positions_day(self):
+        try:
+            return self.order_request("NETPOS")
+        except Exception as e:
+            log_response(e)
+
+    def fetch_market_snapshot(self,reqList):
+        try:
+            self.payload["body"]["Data"] = reqList
+            return self.order_request("MFS")
+        except Exception as e:
+            log_response(e)
