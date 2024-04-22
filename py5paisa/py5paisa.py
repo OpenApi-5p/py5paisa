@@ -1003,7 +1003,7 @@ class FivePaisaClient:
             url=self.get_feed_url(decoded['RedirectServer'])
             return url
         except jwt.InvalidTokenError:
-            print("Invalid token")
+            log_response("Invalid token")
 
     def get_feed_url(self,redirect_server):
         if redirect_server == "A":
