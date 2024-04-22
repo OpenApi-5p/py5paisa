@@ -6,3 +6,4 @@ pycryptodome==3.9.8
 requests==2.23.0
 urllib3==1.26.6
 loguru==0.5.1
+pyjwt==2.3.0
