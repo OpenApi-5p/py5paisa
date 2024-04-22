@@ -287,7 +287,7 @@ print(client.get_trade_history("PASS EXCHANGE ORDER ID"))
 
 ```
 #### Live Market Feed Streaming
-
+#NOTE : Webscoket only works with ScripCode
 ```py
 req_list=[
             { "Exch":"N","ExchType":"C","ScripCode":1660},
