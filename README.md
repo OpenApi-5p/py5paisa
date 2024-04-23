@@ -39,6 +39,19 @@ Note : Use these Links for getting scrip codes
 
 Scrip Master - Downaload ScripMaster [here](https://openapi.5paisa.com/VendorsAPI/Service1.svc/ScripMaster/segment/All)
 
+#Fetch Scrip Codes
+scrips = client.get_scrips()
+#Query Script Data Inputs sequence- exchange, exchangetype, symbol, strike, type, expiry
+#Strike to be 0 for cash stocks , Actual Strike for Derivatives 
+#type to be XX for Cash stocks and Futures, EQ for indices, CE/PE for Options
+#Fetch Scrip Data for Cash
+record = client.query_scrips("N","C","ITC","0","XX","")
+#Fetch Scrip Data for Options
+record = client.query_scrips("N","D","NIFTY","22300","CE","2024-04-25")
+#Fetch Scrip Data for Futures
+record = client.query_scrips("N","C","INFY","0","XX","")
+
+
 #### AUTHENTICATION USING OAUTH
 ```py
 from py5paisa import FivePaisaClient
