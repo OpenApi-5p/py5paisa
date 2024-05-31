@@ -354,20 +354,11 @@ print(client.fetch_market_depth_by_scrip(Exchange="N",ExchangeType="C",ScripData
 #### Full Market Snapshot 
 ```py
 a=[{"Exchange":"N","ExchangeType":"C","ScripCode":"2885"},
-   {"Exchange":"N","ExchangeType":"C","ScripCode":"1660"},
+   {"Exchange":"N","ExchangeType":"C","ScripData":"ITC_EQ"},
    ]
-print(client.fetch_market_depth(a))
+print(client.fetch_market_snapshot(a))
 ```
 
-
-
-#### Full Market Snapshot(By Symbol)
-```py
-a=[{"Exchange":"N","ExchangeType":"C","Symbol":"ITC"},
-   {"Exchange":"N","ExchangeType":"D","Symbol":"BANKNIFTY 31 Feb 2022 CE 41600.00"},
-   ]
-print(client.fetch_market_depth_by_symbol(a))
-```
 
 #### Option Chain
 ```py
