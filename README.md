@@ -28,7 +28,7 @@ Read the docs hosted [here](https://www.5paisa.com/developerapi/overview)
 
 #### Configuring API keys
 
-Get your API keys from https://tradestation.5paisa.com/apidoc
+Get your API keys from [here](https://xstream.5paisa.com/dashboard)
 
 Note:- We have deprecated the existing method which involved the use of login credentials.
        Kindly go through this updated documentation of using Access token for API Access.
@@ -38,7 +38,9 @@ Note:- We have deprecated the existing method which involved the use of login cr
 Note : Use these Links for getting scrip codes
 
 Scrip Master - Downaload ScripMaster [here](https://openapi.5paisa.com/VendorsAPI/Service1.svc/ScripMaster/segment/All)
+
 [API Documentation](https://xstream.5paisa.com/dev-docs/docFundamentals/scrip-master)
+
 #Fetch Scrip Codes
 
 scrips = client.get_scrips()
