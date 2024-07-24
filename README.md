@@ -306,7 +306,7 @@ client.fetch_order_status(req_list_)
 print(client.get_trade_history("PASS EXCHANGE ORDER ID"))
 
 ```
-#### Live Market Feed Streaming
+#### Live Market Feed Streaming - Websocket
 #NOTE : Webscoket only works with ScripCode
 ```py
 req_list=[
