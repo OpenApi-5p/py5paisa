@@ -34,6 +34,7 @@ class FivePaisaClient:
             self.access_token = ""
             self.request_token = None
             self.scrip_data = None
+            self.WEBSOCKET_URL = ""
             self.session = requests.Session()
             self.APP_SOURCE = cred["APP_SOURCE"]
             self.APP_NAME = cred["APP_NAME"]
@@ -528,7 +529,7 @@ class FivePaisaClient:
 
     def connect(self, wspayload: dict):
         try:
-            if self.WEBSOCKET_URL == '':
+            if self.is_blank_or_none(self.WEBSOCKET_URL):
                 self.WEBSOCKET_URL=self.decode_token(self.Jwt_token)
 
             self.web_url = f'{self.WEBSOCKET_URL}{self.Jwt_token}|{self.client_code}'
@@ -544,7 +545,10 @@ class FivePaisaClient:
             self.ws.on_open = on_open
         except Exception as e:
             log_response(e)
-
+            
+    def is_blank_or_none(self, value):
+        return value is None or value == "" or not value
+        
     def send_data(self, open_: any):
         try:
             self.ws.on_open = open_
