@@ -533,6 +533,24 @@ strategy.squareoff('tag')
 ```
 
 
+
+#### REPORTS
+
+```py
+TAX Report
+a=client.tax_report("2024-01-01",'2024-06-26')
+print(a)
+
+# to fetch rTax report
+```
+```py
+Ledger Report
+a=client.fetch_ledger("2024-01-01",'2024-06-26')
+print(a)
+
+# to fetch rTax report
+```
+
 #### TODO
  - Write tests.
 

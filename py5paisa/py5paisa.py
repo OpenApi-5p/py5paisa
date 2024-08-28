@@ -1055,11 +1055,11 @@ class FivePaisaClient:
                 from_date_obj = datetime.strptime(from_date, date_format)
                 to_date_obj = datetime.strptime(to_date, date_format)
             except ValueError:
-                raise ValueError("Dates must be in the format 'YYYY-MM-DD'.")
+                return ValueError("Dates must be in the format 'YYYY-MM-DD'.")
 
             # Ensure the from_date is less than or equal to the to_date
             if from_date_obj > to_date_obj:
-                raise ValueError("From date must be earlier than or equal to To date.")
+                return ValueError("From date must be earlier than or equal to To date.")
 
             # Assign the dates to the payload
             self.payload["body"]["FromDate"] = from_date
@@ -1070,7 +1070,7 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
     
-    def ledger_report(self, from_date: str, to_date: str):
+    def fetch_ledger(self, from_date: str, to_date: str):
         try:
             # Ensure the date format is in 'YYYY-MM-DD'
             date_format = "%Y-%m-%d"
@@ -1078,20 +1078,17 @@ class FivePaisaClient:
                 from_date_obj = datetime.strptime(from_date, date_format)
                 to_date_obj = datetime.strptime(to_date, date_format)
             except ValueError:
-                raise ValueError("Dates must be in the format 'YYYY-MM-DD'.")
+                return ValueError("Dates must be in the format 'YYYY-MM-DD'.")
 
             # Ensure the from_date is less than or equal to the to_date
             if from_date_obj > to_date_obj:
-                raise ValueError("From date must be earlier than or equal to To date.")
+                return ValueError("From date must be earlier than or equal to To date.")
 
             # Assign the dates to the payload
             self.payload["body"]["FromDate"] = from_date
             self.payload["body"]["ToDate"] = to_date
 
             return self.order_request("LR")
-           
-            
-        except ValueError as ve:
-            log_response(ve)
+    
         except Exception as e:
             log_response(e)
