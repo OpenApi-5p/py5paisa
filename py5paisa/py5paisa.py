@@ -275,6 +275,10 @@ class FivePaisaClient:
                 url = self.NETPOSITION_ROUTE 
             elif req_type == "MFS":
                 url = self.MARKETSNAPSHOT_ROUTE 
+            elif req_type == "TR":
+                url = self.TAXREPORT_ROUTE
+            elif req_type == "LR":
+                url = self.LEDGERREPORT_ROUTE
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -283,6 +287,8 @@ class FivePaisaClient:
 
             if req_type == "MS":
                 log_response(res["head"]["statusDescription"])
+            elif req_type == "TR" or req_type == "LR":
+                return res
             else:
                 log_response(res["body"]["Message"])
             return res["body"]
@@ -716,6 +722,8 @@ class FivePaisaClient:
             self.PLACEORDERBULK_ROUTE = PLACEORDERBULK_ROUTE
             self.NETPOSITION_ROUTE = NETPOSITION_ROUTE
             self.MARKETSNAPSHOT_ROUTE = MARKETSNAPSHOT_ROUTE
+            self.TAXREPORT_ROUTE = TAXREPORT_ROUTE
+            self.LEDGERREPORT_ROUTE = LEDGERREPORT_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -1036,5 +1044,54 @@ class FivePaisaClient:
         try:
             self.payload["body"]["Data"] = reqList
             return self.order_request("MFS")
+        except Exception as e:
+            log_response(e)
+
+    def tax_report(self, from_date: str, to_date: str):
+        try:
+            # Ensure the date format is in 'YYYY-MM-DD'
+            date_format = "%Y-%m-%d"
+            try:
+                from_date_obj = datetime.strptime(from_date, date_format)
+                to_date_obj = datetime.strptime(to_date, date_format)
+            except ValueError:
+                raise ValueError("Dates must be in the format 'YYYY-MM-DD'.")
+
+            # Ensure the from_date is less than or equal to the to_date
+            if from_date_obj > to_date_obj:
+                raise ValueError("From date must be earlier than or equal to To date.")
+
+            # Assign the dates to the payload
+            self.payload["body"]["FromDate"] = from_date
+            self.payload["body"]["ToDate"] = to_date
+
+            # Call the dynamic order request function with the appropriate request type
+            return self.order_request("TR")
+        except Exception as e:
+            log_response(e)
+    
+    def ledger_report(self, from_date: str, to_date: str):
+        try:
+            # Ensure the date format is in 'YYYY-MM-DD'
+            date_format = "%Y-%m-%d"
+            try:
+                from_date_obj = datetime.strptime(from_date, date_format)
+                to_date_obj = datetime.strptime(to_date, date_format)
+            except ValueError:
+                raise ValueError("Dates must be in the format 'YYYY-MM-DD'.")
+
+            # Ensure the from_date is less than or equal to the to_date
+            if from_date_obj > to_date_obj:
+                raise ValueError("From date must be earlier than or equal to To date.")
+
+            # Assign the dates to the payload
+            self.payload["body"]["FromDate"] = from_date
+            self.payload["body"]["ToDate"] = to_date
+
+            return self.order_request("LR")
+           
+            
+        except ValueError as ve:
+            log_response(ve)
         except Exception as e:
             log_response(e)
