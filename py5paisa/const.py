@@ -8,10 +8,8 @@ HEADERS = {'Content-Type': 'application/json'}
 
 GENERIC_PAYLOAD = {
     "head": {
-        "key": "",
     },
     "body": {
-        "ClientCode": ""
     }
 }
 LOGIN_PAYLOAD = {"head": {
