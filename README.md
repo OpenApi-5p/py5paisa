@@ -34,7 +34,7 @@ Note:- We have deprecated the existing method which involved the use of login cr
        Kindly go through this updated documentation of using Access token for API Access.
 
 #### Scrip codes reference:
-
+```py
 Note : Use these Links for getting scrip codes
 
 Scrip Master - Downaload ScripMaster [here](https://openapi.5paisa.com/VendorsAPI/Service1.svc/ScripMaster/segment/All)
@@ -57,7 +57,7 @@ record = client.query_scrips("N","C","ITC","0","XX","")
 record = client.query_scrips("N","D","NIFTY","22300","CE","2024-04-25")
 #Fetch Scrip Data for Futures
 record = client.query_scrips("N","C","INFY","0","XX","")
-
+```
 
 #### AUTHENTICATION USING OAUTH
 ```py
@@ -92,6 +92,10 @@ After successful authentication, you should get a `Logged in!!` message in conso
 
 #Function to fetch access token after successful login
 print(client.get_access_token())
+
+#Login with Access Token
+client.set_access_token('accessToken','clientCode')
+
 ```
 
 #### Market Feed
