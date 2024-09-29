@@ -12,7 +12,6 @@ import websocket
 from .urlconst import *
 import jwt
 from datetime import *
-
 from io import StringIO
 from enum import Enum
 
@@ -35,7 +34,7 @@ class FivePaisaClient:
             self.access_token = ""
             self.request_token = None
             self.scrip_data = None
-            self.WEBSOCKET_URL = ""
+            self.WEBSOCKET_URL = WEBSOCKET_URL
             self.session = requests.Session()
             self.APP_SOURCE = cred["APP_SOURCE"]
             self.APP_NAME = cred["APP_NAME"]
@@ -536,11 +535,7 @@ class FivePaisaClient:
 
     def connect(self, wspayload: dict):
         try:
-            if self.is_blank_or_none(self.WEBSOCKET_URL):
-                self.WEBSOCKET_URL=self.decode_token(self.Jwt_token)
-
             self.web_url = f'{self.WEBSOCKET_URL}{self.Jwt_token}|{self.client_code}'
-
             def on_open(ws):
                 log_response("Streaming Started")
                 try:
