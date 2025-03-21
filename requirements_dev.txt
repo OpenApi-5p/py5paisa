@@ -7,3 +7,4 @@ requests==2.23.0
 urllib3==1.26.6
 loguru==0.5.1
 pyjwt==2.3.0
+httpx>=0.28.1,<0.29.0

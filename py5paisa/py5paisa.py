@@ -12,6 +12,7 @@ import websocket
 from .urlconst import *
 import jwt
 from datetime import *
+import httpx
 
 from io import StringIO
 from enum import Enum
@@ -36,7 +37,7 @@ class FivePaisaClient:
             self.request_token = None
             self.scrip_data = None
             self.WEBSOCKET_URL = ""
-            self.session = requests.Session()
+            self.session = httpx.Client(verify=False)
             self.APP_SOURCE = cred["APP_SOURCE"]
             self.APP_NAME = cred["APP_NAME"]
             self.USER_ID = cred["USER_ID"]
@@ -280,6 +281,8 @@ class FivePaisaClient:
                 url = self.TAXREPORT_ROUTE
             elif req_type == "LR":
                 url = self.LEDGERREPORT_ROUTE
+            elif req_type == 'MOM':
+                url = self.MULTIORDERMARGIN_ROUTE
             else:
                 raise Exception("Invalid request type!")
             res = self.session.post(url, json=self.payload,
@@ -725,6 +728,7 @@ class FivePaisaClient:
             self.MARKETSNAPSHOT_ROUTE = MARKETSNAPSHOT_ROUTE
             self.TAXREPORT_ROUTE = TAXREPORT_ROUTE
             self.LEDGERREPORT_ROUTE = LEDGERREPORT_ROUTE
+            self.MULTIORDERMARGIN_ROUTE = MULTIORDERMARGIN_ROUTE
         except Exception as e:
             log_response(e)
 
@@ -1091,5 +1095,12 @@ class FivePaisaClient:
 
             return self.order_request("LR")
     
+        except Exception as e:
+            log_response(e)
+
+    def multi_order_Margin(self, **order):
+        try:
+            self.set_payload(order)
+            return self.order_request("MOM")
         except Exception as e:
             log_response(e)

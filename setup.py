@@ -22,6 +22,7 @@ requirements = [
     "websocket-client>=0.58.0",
     "pandas>=1.2.4",
     "pyjwt==2.3.0",
+    "httpx>=0.28.1,<0.29.0"  # Recommended (allows minor updates)
 ]
 
 setup_requirements = []
