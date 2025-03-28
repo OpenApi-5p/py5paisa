@@ -22,6 +22,7 @@ requirements = [
     "websocket-client>=0.58.0",
     "pandas>=1.2.4",
     "pyjwt==2.3.0",
+    "httpx>=0.28.1,<0.29.0"  # Recommended (allows minor updates)
 ]
 
 setup_requirements = []
@@ -50,6 +51,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/5paisa/py5paisa',
-    version='0.7.19',
+    version='0.7.20',
     zip_safe=False,
 )
