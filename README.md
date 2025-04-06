@@ -373,11 +373,11 @@ print(client.fetch_market_snapshot(a))
 
 #### Option Chain
 ```py
-client.get_expiry("N","NIFTY")
+client.get_expiry("N","nifty")
 # Returns list of all active expiries
 
-# client.get_option_chain("N","NIFTY",<Pass expiry timestamp from get_expiry response>)
-client.get_option_chain("N","NIFTY",1647507600000)
+# client.get_option_chain("N","nifty",<Pass expiry timestamp from get_expiry response>)
+client.get_option_chain("N","nifty",1647507600000)
 ```
 
 #### Historical Data
