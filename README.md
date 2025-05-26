@@ -75,9 +75,6 @@ cred={
 
 client = FivePaisaClient(cred=cred)
 
-# New TOTP based authentication
-client.get_totp_session('Your ClientCode','TOTP from authenticator app','Your Pin')
-
 # OAUTH Approach
 # First get a token by logging in to -> https://dev-openapi.5paisa.com/WebVendorLogin/VLogin/Index?VendorKey=<Your Vendor Key>&ResponseURL=<Redirect URL>
 # VendorKey is UesrKey for individuals user
