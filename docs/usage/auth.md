@@ -2,7 +2,7 @@
 
 #### Configuring API keys
 
-Get your API keys from <a href="https://www.5paisa.com/developerapi/apikeys" target="_blank">here</a>
+Get your API keys from <a href="https://invest.5paisa.com/DeveloperAPI/APIKeys" target="_blank">here</a>
 
 Configure these keys in a file named `keys.conf` in the same directory as your python script exists
 
