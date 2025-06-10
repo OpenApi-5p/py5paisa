@@ -945,7 +945,7 @@ class FivePaisaClient:
             """
             self.subscription_key = SUBSCRIPTION_KEY
 
-            self.market_depth_url = f'wss://openapi.5paisa.com/ws?subscription-key={self.subscription_key}&access_token={self.token}'
+            self.market_depth_url = f'wss://gateway.5paisa.com/ws?subscription-key={self.subscription_key}&access_token={self.token}'
 
             def on_open(ws):
 
