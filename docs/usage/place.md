@@ -1,28 +1,15 @@
 ## Placing an order
 
 ```py
-# Note: This is an indicative order.
+from py5paisa.order import Order, OrderType, Exchange
 
-from py5paisa.order import Order, OrderType
-
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, price=123.0)
-
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=True,atmarket=False)
 client.place_order(test_order)
 
 ```
 
 #### Detailed Usage
 
-#### Placing an intraday order
-
-By default orders are delivery, to place an intraday order, pass `is_intraday=True`
-
-```py
-from py5paisa.order import Order, OrderType
-
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, is_intraday=True, price=123.0)
-client.place_order(test_order)
-```
 
 #### Placing a stoploss order
 
@@ -32,9 +19,8 @@ By default orders are regular, to place a stoploss order, pass `is_stoploss_orde
 
 ```py
 from py5paisa.order import Order, OrderType
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=208,is_intraday=True,atmarket=False, is_stoploss_order=True, stoploss_price=207.5)
 
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, is_stoploss=True, stoploss_price=123.0)
-client.place_order(test_order)
 ```
 
 #### Placing offline orders
@@ -43,9 +29,8 @@ By default all orders are normal orders, pass `ahplaced=AHPlaced.AFTER_MARKET_CL
 
 ```py
 from py5paisa.order import Order, OrderType, AHPlaced
+test_order = Order(order_type='B',exchange='N',exchange_segment='C', scrip_code=1660, quantity=1, price=205,is_intraday=False,atmarket=False, ahplaced=AHPlaced.AFTER_MARKET_CLOSED)
 
-test_order = Order(order_type=OrderType.BUY, scrip_code=11111, quantity=10, ahplaced=AHPlaced.AFTER_MARKET_CLOSED)
-client.place_order(test_order)
 ```
 
 #### Enums
