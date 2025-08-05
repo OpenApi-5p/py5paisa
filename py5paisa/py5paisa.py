@@ -285,8 +285,8 @@ class FivePaisaClient:
                 url = self.MULTIORDERMARGIN_ROUTE
             else:
                 raise Exception("Invalid request type!")
-            res = self.session.post(url, json=self.payload,
-                                    headers=HEADERS).json()
+            res = httpx.post(url, json=self.payload,
+                                    headers=HEADERS,Verify=False).json()
             self.payload = GENERIC_PAYLOAD
 
             if req_type == "MS":
