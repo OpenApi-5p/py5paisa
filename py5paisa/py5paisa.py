@@ -317,7 +317,7 @@ class FivePaisaClient:
     def fetch_market_depth(self, req_list: list):
         try:
             self.payload["body"]["Count"] = "1"
-            self.payload["body"]["Data"] = req_list
+            self.payload["body"]["MarketDepthData"] = req_list
 
             return self.order_request("MD")
         except Exception as e:
