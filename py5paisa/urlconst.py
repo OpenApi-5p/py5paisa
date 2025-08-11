@@ -29,7 +29,7 @@ MARKET_FEED_ROUTE = f'{BaseUrl}MarketFeed'
 MARKET_FEED_ROUTE_BY_SCRIP = f'{BaseUrl}V1/MarketFeed'
 LOGIN_CHECK_ROUTE = "https://openfeed.5paisa.com/Feeds/api/UserActivity/LoginCheck"
 
-MARKET_DEPTH_ROUTE = f'{BaseUrl}/MarketDepth'
+MARKET_DEPTH_ROUTE = f'{BaseUrl}V3/MarketDepth'
 MARKET_DEPTH_BY_SYMBOL_ROUTE = f'{BaseUrl}V1/MarketDepth'
 MARKET_DEPTH_BY_SCRIP = f'{BaseUrl}V2/MarketDepth'
 JWT_VALIDATION_ROUTE = "https://Openapi.indiainfoline.com/VendorsAPI/Service1.svc/JWTOpenApiValidation"
