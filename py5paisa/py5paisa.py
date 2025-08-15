@@ -286,7 +286,7 @@ class FivePaisaClient:
             else:
                 raise Exception("Invalid request type!")
             res = httpx.post(url, json=self.payload,
-                                    headers=HEADERS,Verify=False).json()
+                                    headers=HEADERS,verify=False).json()
             self.payload = GENERIC_PAYLOAD
 
             if req_type == "MS":
