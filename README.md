@@ -196,9 +196,10 @@ client.cancel_bulk_order(cancel_bulk)
 ```
 
 #### Order Margin Calculation
-This function can help calculate
-Margin required for single or multileg order
-Margin required considering existing positions( CoverPosition = Y/N)
+-   This function can help calculate
+-   Margin required for single or multileg order
+-   Margin required considering existing positions( CoverPosition = Y/N)
+
 ```py
 Orders2 =[
 
