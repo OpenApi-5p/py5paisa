@@ -21,18 +21,27 @@ client.order_book()
 #### Order Status and Trade Information
 
 ```py
-from py5paisa.order import OrderForStatus, Exchange, ExchangeType, RequestList
 
-test_order_status = OrderForStatus(exchange=Exchange.BSE, exchange_type=ExchangeType.CASH, scrip_code=500875, order_id=0)
+req_list= [
 
-req_list = RequestList()
-# Add multiple orders to the RequestList to know status of multiple orders at once.
-req_list.add_order(test_order_status)
+        {
+            "Exch": "N",
+            "ExchType": "C",
+            "ScripCode": 20374,
+            "ExchOrderID": "1000000015310807"
+        }]
 
 # Fetches the trade details
 client.fetch_trade_info(req_list)
 
-# Fetches the order status
-client.fetch_order_status(req_list)
+req_list_= [
 
+        {
+            "Exch": "N",
+            "ExchType": "C",
+            "ScripCode": 20374,
+            "RemoteOrderID": "90980441"
+        }]
+# Fetches the order status
+client.fetch_order_status(req_list_)
 ```
