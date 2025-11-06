@@ -67,8 +67,9 @@ HISVTTORDER_ROUTE=f'{BaseUrl}GetHistoryVTTOrder'
 BASKETMARGIN_ROUTE= f'{BaseUrl}PreOrdMarginCalculationBulkVendor'
 PLACEORDERBULK_ROUTE= f'{BaseUrl}PlaceOrderBulk'
 NETPOSITION_ROUTE= f'{BaseUrl}V4/NetPosition'
-MARKETSNAPSHOT_ROUTE = f'{BaseUrl}V1/MarketSnapshot'
+MARKETSNAPSHOT_ROUTE = f'{BaseUrl}MarketSnapshot'
 TAXREPORT_ROUTE=f'{BaseUrl}taxreport'
 LEDGERREPORT_ROUTE=f'{BaseUrl}Ledger'
 
 MULTIORDERMARGIN_ROUTE=f'{BaseUrl}MultiOrderMargin'
+
