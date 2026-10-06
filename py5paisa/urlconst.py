@@ -7,14 +7,14 @@ LOGIN_ROUTE = f'{BaseUrl}V4/LoginRequestMobileNewbyEmail'
 SCRIP_MASTER_ROUTE=f'{BaseUrl}ScripMaster/segment/All'
 
 MARGIN_ROUTE = f'{BaseUrl}V4/Margin'
-ORDER_BOOK_ROUTE = f'{BaseUrl}V3/OrderBook'
+ORDER_BOOK_ROUTE = f'{BaseUrl}V4/OrderBook'
 HOLDINGS_ROUTE = f'{BaseUrl}V3/Holding'
-POSITIONS_ROUTE = f'{BaseUrl}V2/NetPositionNetWise'
+POSITIONS_ROUTE = f'{BaseUrl}V3/NetPositionNetWise'
 
 ORDER_PLACEMENT_ROUTE = f'{BaseUrl}V1/PlaceOrderRequest'
 ORDER_MODIFY_ROUTE = f'{BaseUrl}V1/ModifyOrderRequest'
 ORDER_CANCEL_ROUTE = f'{BaseUrl}V1/CancelOrderRequest'
-ORDER_STATUS_ROUTE = f'{BaseUrl}V2/OrderStatus'
+ORDER_STATUS_ROUTE = f'{BaseUrl}V3/OrderStatus'
 TRADE_INFO_ROUTE = f'{BaseUrl}TradeInformation'
 
 BRACKET_MOD_ROUTE = f'{BaseUrl}ModifyBracketOrderRequest'
