@@ -1075,7 +1075,7 @@ class FivePaisaClient:
         except Exception as e:
             log_response(e)
     
-    def fetch_ledger(self, from_date: str, to_date: str):
+    def fetch_ledger(self, from_date: str, to_date: str, SegmentType: int):
         try:
             # Ensure the date format is in 'YYYY-MM-DD'
             date_format = "%Y-%m-%d"
@@ -1092,6 +1092,7 @@ class FivePaisaClient:
             # Assign the dates to the payload
             self.payload["body"]["FromDate"] = from_date
             self.payload["body"]["ToDate"] = to_date
+            self.payload["body"]["SegmentType"] = SegmentType
 
             return self.order_request("LR")
     
