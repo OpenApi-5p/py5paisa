@@ -547,7 +547,8 @@ print(a)
 ```
 ```py
 Ledger Report
-a=client.fetch_ledger("2024-01-01",'2024-06-26')
+SegmentType: 0 - Combined, 1 - MTF, 2 - Non-MTF
+a=client.fetch_ledger("2024-01-01",'2024-06-26',0)
 print(a)
 
 # to fetch Ledger report
