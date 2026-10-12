@@ -7,7 +7,11 @@ nav:
         - 'Placing an order': 'usage/place.md'
         - 'Modiying an order': 'usage/modify.md'
         - 'Canceling an order': 'usage/cancel.md'
+        - 'Fetching  Market Feed Information': 'usage/mf.md'
+        - 'Placing a Bracket order': 'usage/bo.md'
         - 'Fetching information': 'usage/info.md'
+        - 'Web Socket Live Streaming' : 'usage/websocket.md'
+        
 theme: 
     name: material
     features:
